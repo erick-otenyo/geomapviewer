@@ -1,0 +1,130 @@
+@import '@/styles/settings.scss';
+
+$summary-color: #aaa;
+
+.c-card {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-color: $white;
+  border: solid 1px $border;
+  height: 100%;
+
+  &.active {
+    border-color: $primary-color;
+    box-shadow: 0 0 0 1px $primary-color;
+  }
+
+  .tag {
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+
+    p {
+      color: white;
+      margin: 3px 10px;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+  }
+
+  .image {
+    height: rem(220px);
+    display: flex;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+
+    img {
+      object-fit: cover;
+    }
+  }
+
+  .body {
+    height: calc(100% - #{rem(220px)});
+    padding: rem(15px) rem(20px) rem(20px);
+    border-top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 2;
+
+    &.top-padding {
+      padding-top: rem(40px);
+    }
+
+    @media screen and (min-width: $screen-m) {
+      padding: rem(20px) rem(40px) rem(40px);
+    }
+
+    &.no-image {
+      height: 100%;
+    }
+
+    span {
+      font-size: 12px;
+      margin-bottom: rem(10px);
+      color: $summary-color;
+      display: block;
+    }
+
+    .title {
+      margin-bottom: rem(15px);
+      font-size: rem(26px);
+      font-weight: 300;
+      color: $slate;
+
+      @media screen and (min-width: $screen-m) {
+        font-size: rem(30px);
+      }
+    }
+
+    .summary,
+    .summary p {
+      font-size: rem(16px);
+      margin-bottom: rem(20px);
+      line-height: 1.5;
+      overflow: hidden;
+    }
+
+    .meta {
+      margin-bottom: rem(10px);
+      font-size: rem(14px);
+      opacity: 0.5;
+      text-transform: uppercase;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+
+      * {
+        min-width: rem(130px);
+      }
+    }
+
+    .selector-btn {
+      display: flex;
+
+      .card-selector {
+        max-width: rem(160px);
+        margin-right: rem(10px);
+      }
+
+      .selector-btn-link {
+        transform: rotate(-90deg);
+      }
+    }
+
+    .read-more {
+      max-width: rem(150px);
+      margin-top: rem(30px);
+    }
+  }
+}

@@ -1,0 +1,24 @@
+@import "@/styles/settings";
+
+.c-layer-more-info {
+  p,
+  a {
+    font-size: rem(12px);
+  }
+
+  .more-btn {
+    margin-top: 8px;
+    .go-icon {
+      margin-left: 4px;
+    }
+  }
+  .more-link {
+    margin-top: 8px;
+    a {
+      color: $primary-color;
+      &:hover {
+        color: darken($primary-color, 10%);
+      }
+    }
+  }
+}

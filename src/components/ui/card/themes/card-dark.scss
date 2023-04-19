@@ -1,0 +1,24 @@
+@import '@/styles/settings.scss';
+
+.theme-card-dark {
+  background-color: $slate;
+
+  .body {
+    span {
+      color: $white;
+    }
+
+    .title {
+      color: $white;
+    }
+
+    .summary,
+    .summary p {
+      color: $white;
+    }
+
+    .meta {
+      color: $white;
+    }
+  }
+}

@@ -1,0 +1,149 @@
+@import "@/styles/settings.scss";
+$input-button-width: rem(100px);
+
+.c-share {
+  @media screen and (min-width: $screen-m) {
+    width: rem(430px);
+    min-width: rem(320px);
+  }
+
+  .public-area-field {
+    padding-bottom: 20px;
+
+    span {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: $slate-light;
+      font-size: rem(15px);
+    }
+  }
+
+  .subtitle {
+    font-size: 13px;
+    text-align: left;
+    border-bottom: solid 1px $border;
+    padding-bottom: rem(15px);
+    margin-bottom: rem(20px);
+    opacity: 0.5;
+  }
+
+  .share-switch-tab {
+    max-width: rem(225px);
+    margin-bottom: rem(30px);
+  }
+
+  .info {
+    text-align: left;
+    color: #555;
+    font-size: rem(16px);
+    line-height: rem(30px);
+    width: 100%;
+    margin-bottom: rem(10px);
+  }
+
+  .share-notice {
+    background: $grey-light;
+    color: $slate-dark;
+    border: 1px solid $grey-dark;
+    text-align: center;
+    padding: 17px 20px;
+    border-radius: 5px;
+  }
+
+  .input-container {
+    width: calc(100% + (#{$input-button-width} / 2));
+
+    .input,
+    .input-button {
+      height: rem(40px);
+    }
+
+    .input {
+      width: calc(100% - #{$input-button-width});
+      max-width: rem(300px);
+      border: 0;
+      font-size: rem(13px);
+      position: relative;
+      display: inline-block;
+
+      > input {
+        background: none;
+        padding-left: rem(10px);
+        padding-right: calc((#{$input-button-width} / 2) + #{rem(10px)});
+        width: 100%;
+        height: 100%;
+        border: 1px solid #dededd;
+        border-right: 0;
+        border-radius: 4px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .input-button {
+      position: relative;
+      z-index: 1;
+      right: calc(#{$input-button-width} / 2);
+      border-radius: rem(22.5px);
+      width: $input-button-width;
+      display: inline-block;
+    }
+
+    .input-loader {
+      align-items: flex-start;
+
+      > div {
+        width: rem(20px);
+        height: rem(20px);
+        border-width: 2px;
+        margin-left: rem(10px);
+      }
+    }
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: rem(15px);
+  }
+
+  .share-button {
+    margin: 0 rem(8px);
+    width: 100%;
+  }
+
+  .button {
+    width: rem(125px);
+    height: rem(36px);
+    font-size: 14px;
+    font-weight: 500;
+    color: $slate;
+  }
+
+  .social-container {
+    display: flex;
+    justify-content: left;
+    margin-top: rem(25px);
+  }
+
+  .social-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(50px);
+    height: rem(50px);
+    margin: 0 rem(8px);
+    border: 1px solid #aaa;
+    border-radius: rem(25px);
+
+    svg {
+      fill: #555;
+      height: 20px;
+      width: 20px;
+    }
+  }
+}

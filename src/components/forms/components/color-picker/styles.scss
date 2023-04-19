@@ -1,0 +1,37 @@
+@import "@/styles/settings.scss";
+
+.c-color-picker {
+  position: relative;
+  margin-right: 16px;
+  width: 150px;
+
+  .trigger {
+    display: flex;
+    padding: 5px;
+    background: #fff;
+    border-radius: 4px;
+    border: solid 1px $border;
+    cursor: pointer;
+    width: 100%;
+
+    .color {
+      width: 30px;
+      height: 20px;
+      margin-right: 4px;
+    }
+  }
+
+  .popover {
+    position: absolute;
+    margin-top: 10px;
+    z-index: 9999;
+  }
+
+  .cover {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}

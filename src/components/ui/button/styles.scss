@@ -1,0 +1,71 @@
+@import '@/styles/settings';
+$button-height: rem(40px);
+
+.c-button {
+  height: $button-height;
+  font-family: $font-family-1;
+  border-radius: rem(20px);
+  padding: 0 rem(15px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $primary-color;
+  font-size: rem(16px);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.1;
+  font-weight: 500;
+  color: $white;
+  cursor: pointer;
+  transition: background-color 150ms ease-out;
+  text-decoration: none;
+  width: fit-content;
+
+  .button-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 100%;
+  }
+
+  svg {
+    fill: $white;
+    width: rem(15px);
+    height: rem(15px);
+  }
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+
+  &.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: $grey-dark;
+
+    svg {
+      fill: #ddd;
+    }
+
+    &:hover {
+      background-color: $grey-dark;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.square {
+    width: $button-height;
+    min-width: $button-height;
+    padding: 0;
+    font-size: 0;
+  }
+
+  &.wide {
+    width: 100%;
+  }
+}

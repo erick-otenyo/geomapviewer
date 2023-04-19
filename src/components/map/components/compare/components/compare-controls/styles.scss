@@ -1,0 +1,11 @@
+@import "@/styles/settings.scss";
+
+.c-compare-controls {
+  display: flex;
+  justify-content: center;
+  background-color: rgba($primary-color, 0.1);
+  .compare-btn {
+    border-radius: 0;
+    margin: 10px 0;
+  }
+}

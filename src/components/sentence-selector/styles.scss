@@ -1,0 +1,23 @@
+@import "@/styles/settings";
+.c-sentence-selector {
+  display: inline-block;
+  color: $slate;
+  font-size: rem(12px);
+  line-height: 1.6;
+
+  &.margin {
+    margin-right: 10px;
+  }
+
+  .selector-header {
+    display: flex;
+    flex-direction: column;
+    .selector-title {
+      font-size: 13px;
+      font-weight: 500;
+    }
+  }
+  .sentence-dropdown {
+    display: inline-block;
+  }
+}

@@ -1,0 +1,19 @@
+@import "@/styles/settings.scss";
+
+.map-tooltip {
+  overflow: hidden;
+  background-color: transparent;
+
+  .mapboxgl-popup-tip {
+    border-top-color: #fff !important;
+  }
+
+  .mapboxgl-popup-content {
+    min-width: 40px;
+    min-height: 27px;
+    padding: 5px 9px 4px !important;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px !important;
+  }
+}

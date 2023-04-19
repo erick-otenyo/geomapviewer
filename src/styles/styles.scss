@@ -1,0 +1,16 @@
+// modules styles
+// modules styles
+@import "vizzuality-components/dist/bundle.css";
+@import "react-tippy/dist/tippy.css";
+
+// base styles
+@import "./reset.scss";
+@import "./foundation-grid.scss";
+@import "./settings.scss";
+@import "./base.scss";
+@import "./utils.scss";
+@import "./text.scss";
+@import "./tippy.scss";
+@import "./rc-tooltip.scss";
+@import "./rc-slider.scss";
+@import "./semantic-styles.scss";

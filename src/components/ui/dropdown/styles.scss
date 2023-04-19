@@ -1,0 +1,60 @@
+@import '@/styles/settings.scss';
+
+$dd-height: rem(34px);
+$dd-font-size: rem(13px);
+
+.c-dropdown {
+  color: $slate;
+  width: auto;
+  text-align: left;
+
+  .label {
+    margin-bottom: rem(5px);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-weight: 400;
+    font-size: $dd-font-size;
+
+    .info-button {
+      margin-left: rem(7px);
+      height: 15px;
+      width: 15px;
+      min-width: 15px;
+      border-radius: 50%;
+
+      .info-icon {
+        height: 8px;
+        width: 7px;
+      }
+    }
+  }
+
+  .container {
+    position: relative;
+
+    &.-tooltip {
+      .menu-arrow {
+        display: none;
+      }
+    }
+  }
+
+  .menu-trigger {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+  }
+
+  .is-open {
+    .arrow {
+      transform: rotate(180deg);
+    }
+  }
+}

@@ -1,0 +1,58 @@
+@import '@/styles/settings.scss';
+
+.c-map-attributions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  a,
+  span {
+    margin-left: rem(10px);
+    color: $map-grey;
+    font-size: rem(10px);
+
+    &:hover {
+      color: $map-grey;
+    }
+  }
+
+  .logos {
+    display: flex;
+    align-items: center;
+    height: 25px;
+
+    a {
+      margin-right: rem(10px);
+      margin-left: 0;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .mapbox-logo {
+    width: auto;
+    height: rem(20px);
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .attribution-btn {
+    opacity: 0.8;
+    margin-left: rem(10px);
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    min-height: 14px;
+
+    > div {
+      margin-top: 0;
+    }
+
+    svg {
+      width: 8px;
+      height: 8px;
+    }
+  }
+}

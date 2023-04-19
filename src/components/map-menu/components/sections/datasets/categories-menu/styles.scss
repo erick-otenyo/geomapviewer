@@ -1,0 +1,64 @@
+@import "@/styles/settings";
+
+.c-categories-menu {
+  padding: 20px 0;
+
+  .categories-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #aaa;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+
+    @media screen and (min-width: $screen-m) {
+      color: $slate;
+    }
+  }
+
+  .category-item {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .category-btn {
+      position: relative;
+
+      background-color: $primary-color;
+
+      svg {
+        width: rem(30px);
+        height: rem(30px);
+        fill: $white;
+      }
+    }
+
+    .category-item-label {
+      display: block;
+      text-transform: uppercase;
+      font-size: 11px;
+      color: $slate;
+      text-align: center;
+      line-height: 14px;
+      margin-top: 10px;
+    }
+
+    .category-btn-count {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: rem(14px);
+      height: rem(14px);
+      background-color: $primary-color;
+      border: solid 1px $white;
+      border-radius: 100%;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: -0.3px;
+      color: $white;
+    }
+  }
+}

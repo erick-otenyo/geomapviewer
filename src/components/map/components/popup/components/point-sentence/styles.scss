@@ -1,0 +1,16 @@
+@import "@/styles/settings.scss";
+.c-point-sentence {
+  .sentence {
+    font-size: rem(13px);
+    margin-bottom: 20px;
+    b {
+      font-weight: 500;
+    }
+    button {
+      color: $primary-color;
+      font-weight: 500;
+      display: contents;
+      cursor: pointer;
+    }
+  }
+}

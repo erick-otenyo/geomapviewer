@@ -1,0 +1,37 @@
+@import '@/styles/settings';
+
+.theme-button-clear {
+  background-color: transparent;
+  color: $slate;
+  border: 0;
+
+  svg {
+    fill: $slate;
+  }
+
+  &-underline:hover {
+    text-decoration: underline;
+  }
+
+  &:hover {
+    background-color: transparent;
+
+    svg {
+      fill: darken($slate, 20%);
+    }
+  }
+
+  &.disabled {
+    border-color: transparent;
+    background-color: transparent;
+
+    &:hover {
+      background-color: transparent;
+      border-color: transparent;
+    }
+
+    svg {
+      fill: #ddd;
+    }
+  }
+}

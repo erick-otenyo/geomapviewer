@@ -1,0 +1,185 @@
+@import "@/styles/settings.scss";
+@import "@/styles/utils.scss";
+
+.c-map-controls {
+  .c-icon {
+    &.-active {
+      fill: $primary-color;
+    }
+  }
+
+  .map-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    z-index: 2;
+    margin-bottom: rem(10px);
+
+    .recent-imagery-tooltip,
+    .basemaps-tooltip {
+      width: 100%;
+      box-shadow: 0 1px 2px rgba($black, 0.25);
+      display: none;
+    }
+
+    .recent-imagery-tooltip {
+      margin-right: rem(5px);
+    }
+
+    .basemaps-tooltip {
+      margin-left: rem(5px);
+    }
+  }
+
+  .map-tool-btn {
+    width: 100%;
+
+    &.active {
+      box-shadow: $tooltip-box-shadow;
+    }
+
+    .basemaps-btn-content {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      align-items: center;
+
+      .basemaps-btn-img {
+        height: 100%;
+        float: left;
+        width: rem(38px);
+      }
+
+      .basemaps-btn-label-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 0 rem(10px);
+
+        span {
+          text-align: left;
+          text-transform: uppercase;
+        }
+
+        .basemaps-btn-label-small {
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  .recent-imagery-btn {
+    position: relative;
+  }
+
+  .recent-imagery-loader {
+    .spinner {
+      width: rem(25px);
+      height: rem(25px);
+      border-width: rem(2px);
+    }
+  }
+
+  .satellite-icon {
+    width: rem(20px);
+    height: rem(20px);
+
+    @media screen and (min-width: $screen-m) {
+      width: rem(30px);
+      height: rem(30px);
+    }
+  }
+
+  .globe-icon {
+    width: rem(15px);
+    height: rem(15px);
+
+    @media screen and (min-width: $screen-m) {
+      width: rem(20px);
+      height: rem(20px);
+    }
+  }
+
+  .controls-wrapper {
+    display: flex;
+    box-shadow: 0 1px 2px rgba($black, 0.25);
+    margin-bottom: rem(10px);
+
+    .plus-icon {
+      width: rem(13px);
+      height: rem(13px);
+    }
+
+    .minus-icon {
+      width: rem(13px);
+    }
+
+    .map-tour-icon {
+      fill: $white;
+      background: $slate;
+      border-radius: 15px;
+      padding: 2px;
+    }
+
+    .pulse-tour-btn {
+      animation: pulse 1.5s infinite;
+    }
+  }
+
+  .mobile-controls-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    margin-top: 45px;
+    box-shadow: 0 1px 2px rgba($black, 0.25);
+
+    .map-control {
+      min-width: rem(40px);
+      height: rem(40px);
+
+      svg {
+        width: 25px;
+        height: 25px;
+      }
+
+      &.-share {
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+
+    > * {
+      border-right: solid 1px $border;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  .map-position {
+    background-color: rgba($white, 0.5);
+    padding: rem(5px) rem(8px);
+    font-size: rem(10px);
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.c-map-controls.top-map-controls {
+  position: absolute;
+  top: rem(60px);
+  right: rem(15px);
+  z-index: 5;
+  background-color: $plain-menu;
+  height: subnav-height-dark;
+}
+
+.recent-imagery-panel,
+.basemaps-panel {
+  max-height: calc(100vh - 158px);
+  overflow-y: auto;
+}

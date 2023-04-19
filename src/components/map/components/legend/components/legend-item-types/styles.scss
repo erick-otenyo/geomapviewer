@@ -1,0 +1,13 @@
+@import "@/styles/settings.scss";
+
+.c-legend-item-types {
+  background: $white;
+}
+
+.legend-svg {
+  .tick {
+    line {
+      stroke: none;
+    }
+  }
+}

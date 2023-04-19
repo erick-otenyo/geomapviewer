@@ -1,0 +1,66 @@
+@import '@/styles/settings.scss';
+.c-radio-group {
+    margin-top: rem(8px);
+    .radio-option {
+        margin-bottom: rem(8px);
+        cursor: pointer;
+        label {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: rem(5px);
+            span {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 16px;
+                height: 16px;
+                min-width: 16px;
+                border-radius: 100%;
+                border: solid 1px $slate;
+                margin-right: rem(10px);
+                &::after {
+                    content: '';
+                    width: rem(8px);
+                    height: rem(8px);
+                    background-color: $primary-color;
+                    border-radius: 100%;
+                    display: none;
+                }
+            }
+            .r-text {
+                display: flex;
+                flex-direction: column;
+                .r-title {
+                    font-size: 12px;
+                    font-weight: 410;
+                }
+                .r-desc {
+                    font-size: 11px;
+                    .info-icon {
+                        width: 10px;
+                        height: 10px;
+                        padding: 2px;
+                        fill: #fff;
+                        margin-right: 4px;
+                        vertical-align: middle;
+                        border-radius: 50%;
+                        background-color: #999999;
+                    }
+                }
+            }
+        }
+        input[type=radio] {
+            display: none;
+        }
+        input[type=radio]:checked+label span::after {
+            display: block;
+        }
+    }
+    .radio-input {
+        margin-left: rem(25px);
+        width: calc(100% - #{rem(25px)});
+        max-width: rem(325px);
+    }
+}

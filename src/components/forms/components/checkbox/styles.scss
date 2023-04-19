@@ -1,0 +1,74 @@
+@import "@/styles/settings.scss";
+
+.c-form-checkbox {
+  .checkbox-option {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: rem(20px) 0 rem(20px);
+
+    > span {
+      display: flex;
+      align-items: center;
+    }
+
+    label {
+      cursor: pointer;
+      padding-left: rem(10px);
+    }
+
+    &.sub-options {
+      display: flex;
+      flex-flow: wrap;
+
+      > .c-form-field {
+        margin-bottom: 0;
+        padding: 10px 0 0 35px;
+      }
+
+      .radio-option:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  input[type="checkbox"] {
+    position: relative;
+    width: rem(25px);
+    height: rem(25px);
+    min-width: rem(25px);
+    border: 1px solid $border;
+    appearance: none;
+    color: $primary-color;
+    cursor: pointer;
+    border-radius: rem(4px);
+
+    &::-ms-check {
+      display: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  input[type="checkbox"]::before {
+    content: "✔";
+    position: absolute;
+    left: rem(5px);
+    top: rem(2px);
+    visibility: hidden;
+    font-size: rem(16px);
+  }
+
+  input[type="checkbox"]:checked::before {
+    /* Use `visibility` instead of `display` to avoid recalculating layout */
+    visibility: visible;
+  }
+
+  input[type="checkbox"]:disabled {
+    border-color: black;
+    background: #ddd;
+    color: gray;
+  }
+}

@@ -1,0 +1,58 @@
+@import '@/styles/settings.scss';
+
+$dd-button-height: rem(28px);
+
+.theme-dropdown-button {
+  text-align: center;
+
+  .container {
+    .c-selector {
+      border-radius: rem(25px);
+      border-color: $primary-color;
+      height: $dd-button-height;
+      padding: 0 rem(10px);
+
+      .value {
+        padding: 0;
+        right: rem(26px);
+      }
+    }
+
+    &.is-open {
+      .menu-arrow {
+        position: absolute;
+        width: 0;
+        height: 0;
+        margin: 0 9px;
+        border-bottom: 7px solid #fff;
+        border-left: 7px solid transparent;
+        border-left-color: #fff;
+        border-right: none;
+        transform-origin: 0 0;
+        transform: rotate(-45deg);
+        top: calc(#{$dd-button-height} + #{rem(6px)});
+        left: calc(50% - 14px);
+        border-bottom-color: #fff;
+        box-shadow: 1px -2px 3px 0 rgba(85, 85, 85, 0.1);
+        z-index: 3;
+      }
+    }
+
+    .menu {
+      top: calc(#{$dd-button-height} + #{rem(12px)});
+      border: 0;
+      box-shadow: $pop-box-shadow;
+    }
+  }
+
+  .arrow-btn .arrow {
+    fill: $primary-color;
+  }
+
+  .label {
+    color: $warm-grey;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+}

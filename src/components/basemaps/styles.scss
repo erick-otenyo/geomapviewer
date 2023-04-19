@@ -1,0 +1,124 @@
+@import "@/styles/settings.scss";
+
+$item-size: 55px;
+$item-size-small: 45px;
+$top-section-height: 125px;
+
+.c-basemaps {
+  width: 100%;
+  background-color: $white;
+  height: 100%;
+
+  h4 {
+    font-size: 13px;
+    font-weight: 500;
+    color: #aaa;
+    text-transform: uppercase;
+    text-align: left;
+
+    @media screen and (min-width: $screen-m) {
+      color: $slate;
+    }
+  }
+
+  .map-settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    .info-btn {
+      width: 14px;
+      height: 14px;
+      max-width: 14px;
+      min-width: 14px;
+      background-color: $grey;
+
+      > div {
+        margin-top: 0;
+      }
+
+      svg {
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    .close-btn {
+      margin-left: 8px;
+
+      svg {
+        height: 11px;
+        width: 11px;
+        fill: #999;
+      }
+    }
+  }
+
+  .map-settings {
+    padding: 0 0 30px;
+
+    @media screen and (min-width: $screen-m) {
+      padding: 0 13px 10px;
+
+      .map-settings-col {
+        padding: 0 7px;
+      }
+
+      .mobile-basemaps-btn {
+        padding: 0;
+      }
+    }
+  }
+
+  .map-settings-item {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .basemap-img {
+      border-radius: 50%;
+      border: solid 1px $grey;
+    }
+
+    .item-label,
+    .value {
+      text-align: center;
+      font-size: 11px;
+      color: $slate-dark;
+      text-transform: uppercase;
+      margin-top: 10px;
+    }
+  }
+
+  .map-settings-dropdown {
+    .c-selector-menu {
+      width: 100px;
+      margin-left: -27px;
+
+      @media screen and (min-width: $screen-m) {
+        margin-left: -12px;
+      }
+    }
+  }
+
+  .analysis-settings {
+    padding-bottom: 20px;
+
+    .setting-toggle {
+      display: flex;
+      align-items: center;
+      margin-top: rem(6px);
+      font-size: rem(13px);
+
+      .c-toggle {
+        margin-right: rem(6px);
+      }
+    }
+  }
+}

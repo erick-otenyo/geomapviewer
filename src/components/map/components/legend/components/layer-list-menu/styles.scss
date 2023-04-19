@@ -1,0 +1,26 @@
+@import '@/styles/settings';
+
+.c-layer-list-menu {
+  > div {
+    margin-bottom: rem(15px);
+
+    &:last-child {
+      margin-bottom: rem(5px);
+    }
+  }
+
+  .more-info {
+    margin-top: rem(10px);
+  }
+
+  .nested-legend {
+    padding-left: rem(15px);
+    padding-top: rem(10px);
+  }
+
+  .layer-description {
+    font-size: rem(12px);
+    color: $hot-grey;
+    margin-top: rem(10px);
+  }
+}

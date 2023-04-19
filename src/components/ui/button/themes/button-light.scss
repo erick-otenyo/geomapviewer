@@ -1,0 +1,31 @@
+@import '@/styles/settings';
+
+.theme-button-light {
+  background-color: $white;
+  color: $slate;
+  border: solid 1px $primary-color;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: rem(14px);
+
+  &:hover {
+    background-color: $grey-light;
+  }
+
+  svg {
+    fill: $grey-dark;
+  }
+
+  &.disabled {
+    border-color: $grey-light;
+
+    &:hover {
+      background-color: $grey-light;
+      border-color: $grey-light;
+    }
+
+    svg {
+      fill: $white;
+    }
+  }
+}

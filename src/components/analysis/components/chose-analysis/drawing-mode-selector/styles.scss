@@ -1,0 +1,37 @@
+@import "@/styles/settings";
+
+.c-drawing-modes {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  cursor: pointer;
+  background-color: rgba($primary-color, 0.1);
+  margin-bottom: rem(18px);
+  border-radius: 4px;
+
+  .drawing-mode {
+    display: flex;
+    align-items: center;
+    margin: rem(8px);
+
+    &.active {
+      color: $primary-color;
+
+      .draw-mode-icon {
+        fill: $primary-color;
+      }
+    }
+
+    .draw-mode-icon {
+      width: rem(25px);
+      height: rem(25px);
+      fill: $ashes-grey;
+    }
+
+    .draw-mode-label {
+      font-size: 12px;
+      font-weight: 500;
+      margin-left: 8px;
+    }
+  }
+}

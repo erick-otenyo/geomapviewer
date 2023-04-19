@@ -1,0 +1,33 @@
+@import '@/styles/settings';
+
+.theme-button-map-control {
+  min-width: rem(38px);
+  height: rem(38px);
+  padding: 0;
+  background-color: $white;
+  border-radius: 0;
+  font-size: 10px;
+  color: $slate-light;
+
+  svg {
+    fill: $slate;
+  }
+
+  &:hover {
+    background-color: darken($white, 10%);
+  }
+
+  &.--active {
+    svg {
+      fill: $primary-color;
+    }
+  }
+
+  &.disabled {
+    background-color: $white;
+
+    &:hover {
+      background-color: $white;
+    }
+  }
+}

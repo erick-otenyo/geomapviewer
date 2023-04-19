@@ -1,0 +1,76 @@
+@import '@/styles/settings.scss';
+
+$dd-dark-height: rem(60px);
+$dd-dark-font-size: rem(40px);
+
+.theme-dropdown-dark {
+  color: $white;
+  font-weight: 300;
+
+  .c-selector {
+    border: 0;
+    height: $dd-dark-height;
+    padding: 0;
+    color: $white;
+
+    .value {
+      font-size: $dd-dark-font-size;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding-right: rem(25px);
+
+      &.no-value {
+        color: rgba($white, 0.5);
+      }
+    }
+
+    input {
+      color: $white;
+      font-size: $dd-dark-font-size;
+      font-weight: 300;
+      padding-left: rem(18px);
+
+      &::placeholder {
+        color: rgba($white, 0.5);
+      }
+    }
+
+    &.align-left {
+      .value,
+      input {
+        padding-left: rem(30px);
+      }
+    }
+
+    .arrow-btn {
+      left: 0;
+      width: rem(12px);
+
+      .arrow {
+        fill: $white;
+      }
+    }
+
+    .clear-btn {
+      right: 0;
+
+      .clear-icon {
+        fill: $white;
+      }
+    }
+  }
+
+  .c-selector-menu {
+    border: solid 1px $border;
+    font-size: rem(18px);
+    font-weight: 400;
+    top: $dd-dark-height;
+    box-shadow: 1px 1px 5px 0 rgba(85, 85, 85, 0.25);
+
+    @media screen and (min-width: $screen-m) {
+      left: rem(30px);
+      width: calc(100% - 30px);
+    }
+  }
+}

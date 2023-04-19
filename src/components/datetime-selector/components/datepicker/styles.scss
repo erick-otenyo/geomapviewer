@@ -1,0 +1,443 @@
+@import "@/styles/settings.scss";
+//styles
+.timeline {
+  display: table;
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+}
+
+.text-row {
+  display: block;
+  font-size: 0.9rem;
+  position: absolute;
+  bottom: 44px;
+  left: 0px;
+  padding: 3px 5px;
+}
+
+.text-cell {
+  display: table-cell;
+}
+
+.time {
+  padding-left: 15px;
+}
+
+.controlsRow {
+  display: table-row;
+}
+
+.style-selector {
+  font-size: 0.9rem;
+  label {
+    margin-right: 5px;
+  }
+}
+
+.title {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.field {
+  height: 40px;
+  color: $font-color-3;
+  display: block;
+  padding: 0.5rem 0.5rem;
+  -webkit-appearance: none;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  width: 100%;
+  color: black;
+}
+
+.timelineDatePicker {
+}
+
+.datePicker {
+  width: 230px;
+  height: 300px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  position: absolute;
+  // bottom: 70px;
+  z-index: 9999999999;
+  background: #fff;
+  &.openBelow {
+    top: 10px;
+  }
+}
+
+@media screen and (max-width: $screen-m) {
+  .datePicker {
+    font-family: inherit;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #fff;
+    transform: none !important;
+    &.openBelow {
+      top: 0;
+    }
+  }
+}
+
+.dayPicker {
+  text-align: center;
+  margin-top: -10px;
+}
+
+.backbutton {
+  background-color: transparent;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: 400;
+  box-shadow: none;
+  text-align: left;
+  cursor: pointer;
+  line-height: 20px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  &:focus,
+  &:hover {
+    box-shadow: none;
+    border-color: transparent;
+    outline: none;
+    opacity: 0.9;
+  }
+  display: inline-block;
+  z-index: 99;
+  position: relative;
+  &[disabled],
+  &:disabled {
+    opacity: 0.1;
+  }
+}
+
+.backbtn {
+  background-color: rgba($slate, 0.1);
+  margin: 0 1px;
+  border: 0;
+  border-radius: 2px;
+  padding: 0 4px;
+  box-sizing: border-box;
+  font-weight: 400;
+  box-shadow: none;
+  text-align: left;
+  cursor: pointer;
+  line-height: 20px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  &:focus,
+  &:hover {
+    box-shadow: none;
+    border-color: transparent;
+    outline: none;
+    opacity: 0.9;
+  }
+  display: inline-block;
+  z-index: 99;
+  position: relative;
+  &[disabled],
+  &:disabled {
+    opacity: 0.1;
+  }
+
+  .c-icon {
+    height: 8px;
+    width: 8px;
+    margin-right: 4px;
+    text-align: center;
+  }
+}
+
+.togglebutton {
+  background: transparent;
+  padding: 0px 6px;
+  border: 0;
+  height: 30px;
+  width: 30px;
+  margin-right: 5px;
+  display: inline-block;
+  svg {
+    width: 18px;
+    height: 18px;
+    float: left;
+    fill: #fff;
+  }
+}
+
+.grid {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  color: #fff;
+  padding: 0px 5px;
+  border-radius: 3px;
+  margin-top: -20px;
+}
+
+.gridBody {
+  height: calc(100% - 30px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    width: 10px;
+    /* for vertical scrollbars */
+    height: 8px;
+    /* for horizontal scrollbars */
+  }
+  &::-webkit-scrollbar-track {
+    background: rgba(#888, 0.1);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(#888, 0.6);
+  }
+}
+
+.gridRow {
+  display: flex;
+  align-items: center;
+}
+
+.gridRow:hover {
+  background: #e9e9e9;
+  cursor: pointer;
+}
+
+.inactiveGridRow:hover {
+  background: transparent;
+  cursor: default;
+}
+
+.gridLabel {
+  display: inline-block;
+  width: 35px;
+  font-size: 10px;
+  padding-left: 6px;
+  color: $font-color-3;
+}
+
+.gridRowInner12,
+.gridRowInner31 {
+  display: table-row;
+  padding: 3px;
+  border-radius: 3px;
+}
+
+.gridRowInner12 span,
+.gridRowInner31 span {
+  display: inline-block;
+  height: 10px;
+  width: 2px;
+  background: rgba(199, 197, 197, 0.575);
+  margin-top: 1px;
+}
+
+.gridRowInner12 span {
+  margin-right: 11px;
+}
+
+.gridRowInner31 span {
+  margin-right: 3px;
+}
+
+.activeGrid {
+  opacity: 0.9;
+  background: $primary-color !important;
+}
+
+.gridHeading {
+  text-align: center;
+  color: $font-color-3;
+  font-size: 12px;
+  padding-bottom: 6px;
+}
+
+.hourview {
+}
+
+.summary {
+  font-size: 10px;
+}
+
+.open {
+}
+
+.centuryBtn,
+.dateBtn {
+  background-color: transparent;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-weight: 400;
+  box-shadow: none;
+  text-align: left;
+  cursor: pointer;
+  line-height: 10px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  &:focus,
+  &:hover {
+    box-shadow: none;
+    border-color: transparent;
+    outline: none;
+    opacity: 0.9;
+  }
+  display: block;
+  background: $primary-color;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 10px;
+  &:disabled {
+    background: #595b60 !important;
+    cursor: not-allowed;
+    &:hover,
+    &--hover {
+      background: #595b60 !important;
+    }
+  }
+  &:hover,
+  &--hover {
+    background: $primary-color;
+  }
+  width: calc(100% - 20px);
+  margin: 5px;
+}
+
+.centuryBtn {
+  display: inline-block;
+  width: 40%;
+}
+
+.dayPicker {
+  font-family: inherit;
+  //   width: 290px;
+  //   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s linear;
+  border: none;
+  border-radius: 0;
+
+  .react-datepicker {
+    background-color: $white;
+    border-radius: 0;
+    border: none;
+    // box-shadow: 0 1px 3px 0 rgb(0 0 0 / 30%);
+  }
+
+  .react-datepicker__header {
+    border-bottom: 0;
+    background-color: $white;
+  }
+
+  .react-datepicker__month-container {
+    font-family: inherit;
+    width: 212px;
+  }
+
+  .react-datepicker__month {
+    margin: 0 10px 10px;
+  }
+
+  .react-datepicker__day-names,
+  .react-datepicker__week {
+    display: flex;
+  }
+
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-datepicker__day-name,
+  .react-datepicker__day,
+  .react-datepicker__time-name {
+    width: 100%;
+    margin: 0;
+    line-height: 30px;
+    color: $slate;
+    font-size: 14px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .react-datepicker__day-names {
+    margin: 0 10px 10px 10px;
+
+    .react-datepicker__day-name {
+      font-size: 12px;
+      line-height: 20px;
+    }
+  }
+
+  .react-datepicker__day:hover,
+  .react-datepicker__month-text:hover,
+  .react-datepicker__quarter-text:hover,
+  .react-datepicker__year-text:hover,
+  .react-datepicker__day--keyboard-selected,
+  .react-datepicker__day--selected,
+  .react-datepicker__month-text--keyboard-selected,
+  .react-datepicker__quarter-text--keyboard-selected,
+  .react-datepicker__year-text--keyboard-selected {
+    background-color: rgba($slate, 0.1);
+    border-radius: 0;
+  }
+
+  .react-datepicker__day--selected,
+  .react-datepicker__day--in-selecting-range,
+  .react-datepicker__day--in-range,
+  .react-datepicker__month-text--selected,
+  .react-datepicker__month-text--in-selecting-range,
+  .react-datepicker__month-text--in-range,
+  .react-datepicker__quarter-text--selected,
+  .react-datepicker__quarter-text--in-selecting-range,
+  .react-datepicker__quarter-text--in-range,
+  .react-datepicker__year-text--selected,
+  .react-datepicker__year-text--in-selecting-range,
+  .react-datepicker__year-text--in-range {
+    background-color: $primary-color;
+    color: $white;
+    border-radius: 0;
+
+    &:hover {
+      background-color: $dark-green;
+    }
+  }
+
+  .react-datepicker__day--today,
+  .react-datepicker__month-text--today,
+  .react-datepicker__quarter-text--today,
+  .react-datepicker__year-text--today {
+    font-weight: 400;
+  }
+
+  .react-datepicker__day--disabled,
+  .react-datepicker__month-text--disabled,
+  .react-datepicker__quarter-text--disabled,
+  .react-datepicker__year-text--disabled {
+    color: rgba($slate, 0.5);
+
+    &:hover {
+      background-color: $white;
+    }
+  }
+}

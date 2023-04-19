@@ -1,0 +1,23 @@
+@import '@/styles/settings.scss';
+
+.c-widget-caution {
+  background: $yellow;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 0 10px 0;
+  color: $slate-light;
+  font-weight: 500;
+
+  a, 
+  .caution-link {
+    width: fit-content;
+    margin-bottom: rem(30px);
+    color: $primary-color;
+  }
+
+  a:hover,
+  a:visited {
+    color: darken($primary-color, 10%);
+  }
+  
+}

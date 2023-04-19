@@ -1,0 +1,163 @@
+@import "@/styles/settings.scss";
+$plain-menu: #f1f1f1;
+
+.c-datasets {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+
+  .login-header {
+    padding: rem(5px) rem(15px);
+    @media screen and (min-width: $screen-m) {
+      padding: rem(20px);
+      padding-bottom: rem(5px);
+    }
+
+    h3.title-login {
+      text-transform: uppercase;
+      color: $slate;
+      font-size: rem(14px);
+      font-weight: 500;
+      margin-bottom: rem(10px);
+    }
+    p {
+      margin: rem(10px) 0;
+      line-height: 1.7;
+    }
+    .myhw-login {
+      margin: rem(40px) 0;
+    }
+  }
+
+  .datasets-header {
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    margin-bottom: rem(20px);
+    font-size: 14px;
+    font-weight: 500;
+
+    button {
+      height: fit-content;
+    }
+
+    .icon-return {
+      transform: rotate(90deg);
+      width: rem(10px);
+      height: rem(10px);
+      margin-right: rem(10px);
+    }
+  }
+
+  .group-options-wrapper {
+    padding-bottom: 20px;
+
+    .group-options-title {
+      font-size: 14px;
+      color: $slate;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .group-options {
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      font-size: 12px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 10px;
+      background-color: $plain-menu;
+      color: $slate;
+
+      .group-option {
+        margin-right: 0;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.2em 0;
+        cursor: pointer;
+        user-select: none;
+
+        &.active {
+          border-radius: 1em;
+          color: white;
+          background-color: $primary-color;
+          box-shadow: 0 0 4px 0 black;
+        }
+      }
+    }
+  }
+
+  .countries-selection {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: rem(20px);
+    padding: rem(20px) rem(20px) 0;
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+
+      > * {
+        margin-bottom: rem(5px);
+        margin-right: rem(5px);
+      }
+    }
+
+    .sub-title {
+      text-transform: uppercase;
+      font-size: rem(11px);
+      color: $slate;
+      margin-bottom: rem(5px);
+      font-weight: 500;
+    }
+
+    .country-dropdown {
+      width: rem(110px);
+    }
+  }
+
+  .dataset-toggle {
+    margin-bottom: rem(20px);
+
+    &:last-child {
+      margin-bottom: rem(5px);
+    }
+  }
+
+  .no-datasets-legend {
+    padding: 0 rem(20px) 0;
+    display: flex;
+
+    .legend-dot {
+      background-color: #d4d4d4;
+      height: rem(10px);
+      min-height: rem(10px);
+      width: rem(10px);
+      min-width: rem(10px);
+      border-radius: 50%;
+      display: block;
+      margin-right: rem(5px);
+      margin-top: rem(4px);
+    }
+
+    .no-datasets-message {
+      font-size: rem(12px);
+      color: $slate;
+      margin-bottom: rem(25px);
+
+      strong {
+        font-weight: 500;
+      }
+    }
+  }
+
+  .no-datasets {
+    position: relative;
+    font-size: rem(13px);
+    margin-bottom: rem(10px);
+  }
+}

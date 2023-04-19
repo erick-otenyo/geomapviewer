@@ -1,0 +1,15 @@
+@import "@/styles/settings";
+@import "~maplibre-gl/dist/maplibre-gl.css";
+
+.c-mapbox-map {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  background-color: #a4dbfd;
+}
+
+.maplibregl-canvas,
+.mapboxgl-canvas {
+  cursor: inherit !important;
+}

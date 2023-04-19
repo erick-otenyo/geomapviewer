@@ -1,0 +1,36 @@
+@import "@/styles/settings";
+
+.c-widget-header {
+  > .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > .title-container {
+      max-width: 80%;
+
+      > *  {
+        color: $charcoal-grey;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+
+    ul > li {
+      display: inline-block;
+
+      &:not(:first-child) {
+        margin: 0 0 0 $space;
+      }
+    }
+
+    .button-list {
+      button {
+        > svg {
+          fill: $charcoal-grey;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@import "@/styles/settings.scss";
+
+.c-checkbox-group {
+  margin-top: 10px;
+  .checkbox-option {
+    display: flex;
+    margin-bottom: 10px;
+
+    button {
+      display: flex;
+      align-items: center;
+
+      .c-checkbox {
+        margin-right: 4px;
+      }
+    }
+  }
+}
