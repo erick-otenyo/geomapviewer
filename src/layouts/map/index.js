@@ -42,12 +42,8 @@ class MainMapContainer extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      setMainMapSettings,
-      analysisActive,
-      geostoreId,
-      location,
-    } = this.props;
+    const { setMainMapSettings, analysisActive, geostoreId, location } =
+      this.props;
 
     if (!analysisActive && geostoreId && geostoreId !== prevProps.geostoreId) {
       setMainMapSettings({ showAnalysis: true });
@@ -80,29 +76,22 @@ class MainMapContainer extends PureComponent {
   };
 
   handleClickAnalysis = (selected) => {
-    const { setMainMapAnalysisView } = this.props;
-    const { data, layer, geometry, isPoint } = selected;
+    const { layer, geometry } = selected;
+    const { analysisEndpoint } = layer || {};
 
-    if (isPoint) {
-      // this is a clicked point with latlng
+    const isAdmin = analysisEndpoint === "admin";
+
+    const { setMainMapAnalysisView } = this.props;
+    if (isAdmin) {
       setMainMapAnalysisView(selected);
     } else {
-      const { cartodb_id } = data || {};
-      const { analysisEndpoint, tableName } = layer || {};
-
-      const isAdmin = analysisEndpoint === "admin";
-      const isUse = cartodb_id && tableName;
-
-      if (isAdmin || isUse) {
-        setMainMapAnalysisView(selected);
-      } else {
-        this.onDrawComplete(geometry);
-      }
+      this.onDrawComplete(geometry);
     }
   };
 
   onDrawComplete = (geojson) => {
     const { setDrawnGeostore } = this.props;
+
     this.props.getGeostoreId({ geojson, callback: setDrawnGeostore });
   };
 

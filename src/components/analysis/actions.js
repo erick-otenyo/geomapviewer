@@ -114,7 +114,7 @@ export const uploadShape = createThunkAction(
 
                     setTimeout(() => {
                       pushQuery({
-                        pathname: `/map/geostore/${id}/`,
+                        pathname: `/mapviewer/geostore/${id}/`,
                         query: {
                           ...query,
                           map: {
@@ -215,7 +215,7 @@ export const clearAnalysis = createThunkAction(
     }
 
     pushQuery({
-      pathname: "/map/",
+      pathname: "/mapviewer/",
       query,
     });
     dispatch(clearAnalysisData());

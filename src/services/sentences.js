@@ -8,7 +8,7 @@ const ADMINS = {
 
 const GLOBAL_LOCATION = {
   ...ADMINS,
-  type: "africa",
+  type: "global",
 };
 
 export const adminSentences = {

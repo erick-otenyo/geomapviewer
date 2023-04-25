@@ -52,7 +52,7 @@ export const setAnalysisView = createThunkAction(
   (params) => () => {
     const { query, pushQuery } = useRouter();
     pushQuery({
-      pathname: `/map/${Object.values(params)?.join("/")}/`,
+      pathname: `/mapviewer/${Object.values(params)?.join("/")}/`,
       query: {
         ...query,
         mainMap: {

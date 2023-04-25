@@ -4,26 +4,27 @@ import * as actions from "./actions";
 export const initialState = {
   loading: true,
   error: false,
-  data: [],
+  sections: [],
+  basemaps: {},
 };
 
-const setSectionsLoading = (state, { payload }) => ({
+const setConfigLoading = (state, { payload }) => ({
   ...state,
   ...payload,
 });
 
-const setSections = (state, { payload }) => ({
+const setConfig = (state, { payload }) => ({
   ...state,
-  data: payload,
+  ...payload,
   loading: false,
 });
 
 const setSubCategorySettings = (state, { payload }) => {
-  const { data: sections } = state;
+  const { sections: dataSections } = state;
 
-  const sectionIndex = findIndex(sections, ["id", payload.sectionId]);
+  const sectionIndex = findIndex(dataSections, ["id", payload.sectionId]);
 
-  const data = [...sections];
+  const sections = [...dataSections];
 
   if (sectionIndex > -1) {
     const subCategories = [...data[sectionIndex].subCategories];
@@ -42,8 +43,8 @@ const setSubCategorySettings = (state, { payload }) => {
           ...payload.settings,
         });
 
-        data.splice(sectionIndex, 1, {
-          ...data[sectionIndex],
+        sections.splice(sectionIndex, 1, {
+          ...sections[sectionIndex],
           subCategories: subCategories,
         });
       }
@@ -52,12 +53,12 @@ const setSubCategorySettings = (state, { payload }) => {
 
   return {
     ...state,
-    data,
+    sections: sections,
   };
 };
 
 export default {
-  [actions.setSectionsLoading]: setSectionsLoading,
-  [actions.setSections]: setSections,
+  [actions.setConfigLoading]: setConfigLoading,
+  [actions.setConfig]: setConfig,
   [actions.setSubCategorySettings]: setSubCategorySettings,
 };

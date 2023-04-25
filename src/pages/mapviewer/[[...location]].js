@@ -22,11 +22,11 @@ import { setMapPrompts } from "@/components/prompts/map-prompts/actions";
 
 const notFoundProps = {
   error: 404,
-  title: "Location Not Found | Hazards Watch",
+  title: "Location Not Found",
   errorTitle: "Location Not Found",
 };
 
-const ALLOWED_TYPES = ["africa", "country", "use", "geostore", "aoi", "point"];
+const ALLOWED_TYPES = ["country", "use", "geostore", "aoi", "point"];
 
 export const getServerSideProps = async ({ req, params }) => {
   const [type] = params?.location || [];
@@ -37,7 +37,7 @@ export const getServerSideProps = async ({ req, params }) => {
     };
   }
 
-  if (!type || type === "africa") {
+  if (!type) {
     return {
       props: {
         title: "Hazards Watch | AHW",

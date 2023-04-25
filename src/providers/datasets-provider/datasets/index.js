@@ -1,7 +1,5 @@
-import satellite from "./satellite";
+const allDatasets = [];
 
-const allDatasets = [...satellite.datasets];
-
-export const layersUpdateProviders = [...satellite.updates];
+export const layersUpdateProviders = [];
 
 export default allDatasets;

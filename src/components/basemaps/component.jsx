@@ -153,7 +153,7 @@ const Basemaps = ({
             onSelectBasemap={selectBasemap}
           />
         )}
-        {isDesktop && (
+        {/* {isDesktop && (
           <div className="analysis-settings">
             <Row>
               <Column>
@@ -177,7 +177,7 @@ const Basemaps = ({
               </Column>
             </Row>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
@@ -201,7 +201,7 @@ Basemaps.propTypes = {
   roadsSelected: PropTypes.object.isRequired,
   selectRoads: PropTypes.func.isRequired,
   roads: PropTypes.array.isRequired,
-  onLayerSettingToggle: PropTypes.func.isRequired,
+  onLayerSettingToggle: PropTypes.func,
   analysisSettings: PropTypes.object,
 };
 

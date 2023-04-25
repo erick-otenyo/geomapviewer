@@ -1,12 +1,11 @@
 import { createAction, createThunkAction } from "@/redux/actions";
 
 import hwDatasets from "./datasets";
-import turfBbox from "@turf/bbox";
 
 import { setMapSettings } from "@/components/map/actions";
-import { fetchGeostore } from "@/providers/geostore-provider/actions";
 import getCountryBoundaryDataset from "./datasets/boundaries/country";
-import africaBoundaries from "./datasets/boundaries/africa";
+import { COUNTRY_ISO3_CODE } from "@/utils/constants";
+import { CMS_API } from "@/utils/apis";
 
 export const setDatasetsLoading = createAction("setDatasetsLoading");
 export const setDatasets = createAction("setDatasets");
@@ -22,46 +21,20 @@ export const setDatasetParams = createAction("setDatasetParams");
 export const fetchDatasets = createThunkAction(
   "fetchDatasets",
   (activeDatasets) => (dispatch, getState) => {
+    dispatch(setDatasetsLoading({ loading: true, error: false }));
+
     const currentActiveDatasets = [...activeDatasets];
 
-    dispatch(setDatasetsLoading({ loading: true, error: false }));
+    const boundaryUrl = `${CMS_API}/boundary-tiles/{z}/{x}/{y}?gid_0=${COUNTRY_ISO3_CODE}`;
+
+    const countryBoundaryDataset = getCountryBoundaryDataset(
+      boundaryUrl,
+      "default"
+    );
 
     const datasets = [...hwDatasets];
 
-    const { settings } = getState().mapMenu || {};
-
-    const { mapLocationContext } = settings || {};
-
-    let boundaryDataset = [];
-
-    if (mapLocationContext !== "africa") {
-      const { countries } = getState().countryData;
-      dispatch(
-        fetchGeostore({
-          type: "country",
-          adm0: mapLocationContext,
-          mapLocationContext,
-        })
-      );
-
-      if (!!countries.length) {
-        const country = countries.find((c) => c.value === mapLocationContext);
-
-        if (country) {
-          boundaryDataset = getCountryBoundaryDataset(country.value);
-
-          if (country.bbox) {
-            const bbox = turfBbox(country.bbox);
-            // zoom to country bounds
-            dispatch(setMapSettings({ bbox: bbox }));
-          }
-        }
-      }
-    } else {
-      boundaryDataset = africaBoundaries;
-    }
-
-    const allDatasets = [...datasets].concat(boundaryDataset);
+    const allDatasets = [...datasets].concat(countryBoundaryDataset);
 
     const initialVisibleDatasets = allDatasets.filter((d) => d.initialVisible);
 

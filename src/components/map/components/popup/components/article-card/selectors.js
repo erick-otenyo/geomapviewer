@@ -62,15 +62,6 @@ export const getCardData = createSelector(
           tag: meta.label,
           tagColor: (meta && meta.color) || layer.color,
         }),
-      ...(!articleData.title &&
-        meta && {
-          title: `Place to Watch: ${meta.label}`,
-        }),
-      ...(!articleData.summary &&
-        meta && {
-          summary: `This location is likely in non-compliance with company no-deforestation commitments if cleared for or planted with ${meta.label}.`,
-          showFullSummary: true,
-        }),
       ...(bbox && {
         bbox: newBbox,
       }),

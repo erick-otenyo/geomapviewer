@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import cx from "classnames";
 import { Desktop, Mobile } from "@erick-otenyo/hw-components";
 
-import SectionsProvider from "@/providers/sections-provider";
+import ConfigProvider from "@/providers/config-provider";
 import CountryDataProvider from "@/providers/country-data-provider";
 import GeostoreProvider from "@/providers/geostore-provider";
 import DatasetsProvider from "@/providers/datasets-provider";
@@ -109,13 +109,13 @@ class MainMapComponent extends PureComponent {
             </Mobile>
           </>
         )}
+        <ConfigProvider />
         <DatasetsProvider />
         <ShareModal />
         <MetaModal />
-        <SectionsProvider />
         <CountryDataProvider />
         <GeostoreProvider />
-        <AuthProvider />
+        {/* <AuthProvider /> */}
       </div>
     );
   }

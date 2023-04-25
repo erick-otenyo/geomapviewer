@@ -29,14 +29,7 @@ const actions = {
   setShareModal,
 };
 
-const mapSyncKeys = [
-  "startYear",
-  "endYear",
-  "threshold",
-  "extentYear",
-  "forestType",
-  "landCategory",
-];
+const mapSyncKeys = [];
 
 const adminBoundaryLayer = {
   dataset: POLITICAL_BOUNDARIES_DATASET,

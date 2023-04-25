@@ -116,7 +116,7 @@ export const getWidgetDatasets = ({
 export const getLocationPath = (pathname, type, query, params) => {
   const pathObj = {
     payload: {
-      type: type === "africa" ? "country" : type,
+      type: type,
       ...params,
     },
     query: {

@@ -10,7 +10,6 @@ import {
 
 import layersIcon from "@/assets/icons/layers.svg?sprite";
 
-const selectLatestLoading = (state) => state.latest && state.latest.loading;
 const selectDatasetsLoading = (state) =>
   state.datasets && state.datasets.loading;
 const selectCountryDataLoading = (state) =>
@@ -19,9 +18,8 @@ const selectLayerTimestamps = (state) =>
   state.datasets && state.datasets.timestamps;
 
 export const getLoading = createSelector(
-  [selectLatestLoading, selectDatasetsLoading, selectCountryDataLoading],
-  (latestLoading, datasetsLoading, countryDataLoading) =>
-    latestLoading || datasetsLoading || countryDataLoading
+  [selectDatasetsLoading, selectCountryDataLoading],
+  (datasetsLoading, countryDataLoading) => datasetsLoading || countryDataLoading
 );
 
 const getLegendLayerGroups = createSelector(

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import cx from "classnames";
 import remove from "lodash/remove";
 import { trackEvent } from "@/utils/analytics";
-import isEmpty from "lodash/isEmpty";
 
 import MenuPanel from "./components/menu-panel";
 import MenuDesktop from "./components/menu-desktop";

@@ -1,76 +1,48 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-const isServer = typeof window === 'undefined';
+const isServer = typeof window === "undefined";
 
 export const languages = [
   {
-    label: 'English',
-    value: 'en',
+    label: "English",
+    value: "en",
   },
   {
-    label: '中文',
-    value: 'zh',
-  },
-  {
-    label: 'Français',
-    value: 'fr',
-  },
-  {
-    label: 'Bahasa Indonesia',
-    value: 'id',
-  },
-  {
-    label: 'Português (Brasil)',
-    value: 'pt_BR',
-  },
-  {
-    label: 'Español (Mexico)',
-    value: 'es_MX',
+    label: "Français",
+    value: "fr",
   },
 ];
 
 export const googleLangCodes = {
-  es_MX: 'es',
-  en: 'en',
-  zh: 'zh-CH',
-  pt_BR: 'pt',
-  fr: 'fr',
-  id: 'id',
+  en: "en",
+  fr: "fr",
 };
 
-export const getGoogleLangCode = (lang) => googleLangCodes[lang || 'en'];
+export const getGoogleLangCode = (lang) => googleLangCodes[lang || "en"];
 
 export const momentLangCodes = {
-  es_MX: 'es',
-  en: 'en',
-  zh: 'zh-cn',
-  pt_BR: 'pt-br',
-  fr: 'fr',
-  id: 'id',
+  en: "en",
+  fr: "fr",
 };
 
-export const getMomentLangCode = (lang) => momentLangCodes[lang || 'en'];
+export const getMomentLangCode = (lang) => momentLangCodes[lang || "en"];
 
 export const mapboxLangCodes = {
-  es_MX: 'es',
-  en: 'en',
-  zh: 'zh-Hans',
-  pt_BR: 'pt',
-  fr: 'fr',
-  id: 'en',
+  en: "en",
+  fr: "fr",
 };
 
-export const getMapboxLang = (lang) => mapboxLangCodes[lang || 'en'];
+export const getMapboxLang = (lang) => mapboxLangCodes[lang || "en"];
 
 export function translateText(str, params) {
-  if (!str || typeof str !== 'string') {
+  if (!str || typeof str !== "string") {
     return str;
   }
 
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     const { Transifex } = window;
-    if (typeof Transifex !== 'undefined') {
+    if (typeof Transifex !== "undefined") {
       return Transifex.live.translateText(str, params);
     }
   }
@@ -92,5 +64,5 @@ export const useSetLanguage = (lang) => {
 export const selectActiveLang = (state) =>
   !isServer &&
   (state?.location?.query?.lang ||
-    JSON.parse(localStorage.getItem('txlive:selectedlang')) ||
-    'en');
+    JSON.parse(localStorage.getItem("txlive:selectedlang")) ||
+    "en");

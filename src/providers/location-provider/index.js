@@ -12,10 +12,7 @@ import reducers, { initialState } from "./reducers";
 
 const getLocationFromParams = (url, params, asPath) => {
   if (url?.includes("[[...location]]")) {
-    const type =
-      asPath === "/map" || asPath === "/map/" || asPath?.includes("/map/?")
-        ? "africa"
-        : params?.location?.[0];
+    const type = params?.location?.[0];
     const adm0 = params?.location?.[1];
     const adm1 = params?.location?.[2];
     const adm2 = params?.location?.[3];

@@ -102,11 +102,7 @@ class DatasetsProvider extends PureComponent {
             }
           }
 
-          if (
-            (!mapLocationContext || mapLocationContext === "africa") &&
-            paramClipByGeostore &&
-            !isEmpty(geostore)
-          ) {
+          if (paramClipByGeostore && !isEmpty(geostore)) {
             const { param, value } =
               paramClipByGeostore(clipToGeostore ? geostore : null) || {};
             if (param && value) {

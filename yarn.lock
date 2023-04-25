@@ -8061,11 +8061,6 @@ react-transition-group@^4.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-twitter-conversion-tracker@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-twitter-conversion-tracker/-/react-twitter-conversion-tracker-1.0.0.tgz#6c12ed124753ad6ae66e3d0b69ed32ffcdb375bd"
-  integrity sha512-jUTMiteWe5fPLjkYujZo0DC5IIEut1qSqpLOfDWZuaT8ibH3GggfVqVj0PgfZZUJ/qse3o+wxAAquuwhrJrEyQ==
-
 react-use-measure@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-use-measure/-/react-use-measure-2.1.1.tgz#5824537f4ee01c9469c45d5f7a8446177c6cc4ba"

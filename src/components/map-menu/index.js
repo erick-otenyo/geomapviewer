@@ -3,7 +3,7 @@ import reducerRegistry from "@/redux/registry";
 
 import { setMapSettings } from "@/components/map/actions";
 import { setMapPromptsSettings } from "@/components/prompts/map-prompts/actions";
-import { setSubCategorySettings } from "@/providers/sections-provider/actions";
+import { setSubCategorySettings } from "@/providers/config-provider/actions";
 
 import * as actions from "./actions";
 import reducers, { initialState } from "./reducers";

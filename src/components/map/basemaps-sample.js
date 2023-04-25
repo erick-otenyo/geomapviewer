@@ -54,8 +54,8 @@ export default {
     description: "Basic Basemap with Lables",
     value: "basic_with_labels",
     color: "#131620",
-    baseStyle: false,
+    baseStyle: true,
     hasSettings: false,
-    mapStyle: "http://20.56.94.119/tileserver-gl/styles/basic/style.json",
+    mapStyle: "http://127.0.0.1:8200/tile-gl/style/openmaptiles.json",
   },
 };

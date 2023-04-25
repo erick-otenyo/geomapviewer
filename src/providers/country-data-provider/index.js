@@ -11,7 +11,6 @@ import reducers, { initialState } from "./reducers";
 
 const mapStateToProps = (state) => ({
   location: getDataLocation(state),
-  mapLocationContext: state?.mapMenu?.settings?.mapLocationContext,
 });
 
 class CountryDataProvider extends PureComponent {
@@ -36,17 +35,10 @@ class CountryDataProvider extends PureComponent {
   componentDidUpdate(prevProps) {
     const {
       location: { adm0, adm1, type },
-      mapLocationContext,
-      updateMapLocationContext,
     } = this.props;
-
-    const { mapLocationContext: prevMapLocationContext } = prevProps;
 
     const hasCountryChanged = adm0 && adm0 !== prevProps.location.adm0;
     const hasRegionChanged = adm0 && adm1 && adm1 !== prevProps.location.adm1;
-
-    const hasMapLocationContextChanged =
-      mapLocationContext !== prevMapLocationContext;
 
     if (type !== "point") {
       if (hasCountryChanged) {
@@ -59,10 +51,6 @@ class CountryDataProvider extends PureComponent {
       if (hasRegionChanged) {
         this.handleSubRegionFetch({ adm0, adm1 });
       }
-    }
-
-    if (hasMapLocationContextChanged) {
-      updateMapLocationContext(mapLocationContext);
     }
   }
 
@@ -100,7 +88,6 @@ class CountryDataProvider extends PureComponent {
 CountryDataProvider.propTypes = {
   getCountries: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  mapLocationContext: PropTypes.string,
   getRegions: PropTypes.func.isRequired,
   getSubRegions: PropTypes.func.isRequired,
 };

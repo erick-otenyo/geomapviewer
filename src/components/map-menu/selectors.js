@@ -24,9 +24,7 @@ const getLoading = (state) =>
 const getAnalysisLoading = (state) => state.analysis && state.analysis.loading;
 const getDatasets = (state) => state.datasets && state.datasets.data;
 const getLocation = (state) => state.location && state.location.payload;
-const getApiSections = (state) => (state.sections && state.sections.data) || [];
-const getSectionSettings = (state) =>
-  (state.sections && state.sections.settings) || [];
+const getApiSections = (state) => (state.config && state.config.sections) || [];
 const selectClipToGeostore = (state) => state.map?.settings?.clipToGeostore;
 export const selectmapLocationGeostore = (state) =>
   state.geostore && state.geostore.mapLocationGeostore;
@@ -68,7 +66,7 @@ export const getDatasetSections = createSelector(
   (apiSections, datasets) => {
     const sections = apiSections.map((section) => ({
       ...section,
-      icon: icons[section.icon] ? icons[section.icon] : icons.defaultIcon,
+      icon: icons[section.icon] ? icons[section.icon] : { id: section.icon },
       Component: Datasets,
     }));
 
@@ -118,9 +116,8 @@ export const getDatasetSectionsWithData = createSelector(
     getActiveDatasetsFromState,
     getDatasetCategory,
     getMenuSection,
-    getSectionSettings,
   ],
-  (sections, activeDatasets, datasetCategory, menuSection, sectionSettings) => {
+  (sections, activeDatasets, datasetCategory, menuSection) => {
     if (!activeDatasets) return sections;
     const datasetIds = activeDatasets.map((d) => d.dataset);
 

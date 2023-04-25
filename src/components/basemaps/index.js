@@ -26,7 +26,7 @@ class BasemapsContainer extends React.Component {
     activeDatasets: PropTypes.array,
     activeBoundaries: PropTypes.object,
     setMapSettings: PropTypes.func.isRequired,
-    setAnalysisSettings: PropTypes.func.isRequired,
+    setAnalysisSettings: PropTypes.func,
     analysisSettings: PropTypes.object,
   };
 

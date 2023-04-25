@@ -1,9 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import ReactGA from "react-ga";
-import TwitterConvTrkr from "react-twitter-conversion-tracker";
 
-import ReactPixel from "@/utils/facebook";
 // import { getAgreedCookies } from '@/utils/cookies';
 
 const isServer = typeof window !== "undefined";
@@ -12,8 +10,6 @@ export const initAnalytics = () => {
   if (isServer) {
     window.ANALYTICS_INITIALIZED = true;
     ReactGA.initialize(process.env.ANALYTICS_PROPERTY_ID);
-    ReactPixel.init(process.env.FACEBOOK_PIXEL_ID);
-    TwitterConvTrkr.init(process.env.TWITTER_CONVERSION_ID);
   }
 };
 
@@ -23,8 +19,6 @@ export const trackPage = (url) => {
       url || `${window.location.pathname}${window.location.search}`;
     ReactGA.set({ page: pageUrl });
     ReactGA.pageview(pageUrl);
-    ReactPixel.pageView();
-    TwitterConvTrkr.pageView();
   }
 };
 

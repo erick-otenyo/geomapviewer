@@ -37,20 +37,7 @@ const Cookies = () => {
           <CookiesBanner onAccept={acceptCookies} />
         </div>
       )}
-      {accepted && (
-        <Head>
-          <script
-            key="hotjar"
-            type="text/javascript"
-            src="/scripts/hotjar.js"
-          />
-          <script
-            key="crazyegg"
-            type="text/javascript"
-            src="//script.crazyegg.com/pages/scripts/0027/6897.js"
-          />
-        </Head>
-      )}
+      {accepted && <Head></Head>}
     </>
   );
 };

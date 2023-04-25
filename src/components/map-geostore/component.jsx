@@ -1,23 +1,22 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
-import isEqual from 'lodash/isEqual';
-import cx from 'classnames';
-import ContentLoader from 'react-content-loader';
-import WebMercatorViewport from 'viewport-mercator-project';
-import { TRANSITION_EVENTS } from 'react-map-gl';
-import max from 'lodash/max';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
+import cx from "classnames";
+import ContentLoader from "react-content-loader";
+import WebMercatorViewport from "viewport-mercator-project";
+import { TRANSITION_EVENTS } from "react-map-gl";
 
-import { PluginMapboxGl } from 'layer-manager';
-import { LayerManager, Layer } from 'layer-manager/dist/components';
+import { PluginMapboxGl } from "layer-manager";
+import { LayerManager, Layer } from "layer-manager/dist/components";
 
-import { getGeostore } from '@/services/geostore';
+import { getGeostore } from "@/services/geostore";
 
-import Map from '@/components/ui/map';
+import Map from "@/components/ui/map";
 
-import BASEMAPS from '@/components/map/basemaps';
+import BASEMAPS from "@/components/map/basemaps-sample";
 
-import './styles.scss';
+import "./styles.scss";
 
 const DEFAULT_VIEWPORT = {
   zoom: 2,
@@ -46,7 +45,7 @@ class MapGeostore extends Component {
     padding: 25,
     height: 140,
     width: 140,
-    cursor: 'default',
+    cursor: "default",
   };
 
   state = {
@@ -104,13 +103,13 @@ class MapGeostore extends Component {
 
   onLoad = ({ map }) => {
     if (map) {
-      map.on('render', () => {
+      map.on("render", () => {
         if (this.state.loading) {
           if (map.areTilesLoaded() && this.mounted) {
             this.setState({ loading: false });
           }
         } else {
-          map.off('render');
+          map.off("render");
         }
       });
     }
@@ -156,7 +155,7 @@ class MapGeostore extends Component {
     return (
       <div
         id="recent-image-map"
-        className={cx('c-recent-image-map', className, { small })}
+        className={cx("c-recent-image-map", className, { small })}
         ref={(r) => {
           this.mapContainer = r;
         }}
@@ -165,7 +164,7 @@ class MapGeostore extends Component {
           <ContentLoader
             width={width}
             height={height}
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
           >
             <rect x="0" y="0" width={width} height="100%" />
           </ContentLoader>
@@ -197,29 +196,29 @@ class MapGeostore extends Component {
                     type="geojson"
                     source={{
                       data: geostore.geojson,
-                      type: 'geojson',
+                      type: "geojson",
                     }}
                     render={{
                       layers: [
                         {
-                          type: 'fill',
+                          type: "fill",
                           paint: {
-                            'fill-color': 'transparent',
+                            "fill-color": "transparent",
                           },
                         },
                         {
-                          type: 'line',
+                          type: "line",
                           paint: {
-                            'line-color': '#C0FF24',
-                            'line-width': 3,
-                            'line-offset': 2,
+                            "line-color": "#C0FF24",
+                            "line-width": 3,
+                            "line-offset": 2,
                           },
                         },
                         {
-                          type: 'line',
+                          type: "line",
                           paint: {
-                            'line-color': '#000',
-                            'line-width': 2,
+                            "line-color": "#000",
+                            "line-width": 2,
                           },
                         },
                       ],
@@ -233,7 +232,7 @@ class MapGeostore extends Component {
                   name="Basemap"
                   type="raster"
                   source={{
-                    type: 'raster',
+                    type: "raster",
                     tiles: [basemap.url],
                   }}
                   zIndex={100}

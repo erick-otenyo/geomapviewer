@@ -19,14 +19,12 @@ export const sectors = [
   "Other",
 ];
 export const interests = [
+  "Weather",
   "Climate and Climate Change",
   "General information/Data on Climate",
   "Agriculture",
   "Biodiversity",
-  "Deforestation/Forest Degradation",
   "Innovations in Climate",
-  "Reforestation/Landscape restoration",
-  "Fires",
   "My region or country",
 ];
 
@@ -46,7 +44,6 @@ export const topics = [
   "Agricultural Supply Chains",
   "Climate and Biodiversity",
   "Fires",
-  "Forest Watcher Mobile App",
   "Innovations in Monitoring",
   "Small Grants Fund and Tech Fellowship",
 ];

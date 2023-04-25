@@ -2,7 +2,6 @@ import { createElement, Component } from "react";
 import PropTypes from "prop-types";
 import { CancelToken } from "axios";
 import isEqual from "lodash/isEqual";
-import sumBy from "lodash/sumBy";
 import pick from "lodash/pick";
 import has from "lodash/has";
 import { trackEvent } from "@/utils/analytics";
@@ -69,7 +68,7 @@ class WidgetContainer extends Component {
     if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
       const params = { ...location, ...settings, status };
 
-      this.handleGetWidgetData({ ...params, GFW_META: meta });
+      this.handleGetWidgetData({ ...params });
     }
   }
 
@@ -78,11 +77,9 @@ class WidgetContainer extends Component {
   }
 
   handleMaxRowSize(data) {
-    const { maxDownloadSize = null, settings } = this.props;
+    const { maxDownloadSize = null } = this.props;
     if (!maxDownloadSize) return { downloadDisabled: false };
-    const { key, subKey = null, entryKey, maxSize } = maxDownloadSize;
-
-    const filterSelected = !!settings?.forestType || !!settings?.landCategory;
+    const { key, subKey = null, maxSize } = maxDownloadSize;
 
     const dataEntry = data[key];
     let dataKey = key;
@@ -95,11 +92,7 @@ class WidgetContainer extends Component {
       Array.isArray(dataEntry[dataKey]) &&
       maxSize
     ) {
-      const exceedsMaxSize = entryKey
-        ? sumBy(dataEntry[dataKey], entryKey) > maxSize
-        : sumBy(dataEntry, dataKey) > maxSize;
       return {
-        downloadDisabled: filterSelected || exceedsMaxSize,
         maxSize,
         filterSelected,
       };
@@ -169,9 +162,9 @@ class WidgetContainer extends Component {
   };
 
   handleRefetchData = () => {
-    const { settings, location, widget, meta } = this.props;
+    const { settings, location, widget } = this.props;
     const params = { ...location, ...settings };
-    this.handleGetWidgetData({ ...params, GFW_META: meta });
+    this.handleGetWidgetData({ ...params });
     trackEvent({
       category: "Refetch data",
       action: "Data failed to fetch, user clicks to refetch",

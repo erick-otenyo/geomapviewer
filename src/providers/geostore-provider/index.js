@@ -66,7 +66,7 @@ class GeostoreProvider extends PureComponent {
 
   handleGetGeostore = () => {
     const { type } = this.props.location;
-    if (type !== "point" && type !== "africa") {
+    if (type !== "point") {
       this.cancelGeostoreFetch();
       this.geostoreFetch = cancelToken();
       this.props.fetchGeostore({

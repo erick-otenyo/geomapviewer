@@ -111,7 +111,7 @@ class MapComponent extends Component {
   static propTypes = {
     className: PropTypes.string,
     viewport: PropTypes.shape().isRequired,
-    mapStyle: PropTypes.string.isRequired,
+    mapStyle: PropTypes.string,
     setMapSettings: PropTypes.func.isRequired,
     setMapInteractions: PropTypes.func.isRequired,
     clearMapInteractions: PropTypes.func.isRequired,
@@ -150,6 +150,21 @@ class MapComponent extends Component {
   };
 
   mapCompareContainer = createRef();
+
+  componentDidMount() {
+    const { mapBounds, countryMapSettings } = this.props;
+
+    if (
+      mapBounds &&
+      mapBounds.length === 0 &&
+      countryMapSettings &&
+      countryMapSettings.bbox
+    ) {
+      this.setState({
+        bounds: { bbox: countryMapSettings.bbox, options: { padding: 20 } },
+      });
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     const {

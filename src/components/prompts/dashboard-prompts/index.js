@@ -1,12 +1,12 @@
-import { createElement, PureComponent } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import reducerRegistry from '@/redux/registry';
+import { createElement, PureComponent } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import reducerRegistry from "@/redux/registry";
 
-import * as actions from './actions';
-import reducers, { initialState } from './reducers';
-import Component from './component';
-import { getDashboardPromptsProps } from './selectors';
+import * as actions from "./actions";
+import reducers, { initialState } from "./reducers";
+import Component from "./component";
+import { getDashboardPromptsProps } from "./selectors";
 
 class DashboardPromptsContainer extends PureComponent {
   getStepsData = () => {
@@ -14,11 +14,11 @@ class DashboardPromptsContainer extends PureComponent {
 
     const allSteps = {
       viewNationalDashboards: {
-        title: 'Select a country or subnational area',
+        title: "Select a country or subnational area",
         steps: [
           {
-            target: '.select-container',
-            content: 'View dashboards for countries and subnational areas.',
+            target: ".select-container",
+            content: "View dashboards for countries and subnational areas.",
             disableBeacon: true,
           },
         ],
@@ -27,11 +27,11 @@ class DashboardPromptsContainer extends PureComponent {
         },
       },
       dashboardAnalyses: {
-        title: 'Explore analyses',
+        title: "Explore analyses",
         steps: [
           {
-            target: '.c-subnav-menu',
-            content: 'Explore available analyses for different topics.',
+            target: ".c-subnav-menu",
+            content: "Explore available analyses for different topics.",
             disableBeacon: true,
           },
         ],
@@ -40,12 +40,12 @@ class DashboardPromptsContainer extends PureComponent {
         },
       },
       widgetSettings: {
-        title: 'Change widget settings',
+        title: "Change widget settings",
         steps: [
           {
-            target: '.widget-settings-btn-active',
+            target: ".widget-settings-btn-active",
             content:
-              'Customize analyses by filtering data, selecting the time range and more.',
+              "Customize analyses by filtering data, selecting the time range and more.",
             disableBeacon: true,
           },
         ],
@@ -54,26 +54,12 @@ class DashboardPromptsContainer extends PureComponent {
         },
       },
       shareWidget: {
-        title: 'Share widget',
+        title: "Share widget",
         steps: [
           {
-            target: '.c-widget-share-btn',
+            target: ".c-widget-share-btn",
             content:
-              'Share this analysis by copying a link or embedding your map view in another website.',
-            disableBeacon: true,
-          },
-        ],
-        settings: {
-          disableOverlay: true,
-        },
-      },
-      downloadDashboardStats: {
-        title: 'Download stats',
-        steps: [
-          {
-            target: '.c-dashboard-download-btn',
-            content:
-              'Download tree cover, tree cover loss and tree cover gain statistics.',
+              "Share this analysis by copying a link or embedding your map view in another website.",
             disableBeacon: true,
           },
         ],
@@ -90,7 +76,7 @@ class DashboardPromptsContainer extends PureComponent {
     this.props.setDashboardPromptsSettings({
       open: false,
       stepIndex: 0,
-      stepsKey: '',
+      stepsKey: "",
       force: true,
     });
   };
@@ -114,7 +100,7 @@ DashboardPromptsContainer.propTypes = {
   stepsKey: PropTypes.string,
 };
 
-reducerRegistry.registerModule('dashboardPrompts', {
+reducerRegistry.registerModule("dashboardPrompts", {
   actions,
   reducers,
   initialState,

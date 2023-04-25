@@ -5,17 +5,16 @@ import BasemapButton from "../basemap-button";
 
 import "./styles.scss";
 
-export const BasemapsMenu = ({ basemaps, activeBasemap, onSelectBasemap }) => (
-  <div className="c-basemaps-menu">
-    <Row>
-      <Column>
-        <Desktop>
-          <h4>Map styles</h4>
-        </Desktop>
-      </Column>
-      {Object.values(basemaps)
-        .filter((b) => b.baseStyle)
-        .map((item) => (
+export const BasemapsMenu = ({ basemaps, activeBasemap, onSelectBasemap }) => {
+  return (
+    <div className="c-basemaps-menu">
+      <Row>
+        <Column>
+          <Desktop>
+            <h4>Map styles</h4>
+          </Desktop>
+        </Column>
+        {Object.values(basemaps).map((item) => (
           <Column key={item.value} width={[1 / 3]} className="btn-col">
             <BasemapButton
               {...item}
@@ -24,9 +23,10 @@ export const BasemapsMenu = ({ basemaps, activeBasemap, onSelectBasemap }) => (
             />
           </Column>
         ))}
-    </Row>
-  </div>
-);
+      </Row>
+    </div>
+  );
+};
 
 BasemapsMenu.propTypes = {
   basemaps: PropTypes.object,

@@ -5,21 +5,16 @@ import flatMap from "lodash/flatMap";
 import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/unionBy";
 
+import { getCountryMapViewSettings } from "@/utils/country";
 import { defined } from "@/utils/core";
-
 import { selectActiveLang, getMapboxLang } from "@/utils/lang";
-
-import basemaps from "./basemaps";
 
 // map state
 const selectMapLoading = (state) => state.map && state.map.loading;
 const selectGeostoreLoading = (state) =>
   state.geostore && state.geostore.loading;
-const selectLatestLoading = (state) => state.latest && state.latest.loading;
 const selectDatasetsLoading = (state) =>
   state.datasets && state.datasets.loading;
-const selectRecentImageryLoading = (state) =>
-  state.recentImagery && state.recentImagery.loading;
 const selectMapData = (state) => state.map && state.map.data;
 const selectDatasets = (state) => state.datasets && state.datasets.data;
 export const selectGeostore = (state) => state.geostore && state.geostore.data;
@@ -39,22 +34,15 @@ const selectLayersLoadingStatus = (state) =>
 const selectDatasetParams = (state) => state.datasets?.params;
 const selectMapPrinting = (state) => state.map && state.map?.settings?.printing;
 const getMainMapSettings = (state) => state.mainMap || {};
+export const getBasemaps = (state) => state.config.basemaps;
 
 // CONSTS
 export const getMapSettings = (state) => state.map?.settings || {};
-export const getBasemaps = () => basemaps;
-export const isTropics = (state) => state?.geostore?.data?.tropics || false;
-
-export const getLatestPlanet = (state) => {
-  if (state?.planet?.data?.length) {
-    return state.planet.data[state.planet.data.length - 1].name;
-  }
-  return null;
-};
 
 // SELECTORS
 export const getMapViewport = createSelector([getMapSettings], (settings) => {
   const { zoom, bearing, pitch, center } = settings;
+
   return {
     zoom,
     bearing,
@@ -88,14 +76,25 @@ export const getMapMaxZoom = createSelector(
   (settings) => settings.maxZoom
 );
 
+export const getMapBounds = createSelector(
+  [getMapSettings],
+  (settings) => settings.mapBounds
+);
+
 export const getBasemapFromState = createSelector(
   getMapSettings,
   (settings) => settings.basemap
 );
 
+export const getDefaultApiBaseMap = createSelector(
+  [getBasemaps],
+  (apiBaseMaps) =>
+    apiBaseMaps && Object.values(apiBaseMaps).find((b) => b.default)
+);
+
 export const getBasemap = createSelector(
-  [getBasemapFromState, getLocation, getLatestPlanet],
-  (basemapState, location, planetLatest) => {
+  [getBasemapFromState, getLocation, getBasemaps],
+  (basemapState, location, basemaps) => {
     const isDashboard = location.pathname.includes("/dashboards/");
 
     let basemap = {
@@ -104,13 +103,7 @@ export const getBasemap = createSelector(
     };
 
     if (isDashboard && basemapState.value !== "default") {
-      if (basemapState.value !== "planet") {
-        basemap = basemaps.default;
-      }
-    }
-
-    if (basemap.value === "planet" && basemap.name === "latest") {
-      basemap.name = planetLatest;
+      basemap = basemaps.default;
     }
 
     let url = basemap && basemap.url;
@@ -151,11 +144,11 @@ export const getDrawing = createSelector(
 export const getComparing = createSelector(
   [getMapSettings, getLocation],
   (settings, location) => {
-    const isMapPage = location.pathname.includes("map");
+    const isMapPage = location.pathname.includes("mapviewer");
 
     const { type } = location?.payload || {};
 
-    return settings.comparing && isMapPage && (!type || type === "africa");
+    return settings.comparing && isMapPage && !type;
   }
 );
 
@@ -214,15 +207,12 @@ export const getMapLoading = createSelector(
   [
     selectMapLoading,
     selectGeostoreLoading,
-    selectLatestLoading,
     selectDatasetsLoading,
-    selectRecentImageryLoading,
     someDataLayerLoading,
   ],
   (
     mapLoading,
     geostoreLoading,
-    latestLoading,
     datasetsLoading,
     recentLoading,
     someLayerLoading
@@ -230,7 +220,6 @@ export const getMapLoading = createSelector(
     return (
       mapLoading ||
       geostoreLoading ||
-      latestLoading ||
       datasetsLoading ||
       recentLoading ||
       someLayerLoading
@@ -239,10 +228,9 @@ export const getMapLoading = createSelector(
 );
 
 export const getLoadingMessage = createSelector(
-  [selectRecentImageryLoading, selectLatestLoading, someDataLayerLoading],
-  (recentLoading, latestLoading, someLayerLoading) => {
-    if (recentLoading) return "Fetching the most recent satellite image...";
-    if (latestLoading || someLayerLoading) return "Fetching latest data...";
+  [someDataLayerLoading],
+  (someLayerLoading) => {
+    if (someLayerLoading) return "Fetching data...";
     return "";
   }
 );
@@ -722,12 +710,23 @@ export const getPrintRequests = createSelector(
   (settings) => settings.printRequests
 );
 
+export const getCountryMapSettings = createSelector(
+  [getMapSettings],
+  (settings) => {
+    const { countryIso } = settings;
+
+    return getCountryMapViewSettings(countryIso) || {};
+  }
+);
+
 export const getMapProps = createStructuredSelector({
   viewport: getMapViewport,
   loading: getMapLoading,
   loadingMessage: getLoadingMessage,
   minZoom: getMapMinZoom,
   maxZoom: getMapMaxZoom,
+  mapBounds: getMapBounds,
+  countryMapSettings: getCountryMapSettings,
   mapStyle: getMapStyle,
   mapLabels: getMapLabels,
   mapRoads: getMapRoads,

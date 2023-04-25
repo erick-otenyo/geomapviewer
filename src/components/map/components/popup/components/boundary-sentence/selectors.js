@@ -1,6 +1,6 @@
-import { createSelector, createStructuredSelector } from 'reselect';
-import { formatNumber } from '@/utils/format';
-import { translateText } from '@/utils/lang';
+import { createSelector, createStructuredSelector } from "reselect";
+import { formatNumber } from "@/utils/format";
+import { translateText } from "@/utils/lang";
 
 const getInteractionData = (state, { data }) => data;
 
@@ -8,11 +8,10 @@ export const getSentence = createSelector(
   [getInteractionData],
   ({ data } = {}) => {
     const { level, gid_0, name_1, name_0 } = data;
-    let name = data[`name_${level || '0'}`];
+    let name = data[`name_${level || "0"}`];
     if (!gid_0) {
-      name = data[Object.keys(data).find((k) => k.includes('name'))];
+      name = data[Object.keys(data).find((k) => k.includes("name"))];
     }
-    const area = data[Object.keys(data).find((k) => k.includes('area'))];
     const locationNameTranslated = translateText(name);
 
     let locationNames = [locationNameTranslated];
@@ -27,14 +26,13 @@ export const getSentence = createSelector(
       locationNames = [locationNameTranslated, translateText(name_0)];
     }
 
-    const locationName = locationNames.join(', ');
+    const locationName = locationNames.join(", ");
 
     const params = {
       location: locationName,
-      area: formatNumber({ num: area, unit: 'ha' }),
     };
 
-    const sentence = translateText('{location}, with a total area of {area}.');
+    const sentence = translateText("{location}");
 
     return {
       sentence,

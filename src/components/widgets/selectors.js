@@ -162,10 +162,10 @@ export const getLocationData = createSelector(
       parent,
       parentLabel: parent && parent.label,
       parentData: parentData && buildLocationDict(parentData),
-      location: currentLocation || { label: "africa", value: "africa" },
+      location: currentLocation,
       locationData: locationData && buildLocationDict(locationData),
       locationLabel:
-        ["africa", "geostore", "wdpa", "use"].includes(type) || areaId
+        ["geostore", "use"].includes(type) || areaId
           ? locationLabel
           : currentLocation && currentLocation.label,
       childData: children && buildLocationDict(children),

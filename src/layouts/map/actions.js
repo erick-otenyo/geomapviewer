@@ -48,7 +48,7 @@ export const setMainMapAnalysisView = createThunkAction(
 
       if (payload && payload.adm0) {
         pushQuery({
-          pathname: `/map/${compact(Object.values(payload))?.join("/")}/`,
+          pathname: `/mapviewer/${compact(Object.values(payload))?.join("/")}/`,
           query: {
             ...query,
             map: {
@@ -72,7 +72,7 @@ export const setDrawnGeostore = createThunkAction(
 
     const { map, mainMap } = query || {};
     pushQuery({
-      pathname: `/map/geostore/${geostoreId}/`,
+      pathname: `/mapviewer/geostore/${geostoreId}/`,
       query: {
         ...query,
         map: {

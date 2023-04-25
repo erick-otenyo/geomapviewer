@@ -1,4 +1,4 @@
-const getCountryBoundaryDataset = (countryISO) => {
+const getCountryBoundaryDataset = (tilesUrl, sourceLayer) => {
   const datasets = [
     {
       id: "political-boundaries",
@@ -10,19 +10,13 @@ const getCountryBoundaryDataset = (countryISO) => {
         {
           isBoundary: true,
           analysisEndpoint: "admin",
-          tableName: "pgadapter.africa_gadm36_political_boundaries",
           name: "Political Boundaries",
           id: "political-boundaries",
-          type: "layer",
-          description: "Africa Boundaries",
-          provider: "geojson",
           default: true,
           layerConfig: {
             type: "vector",
             source: {
-              tiles: [
-                `http://20.56.94.119/pg4w/tileserv/pgadapter.africa_gadm36_political_boundaries/{z}/{x}/{y}.pbf?properties=gid_0,gid_1,gid_2,name_0,name_1,name_2,level,area,gid,size&filter=gid_0='${countryISO}'`,
-              ],
+              tiles: [tilesUrl],
               type: "vector",
             },
             render: {
@@ -34,8 +28,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -45,8 +38,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -60,8 +52,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -71,8 +62,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -82,8 +72,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -93,8 +82,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -108,8 +96,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -120,8 +107,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -136,8 +122,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -148,8 +133,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -160,8 +144,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -172,8 +155,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -188,8 +170,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -199,8 +180,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -214,8 +194,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -225,8 +204,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -236,8 +214,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -247,8 +224,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -262,8 +238,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "fill",
                 },
                 {
@@ -273,8 +248,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-width": 2,
                     "line-offset": 1,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -283,8 +257,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-color": "#000",
                     "line-width": 2.5,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -295,8 +268,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-color": "#8b8b8b",
                     "line-width": 1,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -311,8 +283,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-color": "#8b8b8b",
                     "line-width": 1,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -323,8 +294,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-color": "#8b8b8b",
                     "line-width": 1,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -335,8 +305,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-color": "#8b8b8b",
                     "line-width": 1,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -347,8 +316,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-color": "#8b8b8b",
                     "line-width": 1,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -363,8 +331,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-color": "#8b8b8b",
                     "line-width": 1,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -375,8 +342,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-dasharray": [2, 4],
                     "line-width": 0.7,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -391,8 +357,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-dasharray": [2, 4],
                     "line-width": 0.7,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -403,8 +368,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-dasharray": [2, 4],
                     "line-width": 0.7,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -415,8 +379,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-dasharray": [2, 4],
                     "line-width": 0.7,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -427,8 +390,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-dasharray": [2, 4],
                     "line-width": 0.7,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
@@ -443,8 +405,7 @@ const getCountryBoundaryDataset = (countryISO) => {
                     "line-dasharray": [2, 4],
                     "line-width": 0.7,
                   },
-                  "source-layer":
-                    "pgadapter.africa_gadm36_political_boundaries",
+                  "source-layer": sourceLayer,
                   type: "line",
                 },
               ],

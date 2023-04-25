@@ -4,7 +4,7 @@ import isEmpty from "lodash/isEmpty";
 export const selectLocation = (state) => state.location;
 
 export const isMapPage = (location) =>
-  location.pathname && location.pathname.includes("map");
+  location.pathname && location.pathname.includes("mapviewer");
 export const isDashboardPage = (location) =>
   location.pathname && location.pathname.includes("dashboard");
 export const isEmbedPage = (location) =>
@@ -56,5 +56,5 @@ export const locationLevelToStr = (location) => {
   if (adm2) return "adm2";
   if (adm1) return "adm1";
   if (adm0) return "adm0";
-  return type || "africa";
+  return type;
 };

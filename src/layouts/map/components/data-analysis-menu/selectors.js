@@ -44,7 +44,7 @@ export const getFilteredMenuLinks = createSelector(
 export const getComparisonDisabled = createSelector(
   [selectLocationPayload],
   (location) => {
-    return location && location.type !== "africa";
+    return location;
   }
 );
 
