@@ -1,14 +1,16 @@
 import request from "@/utils/request";
-import { GSKY_WPS_URL } from "@/utils/apis";
 
-export const fetchGskyWps = ({
-  identifier,
-  feature,
-  startDateTimeParam,
-  endDateTimeParam,
-  token,
-  owsNameSpace,
-}) => {
+export const fetchGskyWps = (
+  wpsUrl,
+  {
+    identifier,
+    feature,
+    startDateTimeParam,
+    endDateTimeParam,
+    token,
+    owsNameSpace,
+  }
+) => {
   const params = {
     identifier: identifier,
   };
@@ -27,7 +29,7 @@ export const fetchGskyWps = ({
 
   return request
     .post(
-      `${GSKY_WPS_URL}`,
+      wpsUrl,
       { ...feature },
       { params, cancelToken: token, timeout: 120 * 1000 }
     )

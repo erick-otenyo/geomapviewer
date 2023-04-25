@@ -1,11 +1,8 @@
-import { parse } from "cookie";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import useRouter from "@/utils/router";
 import { decodeQueryParams } from "@/utils/url";
-
-import { getLocationData } from "@/services/location";
 
 import FullscreenLayout from "@/wrappers/fullscreen";
 import Map from "@/layouts/map";
@@ -40,8 +37,8 @@ export const getServerSideProps = async ({ req, params }) => {
   if (!type) {
     return {
       props: {
-        title: "Hazards Watch | AHW",
-        description: "Monitoring Hazards in Africa",
+        title: "MapViewer",
+        description: "MapViewer",
       },
     };
   }
@@ -49,7 +46,7 @@ export const getServerSideProps = async ({ req, params }) => {
   if (type === "country") {
     return {
       props: {
-        title: "Interactive Hazards Map for Country | AHW",
+        title: "MapViewer For Country",
       },
     };
   }
@@ -57,7 +54,7 @@ export const getServerSideProps = async ({ req, params }) => {
   if (type === "aoi") {
     return {
       props: {
-        title: "Interactive Hazards Map for AOI | AHW",
+        title: "MapViewer for Area of Interest",
       },
     };
   }
@@ -65,7 +62,7 @@ export const getServerSideProps = async ({ req, params }) => {
   if (type === "point") {
     return {
       props: {
-        title: "Interactive Hazards Map for custom point | AHW",
+        title: "MapViewer for custom point | AHW",
       },
     };
   }
@@ -73,25 +70,15 @@ export const getServerSideProps = async ({ req, params }) => {
   if (type === "geostore") {
     return {
       props: {
-        title: "Interactive Hazards Map for custom area | AHW",
+        title: "MapViewer for custom area | AHW",
       },
     };
   }
 
   try {
-    const locationData = await getLocationData(params?.location);
+    const title = "MapViewer";
 
-    const { locationName } = locationData || {};
-
-    if (!locationName) {
-      return {
-        props: notFoundProps,
-      };
-    }
-
-    const title = `${locationName} Hazards Map | AHW`;
-
-    const description = `Monitoring Hazards in Africa`;
+    const description = "MapViewer";
     const noIndex = !["country"].includes(type);
 
     return {
@@ -102,16 +89,6 @@ export const getServerSideProps = async ({ req, params }) => {
       },
     };
   } catch (err) {
-    if (err?.response?.status === 401) {
-      return {
-        props: {
-          error: 401,
-          title: "Area is private | Hazards Watch",
-          errorTitle: "Area is private",
-        },
-      };
-    }
-
     return {
       props: notFoundProps,
     };

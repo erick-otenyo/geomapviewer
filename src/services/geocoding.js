@@ -1,10 +1,6 @@
 import { all, spread } from "axios";
-import bbox from "@turf/bbox";
 
-import {
-  nominatimGeocodingRequest,
-  pgFeatureServRequest,
-} from "@/utils/request";
+import { nominatimGeocodingRequest } from "@/utils/request";
 
 import { POLITICAL_BOUNDARIES } from "@/data/layers";
 
@@ -21,34 +17,6 @@ const parseNominatimRes = (data) =>
       place_name: f.properties.display_name,
     };
   });
-
-const parsePgFsRes = (data) =>
-  data.map((c) => {
-    return {
-      ...c,
-      source: "pgfeatureserv",
-      id: POLITICAL_BOUNDARIES,
-      bbox: bbox(JSON.parse(c.bbox)),
-      center: JSON.parse(c.centroid)?.coordinates,
-    };
-  });
-
-export const fetchGeocodePg = (searchQuery = "", lang = "en", cancelToken) => {
-  return pgFeatureServRequest
-    .get(
-      `/functions/africa_admin_by_name/items.json?search_name=${searchQuery}`,
-      {
-        cancelToken,
-      }
-    )
-    .then((res) => {
-      const boundaries = res?.data?.rows && parsePgFsRes(res.data.rows);
-      return boundaries;
-    })
-    .catch(() => {
-      return [];
-    });
-};
 
 export const fetchGeocodeNominatim = (
   searchQuery = "",
@@ -93,26 +61,7 @@ export const fetchGeocodeLocations = (
       .catch((err) => {
         return [];
       }),
-    pgFeatureServRequest
-      .get(
-        `/functions/africa_admin_by_name/items.json?search_name=${searchQuery}`,
-        {
-          cancelToken,
-        }
-      )
-      .then((res) => {
-        const boundaries = res?.data?.rows && parsePgFsRes(res.data.rows);
-
-        return boundaries;
-      })
-      .catch(() => {
-        return [];
-      }),
-  ]).then(
-    spread((nominatim, boundaries) => {
-      return [...nominatim, ...boundaries];
-    })
-  );
+  ]);
 };
 
 export const fetchReverseGeocodePoint = ({ lat, lng, cancelToken }) => {

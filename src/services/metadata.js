@@ -1,7 +1,6 @@
-import { cmsApiRequest } from "@/utils/request";
+import { apiRequest } from "@/utils/request";
 
-export const getMetadata = (id) => cmsApiRequest.get(`/metadata/${id}/`);
-
+export const getMetadata = (id) => apiRequest.get(`/metadata/${id}/`);
 export default {
   getMetadata,
 };
