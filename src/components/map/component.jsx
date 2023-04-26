@@ -157,8 +157,7 @@ class MapComponent extends Component {
     const { type, adm0 } = location;
 
     if (
-      type === "country" &&
-      !adm0 &&
+      (!type || (type === "country" && !adm0)) &&
       mapBounds &&
       mapBounds.length === 0 &&
       countryMapSettings &&
