@@ -45,6 +45,7 @@ export const getRegions = createThunkAction(
   "getRegions",
   (country) => (dispatch) => {
     dispatch(setRegionsLoading(true));
+
     getRegionsProvider(country)
       .then((response) => {
         const parsedResponse = [];

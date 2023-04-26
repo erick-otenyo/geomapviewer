@@ -18,7 +18,8 @@ export const getCountriesProvider = () => {
 };
 
 export const getRegionsProvider = ({ adm0, token }) => {
-  const url = `/country?gid_0=${adm0}`;
+  const url = `/country/${adm0}`;
+
   return apiRequest.get(url, { cancelToken: token }).then((resp) => {
     resp.data = {
       rows: resp.data.map((c) => ({ ...c, name: c.name_1, id: c.gid_1 })),
@@ -28,7 +29,7 @@ export const getRegionsProvider = ({ adm0, token }) => {
 };
 
 export const getSubRegionsProvider = (adm0, adm1, token) => {
-  const url = `/country?gid_0=${adm0}&gid_1=${getGadm36Id(adm0, adm1)}`;
+  const url = `/country/${adm0}/${getGadm36Id(adm0, adm1)}`;
   return apiRequest.get(url, { cancelToken: token }).then((resp) => {
     resp.data = {
       rows: resp.data.map((c) => ({ ...c, name: c.name_2, id: c.gid_2 })),

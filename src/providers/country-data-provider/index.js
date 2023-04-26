@@ -56,6 +56,7 @@ class CountryDataProvider extends PureComponent {
 
   handleRegionFetch = (adm0) => {
     const { getRegions } = this.props;
+
     this.cancelRegionsFetch();
     this.regionsFetch = CancelToken.source();
     getRegions({ adm0, token: this.regionsFetch.token });
