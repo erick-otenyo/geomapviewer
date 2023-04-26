@@ -152,9 +152,13 @@ class MapComponent extends Component {
   mapCompareContainer = createRef();
 
   componentDidMount() {
-    const { mapBounds, countryMapSettings } = this.props;
+    const { mapBounds, countryMapSettings, location } = this.props;
+
+    const { type, adm0 } = location;
 
     if (
+      type === "country" &&
+      !adm0 &&
       mapBounds &&
       mapBounds.length === 0 &&
       countryMapSettings &&
