@@ -1,0 +1,29 @@
+.c-legend-button {
+  display: inline-block; // Needed to solve height issues
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+
+  &.-disabled {
+    cursor: not-allowed;
+  }
+
+  // Icons
+  &.info {
+    svg {
+      width: 14px;
+    }
+  }
+  &.close {
+    svg {
+      width: 11px;
+    }
+  }
+  &.opacity {
+    svg {
+      width: 13px;
+    }
+  }
+}

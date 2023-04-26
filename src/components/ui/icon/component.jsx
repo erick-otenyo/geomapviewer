@@ -1,10 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import './styles.scss';
+import "./styles.scss";
 
-const Icon = ({ icon, className }) => (
-  <svg className={`c-icon ${className}`} viewBox={icon.viewBox || '0 0 32 32'}>
+const Icon = ({ icon, className, style }) => (
+  <svg
+    className={`c-icon ${className}`}
+    viewBox={icon.viewBox || "0 0 32 32"}
+    style={style}
+  >
     <use xlinkHref={`#${icon.id || icon}`} />
   </svg>
 );
@@ -19,7 +23,8 @@ Icon.propTypes = {
 };
 
 Icon.defaultProps = {
-  className: '',
+  className: "",
+  style: {},
 };
 
 export default Icon;

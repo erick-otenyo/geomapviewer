@@ -158,16 +158,16 @@
     margin-bottom: rem(10px);
   }
 
-  .vizzuality__c-legend-item-basic {
+  .c-legend-item-basic {
     align-items: center;
-    .vizzuality__icon-line {
+    .icon-line {
       height: 3px;
     }
-    .vizzuality__icon-square {
+    .icon-square {
       border: 0.5px solid rgba(19, 21, 41, 0.5);
     }
   }
-  .vizzuality__c-legend-type-choropleth .vizzuality__icon-choropleth {
+  .c-legend-type-choropleth .icon-choropleth {
     height: 8px;
     border: 1px solid rgba(0, 0, 0, 0.15);
   }

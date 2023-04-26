@@ -34,7 +34,7 @@ const selectLayersLoadingStatus = (state) =>
 const selectDatasetParams = (state) => state.datasets?.params;
 const selectMapPrinting = (state) => state.map && state.map?.settings?.printing;
 const getMainMapSettings = (state) => state.mainMap || {};
-export const getBasemaps = (state) => state.config.basemaps;
+export const getBasemaps = (state) => state.config?.basemaps || {};
 
 // CONSTS
 export const getMapSettings = (state) => state.map?.settings || {};
@@ -123,7 +123,7 @@ export const getBasemap = createSelector(
 
 export const getMapStyle = createSelector(
   getBasemap,
-  (basemap) => basemap.mapStyle
+  (basemap) => basemap?.mapStyle
 );
 
 export const getMapLabels = createSelector(
@@ -238,7 +238,7 @@ export const getLoadingMessage = createSelector(
 export const getActiveDatasetsFromState = createSelector(
   getMapSettings,
   (settings) => {
-    return settings.datasets;
+    return settings?.datasets || [];
   }
 );
 

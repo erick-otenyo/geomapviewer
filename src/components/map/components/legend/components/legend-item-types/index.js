@@ -1,19 +1,15 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-
-import { replace } from "@wmo-raf/layer-manager";
-
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-
-import { Spinner } from "vizzuality-components";
-
+import { replace } from "@wmo-raf/layer-manager";
 import {
   LegendItemTypeBasic,
   LegendItemTypeGradient,
   LegendItemTypeProportional,
-} from "vizzuality-components";
+} from "@/components/legend";
 
+import Loader from "@/components/ui/loader";
 import LegendItemTypeChoropleth from "./legend-item-type-choropleth";
 
 import "./styles.scss";
@@ -117,14 +113,7 @@ class LegendItemTypes extends PureComponent {
 
     return (
       <div className="c-legend-item-types">
-        {url && loading && (
-          <Spinner
-            position="relative"
-            style={{
-              box: { width: 20, height: 20 },
-            }}
-          />
-        )}
+        {url && loading && <Loader />}
 
         {shouldRender &&
           !!React.Children.count(children) &&

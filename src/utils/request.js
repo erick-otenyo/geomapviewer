@@ -27,6 +27,11 @@ export const nominatimGeocodingRequest = axios.create({
   baseURL: "https://nominatim.openstreetmap.org",
 });
 
+export const gskyTimestampsRequest = axios.create({
+  timeout: TIMEOUT,
+  baseURL: "http://20.56.94.119/gsky/mas",
+});
+
 export const cancelToken = () => axios.CancelToken.source();
 
 export default axios.create({

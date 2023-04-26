@@ -705,7 +705,7 @@ class MapComponent extends Component {
               <RenderMap
                 comparing={comparing}
                 mapSide="left"
-                mapStyle={mapStyle}
+                mapStyle={mapStyle || ""}
                 viewport={viewport}
                 bounds={this.state.bounds}
                 onClick={this.onClick}
@@ -719,7 +719,7 @@ class MapComponent extends Component {
               <RenderMap
                 comparing={comparing}
                 mapSide="right"
-                mapStyle={mapStyle}
+                mapStyle={mapStyle || ""}
                 viewport={viewport}
                 bounds={this.state.bounds}
                 onClick={this.onClick}
@@ -734,7 +734,7 @@ class MapComponent extends Component {
           ) : (
             <RenderMap
               comparing={comparing}
-              mapStyle={mapStyle}
+              mapStyle={mapStyle || ""}
               viewport={viewport}
               bounds={this.state.bounds}
               onViewportChange={this.onViewportChange}

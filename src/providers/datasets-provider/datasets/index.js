@@ -1,5 +1,8 @@
-const allDatasets = [];
+import weather from "./weather";
+import satellite from "./satellite";
 
-export const layersUpdateProviders = [];
+const allDatasets = [...weather.datasets, ...satellite.datasets];
+
+export const layersUpdateProviders = [...weather.updates, ...satellite.updates];
 
 export default allDatasets;

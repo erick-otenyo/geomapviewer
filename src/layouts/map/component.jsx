@@ -7,7 +7,6 @@ import ConfigProvider from "@/providers/config-provider";
 import CountryDataProvider from "@/providers/country-data-provider";
 import GeostoreProvider from "@/providers/geostore-provider";
 import DatasetsProvider from "@/providers/datasets-provider";
-import GeodescriberProvider from "@/providers/geodescriber-provider";
 
 import AuthProvider from "@/providers/auth-provider";
 
@@ -116,7 +115,6 @@ class MainMapComponent extends PureComponent {
         <MetaModal />
         <CountryDataProvider />
         <GeostoreProvider />
-        <GeodescriberProvider />
         {/* <AuthProvider /> */}
       </div>
     );

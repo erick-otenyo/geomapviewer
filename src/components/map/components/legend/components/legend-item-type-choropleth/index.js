@@ -1,8 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './styles.scss';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 
-class LegendTypeChoropleth extends React.PureComponent {
+import "./styles.scss";
+
+class LegendTypeChoropleth extends PureComponent {
   static propTypes = {
     activeLayer: PropTypes.shape({
       legendConfig: PropTypes.shape({
@@ -20,7 +21,7 @@ class LegendTypeChoropleth extends React.PureComponent {
     const { activeLayer } = this.props;
     const { legendConfig } = activeLayer;
 
-    if (!legendConfig || legendConfig.type !== 'choropleth') {
+    if (!legendConfig || legendConfig.type !== "choropleth") {
       return null;
     }
 

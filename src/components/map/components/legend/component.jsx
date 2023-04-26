@@ -2,15 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 
-import {
-  Legend,
+import Legend, {
   LegendListItem,
   LegendItemToolbar,
   LegendItemButtonOpacity,
   LegendItemButtonInfo,
   LegendItemButtonRemove,
-  Icons,
-} from "vizzuality-components";
+} from "@/components/legend";
 
 import LegendItemTypes from "./components/legend-item-types";
 
@@ -22,7 +20,6 @@ import LayerFilterSelector from "@/components/layer-filter-selector";
 import WidgetCaution from "@/components/widget/components/widget-caution";
 import Icon from "@/components/ui/icon";
 
-import Timeline from "./components/timeline";
 import LayerListMenu from "./components/layer-list-menu";
 import LayerSelectMenu from "./components/layer-select-menu";
 import LayerSelectorMenu from "./components/layer-selector-menu";
@@ -43,14 +40,11 @@ import "./themes/vizzuality-legend.scss";
 const MapLegendContent = ({
   layerGroups,
   onChangeOrder,
-  onChangeTimeline,
-  onChangeThreshold,
   onToggleLayer,
   onSelectLayer,
   onChangeLayer,
   onChangeParam,
   onChangeFilterParam,
-  onChangeDecodeParam,
   onChangeInfo,
   loading,
   className,
@@ -108,7 +102,6 @@ const MapLegendContent = ({
           paramsSelectorConfig,
           paramsSelectorColumnView,
           moreInfo,
-          timelineParams,
           statement,
           // citation: layerCitation,
           disclaimer,
@@ -134,7 +127,7 @@ const MapLegendContent = ({
               <LegendItemToolbar
                 {...rest}
                 enabledStyle={{
-                  fill: color || "#97be32",
+                  fill: color,
                 }}
                 defaultStyle={{
                   fill: "#999",
@@ -155,10 +148,6 @@ const MapLegendContent = ({
                     border: 0,
                     boxShadow: "rgba(0, 0, 0, 0.29) 0px 1px 2px 0px",
                   }}
-                  trackStyle={[
-                    { backgroundColor: color || "#97be32" },
-                    { backgroundColor: "#d6d6d9" },
-                  ]}
                 />
                 {metadata && <LegendItemButtonInfo />}
                 <LegendItemButtonRemove />
@@ -323,9 +312,7 @@ const MapLegendContent = ({
                   {...selectorLayerConfig}
                 />
               )}
-            {timelineParams && (
-              <Timeline {...timelineParams} handleChange={onChangeTimeline} />
-            )}
+
             {isMultiLayer && (
               <LayerListMenu
                 className="sub-layer-menu"
@@ -403,7 +390,6 @@ class MapLegendCompare extends Component {
 const MapLegend = ({ layerGroups, loading, className, comparing, ...rest }) => {
   return (
     <div className={cx("c-legend", className)}>
-      <Icons />
       {loading && <Loader className="datasets-loader" />}
 
       {comparing && <MapLegendCompare layerGroups={layerGroups} {...rest} />}
@@ -429,12 +415,9 @@ MapLegend.propTypes = {
   layerGroups: PropTypes.array,
   loading: PropTypes.bool,
   onChangeOrder: PropTypes.func,
-  onChangeTimeline: PropTypes.func,
-  onChangeThreshold: PropTypes.func,
   onToggleLayer: PropTypes.func,
   onSelectLayer: PropTypes.func,
   onChangeParam: PropTypes.func,
-  onChangeDecodeParam: PropTypes.func,
   onChangeLayer: PropTypes.func,
   onChangeInfo: PropTypes.func,
   layers: PropTypes.array,

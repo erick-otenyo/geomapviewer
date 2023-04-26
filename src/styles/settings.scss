@@ -65,6 +65,15 @@ $font-color-4: $primary-color;
 $font-color-5: $warm-grey;
 $font-color-6: $slate-light;
 
+// Weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+
+// Border
+$border-color-1: rgba(26, 28, 34, 0.1);
+$border-color-2: rgba(202, 204, 208, 0.85); // For inputs
+
 /* SHADOWS */
 $pop-box-shadow: 1px 1px 10px 0 rgba($slate, 0.25);
 $tooltip-box-shadow: 0 4px 20px 4px rgba(0, 20, 60, 0.1),
