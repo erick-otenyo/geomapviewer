@@ -12,13 +12,9 @@ import Error from "@/components/forms/components/error";
 
 import { email } from "@/components/forms/validations";
 
-import { HW_API } from "@/utils/apis";
-
 import "./styles.scss";
 
 const isServer = typeof window === "undefined";
-
-const AUTH_URL = `${HW_API}/auth`;
 
 class LoginForm extends PureComponent {
   static propTypes = {

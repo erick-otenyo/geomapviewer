@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
-import { replace } from "layer-manager";
+import { replace } from "@wmo-raf/layer-manager";
 
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";

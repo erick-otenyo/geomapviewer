@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import { LayerManager, Layer } from "layer-manager/dist/components";
-import { PluginMapboxGl } from "layer-manager";
+import { LayerManager, Layer } from "@wmo-raf/layer-manager/dist/components";
+import { PluginMapboxGl } from "@wmo-raf/layer-manager";
 
 class LayerManagerComponent extends PureComponent {
   static propTypes = {

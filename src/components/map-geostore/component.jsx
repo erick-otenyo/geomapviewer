@@ -7,8 +7,8 @@ import ContentLoader from "react-content-loader";
 import WebMercatorViewport from "viewport-mercator-project";
 import { TRANSITION_EVENTS } from "react-map-gl";
 
-import { PluginMapboxGl } from "layer-manager";
-import { LayerManager, Layer } from "layer-manager/dist/components";
+import { PluginMapboxGl } from "@wmo-raf/layer-manager";
+import { LayerManager, Layer } from "@wmo-raf/layer-manager/dist/components";
 
 import { getGeostore } from "@/services/geostore";
 
