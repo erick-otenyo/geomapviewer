@@ -11,6 +11,10 @@ import "./styles.scss";
 import drawConfig from "./config";
 
 class Draw extends PureComponent {
+  state = {
+    featureId: null,
+  };
+
   componentDidMount() {
     if (this.props.drawing) {
       this.initDrawing();
@@ -47,13 +51,22 @@ class Draw extends PureComponent {
 
     map.on("draw.create", (e) => {
       const geoJSON = e.features && e.features[0];
-      if (geoJSON) {
-        onDrawComplete(geoJSON);
-        trackEvent({
-          category: "Map analysis",
-          action: "User drawn shape",
-          label: "Complete",
-        });
+      const { featureId } = this.state;
+      const { id } = geoJSON;
+
+      if (id !== featureId) {
+        if (geoJSON) {
+          // we set the drawn feature id to state to avoid duplicates features being sent. 
+          // Not sure why this event is fired multiple times when drawing polygon
+          this.setState({ featureId: id }, () => {
+            onDrawComplete(geoJSON);
+            trackEvent({
+              category: "Map analysis",
+              action: "User drawn shape",
+              label: "Complete",
+            });
+          });
+        }
       }
     });
   };

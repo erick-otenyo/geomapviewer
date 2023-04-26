@@ -1,3 +1,4 @@
+import { getCookie } from "@/utils/cookies";
 import { apiRequest } from "@/utils/request";
 
 const LARGE_ISOS = [];
@@ -37,14 +38,21 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
 };
 
 export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) => {
+  const csrftoken = getCookie("csrftoken");
+  const headers = { "content-type": "application/json" };
+
+  if (csrftoken) {
+    headers["X-CSRFToken"] = csrftoken;
+  }
+
   return apiRequest({
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: headers,
     data: {
       geojson,
     },
     url: GEOSTORE_URL_PATH,
     onUploadProgress,
     onDownloadProgress,
-  });
+  }).then((res) => res.data);
 };

@@ -41,8 +41,8 @@ export const getGeostoreId = createThunkAction(
 
         saveGeostore(geojson)
           .then((geostore) => {
-            if (geostore && geostore.data && geostore.data.data) {
-              const { id } = geostore.data.data;
+            if (geostore) {
+              const { id } = geostore;
               if (callback) {
                 callback(id);
               } else {

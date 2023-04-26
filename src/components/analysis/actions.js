@@ -108,8 +108,8 @@ export const uploadShape = createThunkAction(
             } else {
               saveGeostore(geometry, onGeostoreUpload, onGeostoreDownload)
                 .then((geostore) => {
-                  if (geostore && geostore.data && geostore.data.data) {
-                    const { id } = geostore.data.data;
+                  if (geostore) {
+                    const { id } = geostore;
                     const { query, pushQuery } = useRouter();
 
                     setTimeout(() => {
