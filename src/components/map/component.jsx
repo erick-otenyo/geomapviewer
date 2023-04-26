@@ -7,8 +7,6 @@ import cx from "classnames";
 
 import { trackMapLatLon, trackEvent } from "@/utils/analytics";
 
-import { Tooltip } from "react-tippy";
-import Tip from "@/components/ui/tip";
 import Loader from "@/components/ui/loader";
 import Icon from "@/components/ui/icon";
 import Map from "@/components/ui/map";
@@ -687,71 +685,61 @@ class MapComponent extends Component {
         className={cx("c-map", { "no-pointer-events": drawing }, className)}
         style={{ backgroundColor: basemap && basemap.color }}
       >
-        <Tooltip
-          theme="tip"
-          title="HW Interactive Map"
-          hideOnClick={false}
-          html={<Tip text={tipText} className="tooltip-dark" />}
-          position="top"
-          followCursor
-          animateFill={false}
-          disabled={!drawing}
-        >
-          {comparing ? (
-            <div
-              ref={this.mapCompareContainer}
-              style={{ ...style, width: "100%" }}
-            >
-              <RenderMap
-                comparing={comparing}
-                mapSide="left"
-                mapStyle={mapStyle || ""}
-                viewport={viewport}
-                bounds={this.state.bounds}
-                onClick={this.onClick}
-                onMouseMove={this.onMouseMove}
-                onLoad={this.onLoad}
-                attributionControl={false}
-                minZoom={minZoom}
-                maxZoom={maxZoom}
-                style={style}
-              />
-              <RenderMap
-                comparing={comparing}
-                mapSide="right"
-                mapStyle={mapStyle || ""}
-                viewport={viewport}
-                bounds={this.state.bounds}
-                onClick={this.onClick}
-                onMouseMove={this.onMouseMove}
-                onLoad={this.onLoad}
-                attributionControl={false}
-                minZoom={minZoom}
-                maxZoom={maxZoom}
-                style={style}
-              />
-            </div>
-          ) : (
+        {comparing ? (
+          <div
+            ref={this.mapCompareContainer}
+            style={{ ...style, width: "100%" }}
+          >
             <RenderMap
               comparing={comparing}
+              mapSide="left"
               mapStyle={mapStyle || ""}
               viewport={viewport}
               bounds={this.state.bounds}
-              onViewportChange={this.onViewportChange}
               onClick={this.onClick}
               onMouseMove={this.onMouseMove}
               onLoad={this.onLoad}
-              interactiveLayerIds={mapInteractiveLayerIds}
               attributionControl={false}
               minZoom={minZoom}
               maxZoom={maxZoom}
-              onClickAnalysis={onClickAnalysis}
-              drawing={drawing}
-              onDrawComplete={onDrawComplete}
-              drawingMode={drawingMode}
+              style={style}
             />
-          )}
-        </Tooltip>
+            <RenderMap
+              comparing={comparing}
+              mapSide="right"
+              mapStyle={mapStyle || ""}
+              viewport={viewport}
+              bounds={this.state.bounds}
+              onClick={this.onClick}
+              onMouseMove={this.onMouseMove}
+              onLoad={this.onLoad}
+              attributionControl={false}
+              minZoom={minZoom}
+              maxZoom={maxZoom}
+              style={style}
+            />
+          </div>
+        ) : (
+          <RenderMap
+            comparing={comparing}
+            mapStyle={mapStyle || ""}
+            viewport={viewport}
+            bounds={this.state.bounds}
+            onViewportChange={this.onViewportChange}
+            onClick={this.onClick}
+            onMouseMove={this.onMouseMove}
+            onLoad={this.onLoad}
+            interactiveLayerIds={mapInteractiveLayerIds}
+            attributionControl={false}
+            minZoom={minZoom}
+            maxZoom={maxZoom}
+            onClickAnalysis={onClickAnalysis}
+            drawing={drawing}
+            onDrawComplete={onDrawComplete}
+            drawingMode={drawingMode}
+          />
+        )}
+
         <Icon className="map-icon-crosshair" icon={iconCrosshair} />
         {loading && (
           <Loader
