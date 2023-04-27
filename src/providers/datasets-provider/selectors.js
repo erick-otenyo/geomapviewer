@@ -5,6 +5,8 @@ import {
   getActiveDatasetsFromState,
 } from "@/components/map/selectors";
 
+const getAllDatasets = (state) => state.datasets && state.datasets.data;
+
 export const selectmapLocationGeostore = (state) =>
   state.geostore && state.geostore.mapLocationGeostore;
 
@@ -19,13 +21,13 @@ const selectMapLocationContext = (state) =>
 
 const selectDatasetParams = (state) => state.datasets?.params;
 
-import { layersUpdateProviders } from "./datasets";
+import { createUpdateProviders } from "./utils";
 
 export const getUpdateProviders = createSelector(
-  [getActiveLayers, getActiveDatasetsFromState],
-  (activeLayers, activeDatasets) => {
-    const updateProviders = layersUpdateProviders.filter((p) =>
-      activeLayers.find((l) => l.id === p.layer)
+  [getActiveLayers, getActiveDatasetsFromState, getAllDatasets],
+  (activeLayers, activeDatasets, allDatasets) => {
+    const updateProviders = createUpdateProviders(
+      activeLayers.filter((l) => !l.isBoundary)
     );
 
     return updateProviders;

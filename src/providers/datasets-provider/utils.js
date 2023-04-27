@@ -1,47 +1,35 @@
-import { deburrUpper } from '@/utils/strings';
-import moment from 'moment';
+import { fetchRasterTimestamps } from "@/services/timestamps";
 
-export const reduceParams = (params) => {
-  if (!params) return null;
-  return params.reduce((obj, param) => {
-    const { format, key, interval, count } = param;
-    let paramValue = param.default;
-    const isDate = deburrUpper(param.key).includes('DATE');
-    if (isDate && !paramValue) {
-      let date = moment().utc();
-      if (interval && count) date = date.subtract(count, interval);
-      paramValue = date.format(format || 'YYYY-MM-DD');
-    }
+const rasterFileUpdateProvider = (layer) => {
+  const { id: layerId } = layer;
 
-    const newObj = {
-      ...obj,
-      [key]: paramValue,
-      ...(key === 'endDate' &&
-        param.url && {
-          latestUrl: param.url,
-        }),
-      ...(key === 'date' &&
-        param.format && {
-          latestFormat: param.format,
-        }),
-    };
-    return newObj;
-  }, {});
+  return {
+    layer: layerId,
+    getTimestamps: () => {
+      return fetchRasterTimestamps(layerId).then((timestamps) => {
+        console.log(timestamps);
+        return timestamps;
+      });
+    },
+  };
 };
 
-export const reduceSqlParams = (params) => {
-  if (!params) return null;
-  return params.reduce((obj, param) => {
-    const newObj = {
-      ...obj,
-      [param.key]: param.key_params.reduce((subObj, item) => {
-        const keyValues = {
-          ...subObj,
-          [item.key]: item.value || item.default,
-        };
-        return keyValues;
-      }, {}),
-    };
-    return newObj;
-  }, {});
+export const createUpdateProviders = (activeLayers) => {
+  const providers = activeLayers.reduce((all, layer) => {
+    const { layerType, multiTemporal } = layer;
+
+    let provider;
+
+    if (multiTemporal && layerType && layerType === "file") {
+      provider = rasterFileUpdateProvider(layer);
+    }
+
+    if (provider) {
+      all.push(provider);
+    }
+
+    return all;
+  }, []);
+
+  return providers;
 };

@@ -1,11 +1,12 @@
 import { createAction, createThunkAction } from "@/redux/actions";
 
-import hwDatasets from "./datasets";
-
 import { setMapSettings } from "@/components/map/actions";
 import getCountryBoundaryDataset from "./datasets/boundaries/country";
 import { COUNTRY_ISO3_CODE } from "@/utils/constants";
 import { CMS_API } from "@/utils/apis";
+import { getApiDatasets } from "@/services/datasets";
+
+// import hwDatasets from "./datasets";
 
 export const setDatasetsLoading = createAction("setDatasetsLoading");
 export const setDatasets = createAction("setDatasets");
@@ -32,36 +33,47 @@ export const fetchDatasets = createThunkAction(
       "default"
     );
 
-    const datasets = [...hwDatasets];
+    getApiDatasets()
+      .then((apiDatasets) => {
+        const datasets = [...apiDatasets];
 
-    const allDatasets = [...datasets].concat(countryBoundaryDataset);
+        const allDatasets = [...datasets].concat(countryBoundaryDataset);
 
-    const initialVisibleDatasets = allDatasets.filter((d) => d.initialVisible);
+        const initialVisibleDatasets = allDatasets.filter(
+          (d) => d.initialVisible
+        );
 
-    const { query } = getState().location;
+        const { query } = getState().location;
 
-    const hasDatasetsInUrlState =
-      query && query.map && query.map.datasets && !!query.map.datasets.length;
+        const hasDatasetsInUrlState =
+          query &&
+          query.map &&
+          query.map.datasets &&
+          !!query.map.datasets.length;
 
-    // set default visible datasets when no datasets in map url state
-    if (!hasDatasetsInUrlState && !!initialVisibleDatasets.length) {
-      const newDatasets = [...currentActiveDatasets].concat(
-        initialVisibleDatasets.reduce((all, dataset) => {
-          const config = {
-            dataset: dataset.id,
-            layers: dataset.layers.map((l) => l.id),
-            opacity: 1,
-            visibility: true,
-          };
-          all.push(config);
-          return all;
-        }, [])
-      );
+        // set default visible datasets when no datasets in map url state
+        if (!hasDatasetsInUrlState && !!initialVisibleDatasets.length) {
+          const newDatasets = [...currentActiveDatasets].concat(
+            initialVisibleDatasets.reduce((all, dataset) => {
+              const config = {
+                dataset: dataset.id,
+                layers: dataset.layers.map((l) => l.id),
+                opacity: 1,
+                visibility: true,
+              };
+              all.push(config);
+              return all;
+            }, [])
+          );
 
-      // set new active Datasets
-      dispatch(setMapSettings({ datasets: newDatasets }));
-    }
+          // set new active Datasets
+          dispatch(setMapSettings({ datasets: newDatasets }));
+        }
 
-    dispatch(setDatasets(allDatasets));
+        dispatch(setDatasets(allDatasets));
+      })
+      .catch(() => {
+        dispatch(setDatasetsLoading({ loading: false, error: true }));
+      });
   }
 );
