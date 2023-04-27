@@ -7,9 +7,11 @@ const rasterFileUpdateProvider = (layer) => {
     layer: layerId,
     getTimestamps: () => {
       return fetchRasterTimestamps(layerId).then((timestamps) => {
-        console.log(timestamps);
         return timestamps;
       });
+    },
+    getCurrentLayerTime: (timestamps) => {
+      return timestamps[0];
     },
   };
 };

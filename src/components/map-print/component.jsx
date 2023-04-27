@@ -10,7 +10,7 @@ import Checkbox from "@/components/ui/checkbox";
 import Button from "@/components/ui/button";
 import MapPreview from "./preview-map";
 
-import hwLogo from "@/assets/logos/logo.png?webp";
+import brandingLogo from "@/assets/logos/logo-placeholder.png?webp";
 
 import "./styles.scss";
 
@@ -103,7 +103,7 @@ class MapPrint extends PureComponent {
             <div className="report-body">
               <div className="page-header">
                 <div className="brand">
-                  <img className="logo" src={hwLogo} alt="Hazards Watch" />
+                  <img className="logo" src={brandingLogo} alt="Brand Logo" />
                 </div>
                 {title && (
                   <h1 className="report-title" contentEditable>
