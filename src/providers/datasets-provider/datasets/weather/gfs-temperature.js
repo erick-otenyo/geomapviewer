@@ -19,7 +19,7 @@ const datasets = [
     category: category,
     sub_category: subCategory,
     metadata: metadataId,
-    citation: "GFS, Hourly for the next 5 days",
+    summary: "GFS, Hourly for the next 5 days",
     group: "gfs",
     global: true,
     capabilities: ["clip", "timeseries", "analysis"],
@@ -28,7 +28,6 @@ const datasets = [
         name: datasetName,
         id: layerName,
         type: "layer",
-        citation: "",
         default: true,
         dataset: layerName,
         layerConfig: {

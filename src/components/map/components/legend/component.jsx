@@ -91,7 +91,7 @@ const MapLegendContent = ({
           caution,
           name,
           dataset,
-          citation,
+          summary,
           capabilities,
         } = lg || {};
 
@@ -103,11 +103,9 @@ const MapLegendContent = ({
           paramsSelectorColumnView,
           moreInfo,
           statement,
-          // citation: layerCitation,
           disclaimer,
           layerFilterParams,
           layerFilterParamsConfig,
-          legendImage,
         } = activeLayer || {};
 
         const isUpdating =
@@ -172,7 +170,7 @@ const MapLegendContent = ({
               </div>
             )}
 
-            {citation && <div>{citation}</div>}
+            {summary && <div>{summary}</div>}
             {disclaimer && <div className="disclaimer">{disclaimer}</div>}
             {isUpdating && (
               <div className="updating-indicator">
@@ -181,13 +179,7 @@ const MapLegendContent = ({
               </div>
             )}
             <LayerCapabilities capabilities={capabilities} />
-            {legendImage && legendImage.url && (
-              <div className="legend-image">
-                <img src={legendImage.url} />
-              </div>
-            )}
-
-            {!legendImage && <LegendItemTypes />}
+            <LegendItemTypes />
             {statement && <LayerAnalysisStatement statementHtml={statement} />}
             {statementConfig && (
               <LayerStatement

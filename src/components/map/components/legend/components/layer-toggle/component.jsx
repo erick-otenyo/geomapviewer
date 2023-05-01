@@ -35,7 +35,7 @@ class LayerToggle extends PureComponent {
       iso,
       active,
       color,
-      citation,
+      summary,
       description,
       isNearRealTime,
       capabilities,
@@ -91,14 +91,14 @@ class LayerToggle extends PureComponent {
               </Tooltip>
             )}
           </div>
-          {citation && showSubtitle && (
+          {summary && showSubtitle && (
             <div
               className="subtitle"
               onClick={() => onToggle({ dataset, layer, iso }, !active)}
               role="button"
               tabIndex={tabIndex}
             >
-              {`${citation}`}
+              {`${summary}`}
             </div>
           )}
 

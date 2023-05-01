@@ -16,7 +16,7 @@ const datasets = [
     sub_category: subCategory,
     metadata: "",
     isNearRealTime: true,
-    citation: "EUMETSAT, Updated every 15 minutes",
+    summary: "EUMETSAT, Updated every 15 minutes",
     global: true,
     capabilities: ["timeseries", "nearRealTime"],
     layers: [

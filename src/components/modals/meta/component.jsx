@@ -56,10 +56,9 @@ class ModalMeta extends PureComponent {
       subtitle,
       overview,
       citation,
-      map_service,
+
       learn_more,
       download_data,
-      amazon_link,
     } = metaData || {};
 
     const parsedCitation =
@@ -110,7 +109,7 @@ class ModalMeta extends PureComponent {
                 <div className="body">{this.parseContent(parsedCitation)}</div>
               </div>
             )}
-            {(learn_more || download_data || map_service || amazon_link) && (
+            {(learn_more || download_data) && (
               <div className="ext-actions">
                 {learn_more && (
                   <a
@@ -128,15 +127,6 @@ class ModalMeta extends PureComponent {
                     rel="noopener noreferrer"
                   >
                     <Button size="medium">DOWNLOAD DATA</Button>
-                  </a>
-                )}
-                {(map_service || amazon_link) && (
-                  <a
-                    href={map_service || amazon_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button size="medium">OPEN IN ARCGIS</Button>
                   </a>
                 )}
               </div>

@@ -9,28 +9,36 @@ const getAllDatasets = (state) => state.datasets && state.datasets.data;
 
 export const selectmapLocationGeostore = (state) =>
   state.geostore && state.geostore.mapLocationGeostore;
-
 export const selectLocation = (state) =>
   state.location && state.location.payload;
-
 export const selectClipToGeostore = (state) =>
   state.map?.settings?.clipToGeostore;
-
 const selectMapLocationContext = (state) =>
   state.mapMenu?.settings?.mapLocationContext;
-
 const selectDatasetParams = (state) => state.datasets?.params;
+const selectCapConfig = (state) => state.config?.capConfig;
 
 import { createUpdateProviders } from "./utils";
+import { createCapUpdateProvider } from "./datasets/cap";
 
 export const getUpdateProviders = createSelector(
-  [getActiveLayers, getActiveDatasetsFromState, getAllDatasets],
-  (activeLayers, activeDatasets, allDatasets) => {
+  [
+    getActiveLayers,
+    getActiveDatasetsFromState,
+    getAllDatasets,
+    selectCapConfig,
+  ],
+  (activeLayers, activeDatasets, allDatasets, capConfig) => {
     const updateProviders = createUpdateProviders(
       activeLayers.filter((l) => !l.isBoundary)
     );
 
-    return updateProviders;
+    const hasCapAlert = activeLayers.find((l) => l.id === "cap_alerts");
+
+    const capUpdateProvider =
+      (hasCapAlert && capConfig && createCapUpdateProvider(capConfig)) || [];
+
+    return updateProviders.concat(...capUpdateProvider);
   }
 );
 

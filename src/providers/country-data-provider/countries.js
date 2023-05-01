@@ -1,4 +1,4 @@
-const AFRICA_COUNTRIES = [
+const COUNTRIES = [
   {
     name: "Algeria",
     iso: "DZA",
@@ -286,4 +286,4 @@ const AFRICA_COUNTRIES = [
   },
 ];
 
-export default AFRICA_COUNTRIES;
+export default COUNTRIES;

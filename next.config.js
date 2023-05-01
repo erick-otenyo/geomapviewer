@@ -25,6 +25,8 @@ const nextConfig = {
 
     config.infrastructureLogging = { level: "error" };
 
+    config.resolve.fallback = { fs: false };
+
     return config;
   },
   images: {
@@ -47,7 +49,7 @@ const nextConfig = {
     GOOGLE_CUSTOM_SEARCH_CX: process.env.GOOGLE_CUSTOM_SEARCH_CX,
     GOOGLE_SEARCH_API_KEY: process.env.GOOGLE_SEARCH_API_KEY,
     MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
-    COUNTRY_ISO3_CODE:process.env.COUNTRY_ISO3_CODE
+    COUNTRY_ISO3_CODE: process.env.COUNTRY_ISO3_CODE,
   },
 };
 

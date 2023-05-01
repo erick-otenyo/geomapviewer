@@ -15,7 +15,6 @@ const actions = {
 class LayerUpdate extends PureComponent {
   componentDidMount() {
     const { updateInterval } = this.props;
-
     this.doUpdate({ isInitial: true });
 
     if (updateInterval) {

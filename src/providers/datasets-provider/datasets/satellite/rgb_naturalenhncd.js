@@ -18,7 +18,7 @@ const datasets = [
     metadata: metadataId,
     isNearRealTime: true,
     initialVisible: true,
-    citation: "EUMETSAT, Updated every 15 minutes",
+    summary: "EUMETSAT, Updated every 15 minutes",
     global: true,
     capabilities: ["timeseries", "nearRealTime"],
     layers: [

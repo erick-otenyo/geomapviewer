@@ -1,6 +1,8 @@
 import { createAction, createThunkAction } from "@/redux/actions";
 
 import { getConfig } from "@/services/config";
+import { createCapDataset } from "../datasets-provider/datasets/cap";
+import { updateDatasets } from "../datasets-provider/actions";
 
 export const setConfigLoading = createAction("setConfigLoading");
 export const setConfig = createAction("setConfig");
@@ -13,7 +15,11 @@ export const fetchConfig = createThunkAction(
 
     getConfig()
       .then((config) => {
-        const { categories, basemaps } = config;
+        const { categories, basemaps, capConfig } = config;
+
+        const capDataset = createCapDataset(capConfig);
+
+        dispatch(updateDatasets(capDataset));
 
         const sections = categories
           .filter((c) => c.active)
@@ -40,11 +46,13 @@ export const fetchConfig = createThunkAction(
             all[item.label] = item;
             return all;
           }, {}),
+          capConfig,
         };
 
         dispatch(setConfig(appConfig));
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err);
         dispatch(setConfigLoading({ loading: false, error: true }));
       });
   }

@@ -162,7 +162,7 @@ class MapComponent extends Component {
       countryMapSettings.bbox
     ) {
       this.setState({
-        bounds: { bbox: countryMapSettings.bbox, options: { padding: 20 } },
+        bounds: { bbox: countryMapSettings.bbox, options: { padding: 50 } },
       });
     }
   }

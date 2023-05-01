@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@erick-otenyo/hw-components": "^1.0.0",
+    "@mapbox/geojson-rewind": "^0.5.2",
     "@mapbox/mapbox-gl-draw": "^1.4.1",
     "@mapbox/mapbox-gl-sync-move": "^0.3.1",
     "@next/bundle-analyzer": "^13.2.4",
@@ -108,12 +109,14 @@
     "reselect": "^4.1.7",
     "responsive-loader": "^3.1.2",
     "simple-entity-decode": "^0.0.3",
+    "slugify": "^1.6.6",
     "svg-sprite-loader": "^6.0.11",
     "three-orbit-controls": "^82.1.0",
+    "txml": "^5.1.1",
     "use-deep-compare-effect": "^1.8.1",
     "viewport-mercator-project": "^7.0.4",
     "webp-loader": "^0.6.0",
-    "xml2js": "^0.4.23"
+    "wms-capabilities": "^0.6.0"
   },
   "devDependencies": {
     "eslint": "8.37.0",

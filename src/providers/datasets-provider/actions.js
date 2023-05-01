@@ -5,6 +5,7 @@ import getCountryBoundaryDataset from "./datasets/boundaries/country";
 import { COUNTRY_ISO3_CODE } from "@/utils/constants";
 import { CMS_API } from "@/utils/apis";
 import { getApiDatasets } from "@/services/datasets";
+import { createCapDataset } from "./datasets/cap";
 
 // import hwDatasets from "./datasets";
 
@@ -70,7 +71,8 @@ export const fetchDatasets = createThunkAction(
           dispatch(setMapSettings({ datasets: newDatasets }));
         }
 
-        dispatch(setDatasets(allDatasets));
+        dispatch(updateDatasets(allDatasets));
+        dispatch(setDatasetsLoading({ loading: false, error: false }));
       })
       .catch(() => {
         dispatch(setDatasetsLoading({ loading: false, error: true }));

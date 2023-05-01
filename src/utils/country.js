@@ -1,7 +1,7 @@
-import AFRICA_COUNTRIES from "@/providers/country-data-provider/africa-countries";
+import COUNTRIES from "@/providers/country-data-provider/countries";
 
 export const getCountryMapViewSettings = (countryIso) => {
-  const country = AFRICA_COUNTRIES.find((c) => c.iso === countryIso);
+  const country = COUNTRIES.find((c) => c.iso === countryIso);
 
   return {
     bbox: country.bbox,

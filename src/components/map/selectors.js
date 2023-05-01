@@ -274,7 +274,7 @@ export const getDatasetsWithConfig = createSelector(
         visibility,
         opacity,
         bbox,
-        citation = null,
+        summary = null,
         layerFilterParams,
         mapSide,
       } = layerConfig || {};
@@ -300,7 +300,7 @@ export const getDatasetsWithConfig = createSelector(
             visibility,
             opacity,
             bbox,
-            citation,
+            summary,
             mapSide,
             color: d.color,
             active: layers && layers.length && layers.includes(l.id),

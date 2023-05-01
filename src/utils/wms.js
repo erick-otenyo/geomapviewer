@@ -1,7 +1,43 @@
 import { get } from "axios";
-import xml2js from "xml2js";
+import WMSCapabilities from "wms-capabilities";
+import { subMonths, subDays } from "date-fns";
 
 import request from "@/utils/request";
+
+function parseISO8601Duration(durationString) {
+  const regex =
+    /P(?:([0-9]+)Y)?(?:([0-9]+)M)?(?:([0-9]+)D)?(?:T(?:([0-9]+)H)?(?:([0-9]+)M)?(?:([0-9]+(?:\.[0-9]+)?)S)?)?/;
+  const matches = regex.exec(durationString);
+
+  const years = matches[1] || 0;
+  const months = matches[2] || 0;
+  const days = matches[3] || 0;
+  const hours = matches[4] || 0;
+  const minutes = matches[5] || 0;
+  const seconds = parseFloat(matches[6]) || 0;
+
+  const duration =
+    (((years * 365 + months * 30 + days) * 24 + hours) * 60 + minutes) * 60 +
+    seconds;
+  return duration * 1000; // convert to milliseconds
+}
+
+function getValidTimestamps(rangeString) {
+  const parts = rangeString.split("/");
+  const start_time = new Date(parts[0]);
+  const end_time = new Date(parts[1]);
+  const duration = parseISO8601Duration(parts[2]);
+
+  let current_time = start_time.getTime();
+  const valid_timestamps = [];
+
+  while (current_time < end_time.getTime()) {
+    valid_timestamps.push(new Date(current_time).toISOString());
+    current_time += duration;
+  }
+
+  return valid_timestamps;
+}
 
 export const getTimeValuesFromWMS = async (wmsUrl, layerName, params = {}) => {
   const defaultParams = {
@@ -15,43 +51,43 @@ export const getTimeValuesFromWMS = async (wmsUrl, layerName, params = {}) => {
     const response = await get(wmsUrl, {
       params: { ...defaultParams, ...params },
     });
-    const xml = response.data;
 
-    // Parse the XML document to a JavaScript object
-    const parser = new xml2js.Parser();
-    const result = await parser.parseStringPromise(xml);
+    // parse xml
+    const capabilities = new WMSCapabilities(response.data).toJSON();
 
-    let capability = {};
+    // get all layers
+    const layers = capabilities?.Capability?.Layer?.Layer || [];
 
-    if (result.Capability) {
-      capability = result.Capability[0];
-    } else {
-      if (result.WMS_Capabilities && result.WMS_Capabilities?.Capability) {
-        capability = result.WMS_Capabilities.Capability[0];
+    // find matching layer by name
+    const match = layers.find((l) => l.Name === layerName) || {};
+
+    // get time values
+    const timeValueStr =
+      match?.Dimension?.find((d) => d.name === "time")?.values || [];
+
+    let dateRange = timeValueStr.split("/");
+
+    if (!!dateRange.length && dateRange.length > 1) {
+      const isoDuration = dateRange[dateRange.length - 1];
+      const durationMilliseconds = parseISO8601Duration(isoDuration);
+      const durationDays = durationMilliseconds / 8.64e7;
+
+      // if the interval is less that 24 hours, by default return dates for the past one month only.
+      // This is a quick implementation to avoid the browser hanging.
+      // In future we can implement this with web workers to show all the dates
+      if (durationDays < 1) {
+        const endTime = new Date(dateRange[1]);
+        const startTime = subDays(endTime, 2);
+
+        return getValidTimestamps(
+          `${startTime.toISOString()}/${endTime.toISOString()}/${isoDuration}`
+        );
       }
+
+      return getValidTimestamps(timeValueStr);
     }
 
-    // Find the layer with the given name
-    const layers = capability?.Layer[0]?.Layer;
-
-    const layer = layers.find((l) => l?.Name[0] === layerName);
-
-    if (!layer) {
-      throw new Error(
-        `Layer ${layerName} not found in GetCapabilities document.`
-      );
-    }
-
-    // Extract the available time values for the layer
-    const timeExtent = layer.Dimension.find((d) => d.$.name === "time");
-
-    let timeValues = timeExtent["_"] || [];
-
-    if (timeValues) {
-      timeValues = timeValues.split(",");
-    }
-
-    return timeValues;
+    return timeValueStr.split(",");
   } catch (error) {
     console.error(
       `Error fetching or parsing GetCapabilities document: ${error.message}`

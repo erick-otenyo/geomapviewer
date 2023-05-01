@@ -7,6 +7,7 @@ import {
   LegendItemTypeBasic,
   LegendItemTypeGradient,
   LegendItemTypeProportional,
+  LegendItemTypeImage,
 } from "@/components/legend";
 
 import Loader from "@/components/ui/loader";
@@ -138,6 +139,10 @@ class LegendItemTypes extends PureComponent {
 
         {shouldRender && !React.Children.count(children) && (
           <LegendItemTypeProportional {...this.props} />
+        )}
+
+        {shouldRender && !React.Children.count(children) && (
+          <LegendItemTypeImage {...this.props} />
         )}
       </div>
     );
