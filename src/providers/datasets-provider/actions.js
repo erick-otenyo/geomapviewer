@@ -35,10 +35,19 @@ export const fetchDatasets = createThunkAction(
     );
 
     getApiDatasets()
-      .then((apiDatasets) => {
-        const datasets = [...apiDatasets];
+      .then(({ datasets: apiDatasets, config = {} }) => {
+        let capDataset = [];
+        const { capConfig } = config;
 
-        const allDatasets = [...datasets].concat(countryBoundaryDataset);
+        if (capConfig) {
+          capDataset = createCapDataset(capConfig);
+        }
+
+        const allDatasets = [
+          ...countryBoundaryDataset,
+          ...capDataset,
+          ...apiDatasets,
+        ];
 
         const initialVisibleDatasets = allDatasets.filter(
           (d) => d.initialVisible

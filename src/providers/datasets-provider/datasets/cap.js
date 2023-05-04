@@ -1,7 +1,7 @@
-import { getCapAlerts } from "@/services/cap";
+import { getCapAlertsGeojson } from "@/services/cap";
 
 export const createCapDataset = (capConfig) => {
-  const { category, subCategory, baseUrl } = capConfig || {};
+  const { category, subCategory, baseUrl, initialVisible } = capConfig || {};
 
   const canShow = !!(category && subCategory && baseUrl);
 
@@ -15,12 +15,13 @@ export const createCapDataset = (capConfig) => {
       dataset: "cap_alerts",
       name: "Weather Alerts",
       layer: "cap_alerts",
-      initialVisible: true,
+      initialVisible: initialVisible,
       isCapAlert: true,
       metadata: "",
       category: category,
       sub_category: subCategory,
       capabilities: ["nearRealTime"],
+      capConfig: capConfig,
       layers: [
         {
           id: "cap_alerts",
@@ -91,6 +92,7 @@ export const createCapDataset = (capConfig) => {
               { label: "Extreme", value: "Extreme" },
               { label: "Severe", value: "Severe" },
               { label: "Moderate", value: "Moderate" },
+              { label: "Minor", value: "Minor" },
             ],
           },
           layerFilterParamsConfig: [
@@ -157,8 +159,7 @@ export const createCapUpdateProvider = (capConfig) => {
     {
       layer: "cap_alerts",
       getData: async (token) => {
-        const timestamp = new Date().getTime();
-        return getCapAlerts(baseUrl);
+        return getCapAlertsGeojson(baseUrl);
       },
       ...(!!refreshInterval && {
         updateInterval: refreshInterval,

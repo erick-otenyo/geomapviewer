@@ -7,6 +7,7 @@ import Dotdotdot from "react-dotdotdot";
 import cx from "classnames";
 
 import infoIcon from "@/assets/icons/info.svg?sprite";
+import alertIcon from "@/assets/icons/alert.svg?sprite";
 
 import "./styles.scss";
 import "./themes/card-small.scss";
@@ -17,22 +18,6 @@ const TOP_META = {
   expires: { title: "Expire Time", icon: infoIcon },
   urgency: { title: "Urgency", icon: infoIcon },
   certainty: { title: "Certainty", icon: infoIcon },
-  senderName: { title: "Source", icon: infoIcon },
-  eventSent: { title: "Sent", icon: infoIcon },
-  sourceInfo: {
-    country: {
-      title: "Country",
-      icon: infoIcon,
-    },
-    organisation: {
-      title: "Source",
-      icon: infoIcon,
-    },
-    logo: {
-      icon: false,
-      image: true,
-    },
-  },
 };
 
 class CapAlertCard extends PureComponent {
@@ -119,21 +104,25 @@ class CapAlertCard extends PureComponent {
   // eslint-disable-line react/prefer-stateless-function
   render() {
     const { className, theme, data, active, clamp } = this.props;
-    const { event, buttons, tag, tagColor, tagFontColor, alertDetail } =
-      data || {};
-
-    const description =
-      alertDetail && alertDetail.info && alertDetail.info.description;
-
-    const instruction =
-      alertDetail && alertDetail.info && alertDetail.info.instruction;
+    const {
+      event,
+      buttons,
+      tag,
+      tagColor,
+      tagFontColor,
+      description,
+      instruction,
+    } = data || {};
 
     return (
       <div className={cx("c-card", className, theme, { active })}>
         {tag && tagColor && (
-          <span className="tag" style={{ backgroundColor: tagColor }}>
-            <p style={{ color: tagFontColor && tagFontColor }}>{tag}</p>
-          </span>
+          <>
+            <div className="tag" style={{ backgroundColor: tagColor }}>
+              <Icon icon={alertIcon} className="alert-icon" />
+              <p style={{ color: tagFontColor && tagFontColor }}>{tag}</p>
+            </div>
+          </>
         )}
         <div className={cx("body", { "top-padding": tag && tagColor })}>
           {this.renderMeta()}
@@ -147,9 +136,7 @@ class CapAlertCard extends PureComponent {
 
             {instruction && (
               <div className="instruction">
-                <h3 className="title" style={{ backgroundColor: tagColor }}>
-                  Instruction
-                </h3>
+                <h3 className="title">Instruction</h3>
                 <div className="instruction-text">{instruction}</div>
               </div>
             )}

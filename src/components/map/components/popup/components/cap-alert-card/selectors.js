@@ -1,81 +1,81 @@
 import { createSelector, createStructuredSelector } from "reselect";
-import moment from "moment";
+import { parseISO, format } from "date-fns";
 
 const getInteractionData = (state, { data }) => data;
 
 export const SEVERITY_MAPPING = {
-  4: {
+  Extreme: {
     color: "#d72f2a",
     name: "Extreme",
-    value: 4,
+    value: "Extreme",
   },
-  3: {
+  Severe: {
     color: "#fe9900",
     name: "Severe",
-    value: 3,
+    value: "Severe",
   },
-  2: {
+  Moderate: {
     color: "#ffff00",
     fontColor: "#000",
     name: "Moderate",
-    value: 2,
+    value: "Moderate",
   },
-  1: {
+  Minor: {
     color: "#03ffff",
     fontColor: "#000",
     name: "Minor",
-    value: 1,
+    value: "Minor",
   },
-  uknown: {
+  Unknown: {
     color: "#3366ff",
     name: "Unknown",
-    value: 0,
+    value: "Unknown",
   },
 };
 
 export const URGENCY_MAPPING = {
-  4: {
+  Immediate: {
     name: "Immediate",
-    value: 4,
+    value: "Immediate",
   },
-  3: {
+  Expected: {
     name: "Expected",
-    value: 3,
+    value: "Expected",
   },
-  2: {
+  Future: {
     name: "Future",
-    value: 2,
+    value: "Future",
   },
-  1: {
+  Past: {
     name: "Past",
-    value: 1,
+    value: "Past",
   },
-  uknown: {
+  Unknown: {
     name: "Unknown",
-    value: 0,
+    value: "Unknown",
   },
 };
 
 export const CERTAINTY_MAPPING = {
-  4: {
+  Observed: {
     name: "Observed",
-    value: 4,
+    value: "Observed",
   },
-  3: {
+  Likely: {
     name: "Likely",
-    value: 3,
+    value: "Likely",
   },
-  2: {
+  Possible: {
     name: "Possible",
-    value: 2,
+    value: "Possible",
   },
-  1: {
+  Unlikely: {
     name: "Unlikely",
-    value: 1,
+    value: "Unlikely",
   },
   uknown: {
     name: "Unknown",
-    value: 0,
+    value: "Unknown",
   },
 };
 
@@ -103,19 +103,23 @@ export const getCardData = createSelector(
         capData[key] = MAPPING_FIELDS[key][capData[key]];
       }
 
-      if (key === "event") {
-        const eventData = capData[key].split("^");
-
-        capData["event"] = eventData[0];
-
-        capData["eventSentTime"] = eventData[2].length;
-
-        capData["eventSent"] =
-          !!eventData[2].length && capData["utc"]
-            ? moment(eventData[2]).from(capData["utc"])
-            : "";
+      if (key === "onset" || key === "expires") {
+        const isoDate = parseISO(capData[key]);
+        capData[key] = format(isoDate, "yyyy-mm-dd HH:MM") + " UTC";
       }
     });
+
+    const { web } = capData;
+
+    const buttons = web
+      ? [
+          {
+            text: "MORE DETAILS",
+            extLink: web,
+            theme: `theme-button-small`,
+          },
+        ]
+      : [];
 
     const category = capData.severity;
 
@@ -124,29 +128,6 @@ export const getCardData = createSelector(
       tagColor: category.color,
       tagFontColor: category.fontColor && category.fontColor,
     };
-
-    if (capData && capData.alertDetail) {
-      capData.alertDetail = JSON.parse(capData.alertDetail);
-    }
-
-    const sourceInfo = capData && capData.sourceInfo;
-
-    if (sourceInfo) {
-      capData.sourceInfo = JSON.parse(sourceInfo);
-    }
-
-    const { website } = (capData.sourceInfo && capData.sourceInfo) || {};
-
-    const buttons =
-      capData && capData.link
-        ? [
-            {
-              text: "DETAILS",
-              extLink: `/cap/?capUrl=${capData.link}&section=detail`,
-              theme: `theme-button-small`,
-            },
-          ]
-        : [];
 
     return {
       ...capData,
