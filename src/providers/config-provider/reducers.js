@@ -27,7 +27,7 @@ const setSubCategorySettings = (state, { payload }) => {
   const sections = [...dataSections];
 
   if (sectionIndex > -1) {
-    const subCategories = [...data[sectionIndex].subCategories];
+    const subCategories = [...sections[sectionIndex].subCategories];
 
     if (subCategories) {
       const subCatIndex = findIndex(subCategories, [
