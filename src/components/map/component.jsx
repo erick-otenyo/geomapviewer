@@ -24,6 +24,8 @@ import Attributions from "./components/attributions";
 import LayerManagerWrapper from "./components/layer-manager";
 // import { pulsingDot } from "./mapImages";
 
+import mapStyleForNoStyle from "./defautlStyle";
+
 // Styles
 import "./styles.scss";
 
@@ -51,7 +53,7 @@ class RenderMap extends PureComponent {
     return (
       <Map
         comparing={!!mapSide}
-        mapStyle={mapStyle}
+        mapStyle={mapStyle || mapStyleForNoStyle}
         viewport={viewport}
         bounds={bounds}
         onViewportChange={onViewportChange}
