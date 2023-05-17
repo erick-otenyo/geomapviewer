@@ -62,7 +62,7 @@ export const getServerSideProps = async ({ req, params }) => {
   if (type === "point") {
     return {
       props: {
-        title: "MapViewer for custom point | AHW",
+        title: "MapViewer for custom point",
       },
     };
   }
@@ -70,7 +70,7 @@ export const getServerSideProps = async ({ req, params }) => {
   if (type === "geostore") {
     return {
       props: {
-        title: "MapViewer for custom area | AHW",
+        title: "MapViewer for custom area",
       },
     };
   }

@@ -189,8 +189,7 @@ class ChoseAnalysis extends PureComponent {
           </div>
           <p>
             By uploading data you agree to the{" "}
-            <a href="/terms" target="_blank" rel="noopenner nofollower">
-              AHW Terms of Service
+            <a href="/terms" target="_blank" rel="noopenner nofollower">Terms of Service
             </a>
           </p>
         </div>

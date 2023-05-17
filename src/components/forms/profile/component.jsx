@@ -95,7 +95,7 @@ class ProfileForm extends PureComponent {
                     <div className="column small-12">
                       <h1>Your profile</h1>
                       <h3>
-                        We use this information to make Hazards Watch more
+                        We use this information to make the application more
                         useful for you. Your privacy is important to us and
                         we&apos;ll never share your information without your
                         consent.

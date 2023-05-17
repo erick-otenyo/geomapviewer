@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
   return {
     open,
     showPrompts: selectShowMapPrompts(state),
-    title: hideModal ? "Map How-To Guide" : "Welcome to new Hazards Watch map!",
+    title: hideModal ? "Map How-To Guide" : "Welcome to the Map Viewer!",
     description: "What would you like to do?",
   };
 };

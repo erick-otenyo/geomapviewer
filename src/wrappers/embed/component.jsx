@@ -62,7 +62,7 @@ const EmbedWrapper = ({
         <div className="embed-footer">
           <p>For more info</p>
           <a href={exploreLink} target="_blank" rel="noopener noreferrer">
-            <Button className="embed-btn">EXPLORE ON AHW</Button>
+            <Button className="embed-btn">EXPLORE ON MAPVIEWER</Button>
           </a>
         </div>
       </div>

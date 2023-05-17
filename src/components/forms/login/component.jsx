@@ -139,7 +139,6 @@ class LoginForm extends PureComponent {
                         name="email"
                         type="email"
                         label="email"
-                        placeholder="example@hazardswatch.org"
                         validate={[email]}
                         required
                       />
