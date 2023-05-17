@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from "@/redux/actions";
-// import { getMetadata } from "@/services/metadata";
+import { getMetadata } from "@/services/metadata";
 
 export const setModalMetaData = createAction("setModalMetaData");
 export const setModalMetaLoading = createAction("setModalMetaLoading");
@@ -12,13 +12,13 @@ export const getModalMetaData = createThunkAction(
     const { modalMeta } = getState();
     if (modalMeta && !modalMeta.loading) {
       dispatch(setModalMetaLoading({ loading: true, error: false }));
-      // getMetadata(metaKey)
-      //   .then((response) => {
-      //     dispatch(setModalMetaData(response.data));
-      //   })
-      //   .catch(() => {
-      //     dispatch(setModalMetaLoading({ loading: false, error: true }));
-      //   });
+      getMetadata(metaKey)
+        .then((response) => {
+          dispatch(setModalMetaData(response.data));
+        })
+        .catch(() => {
+          dispatch(setModalMetaLoading({ loading: false, error: true }));
+        });
     }
   }
 );
