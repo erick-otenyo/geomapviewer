@@ -5,7 +5,6 @@ import flatMap from "lodash/flatMap";
 import sortBy from "lodash/sortBy";
 import uniqBy from "lodash/unionBy";
 
-import { getCountryMapViewSettings } from "@/utils/country";
 import { defined } from "@/utils/core";
 import { selectActiveLang, getMapboxLang } from "@/utils/lang";
 
@@ -35,6 +34,7 @@ const selectDatasetParams = (state) => state.datasets?.params;
 const selectMapPrinting = (state) => state.map && state.map?.settings?.printing;
 const getMainMapSettings = (state) => state.mainMap || {};
 export const getBasemaps = (state) => state.config?.basemaps || {};
+const getCountryConfig = (state) => state.config?.country || {};
 
 // CONSTS
 export const getMapSettings = (state) => state.map?.settings || {};
@@ -711,11 +711,9 @@ export const getPrintRequests = createSelector(
 );
 
 export const getCountryMapSettings = createSelector(
-  [getMapSettings],
-  (settings) => {
-    const { countryIso } = settings;
-
-    return getCountryMapViewSettings(countryIso) || {};
+  [getCountryConfig],
+  (countryConfig) => {
+    return countryConfig;
   }
 );
 

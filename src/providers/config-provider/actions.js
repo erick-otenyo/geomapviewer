@@ -13,7 +13,7 @@ export const fetchConfig = createThunkAction(
 
     getConfig()
       .then((config) => {
-        const { categories, basemaps } = config;
+        const { categories, basemaps, country } = config;
 
         const sections = categories
           .filter((c) => c.active)
@@ -34,6 +34,7 @@ export const fetchConfig = createThunkAction(
           }));
 
         const appConfig = {
+          country,
           sections: sections,
           basemaps: basemaps.reduce((all, item) => {
             item.value = item.label;

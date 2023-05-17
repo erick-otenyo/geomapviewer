@@ -2,7 +2,6 @@ import { createAction, createThunkAction } from "@/redux/actions";
 
 import { setMapSettings } from "@/components/map/actions";
 import getCountryBoundaryDataset from "./datasets/boundaries/country";
-import { COUNTRY_ISO3_CODE } from "@/utils/constants";
 import { CMS_API } from "@/utils/apis";
 import { getApiDatasets } from "@/services/datasets";
 import { createCapDataset } from "./datasets/cap";
@@ -27,17 +26,19 @@ export const fetchDatasets = createThunkAction(
 
     const currentActiveDatasets = [...activeDatasets];
 
-    const boundaryUrl = `${CMS_API}/boundary-tiles/{z}/{x}/{y}?gid_0=${COUNTRY_ISO3_CODE}`;
-
-    const countryBoundaryDataset = getCountryBoundaryDataset(
-      boundaryUrl,
-      "default"
-    );
+    let countryBoundaryDataset = [];
 
     getApiDatasets()
       .then(({ datasets: apiDatasets, config = {} }) => {
         let capDataset = [];
-        const { capConfig } = config;
+        const { capConfig, boundaryTilesUrl } = config;
+
+        if (boundaryTilesUrl) {
+          countryBoundaryDataset = getCountryBoundaryDataset(
+            boundaryTilesUrl,
+            "default"
+          );
+        }
 
         if (capConfig) {
           capDataset = createCapDataset(capConfig);

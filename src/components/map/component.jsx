@@ -152,21 +152,7 @@ class MapComponent extends Component {
   mapCompareContainer = createRef();
 
   componentDidMount() {
-    const { mapBounds, countryMapSettings, location } = this.props;
-
-    const { type, adm0 } = location;
-
-    if (
-      (!type || (type === "country" && !adm0)) &&
-      mapBounds &&
-      mapBounds.length === 0 &&
-      countryMapSettings &&
-      countryMapSettings.bbox
-    ) {
-      this.setState({
-        bounds: { bbox: countryMapSettings.bbox, options: { padding: 50 } },
-      });
-    }
+    this.setMapCountryBounds();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -186,6 +172,7 @@ class MapComponent extends Component {
       location,
       geostoreType,
       printRequests,
+      countryMapSettings,
     } = this.props;
 
     const {
@@ -199,6 +186,7 @@ class MapComponent extends Component {
       basemap: prevBasemap,
       location: prevLocation,
       printRequests: prevPrintRequests,
+      countryMapSettings: prevCountryMapSettings,
     } = prevProps;
 
     if (!drawing && prevDrawing) {
@@ -309,6 +297,10 @@ class MapComponent extends Component {
     if (this.map && printRequests && printRequests !== prevPrintRequests) {
       this.requestPrintMap();
     }
+
+    if (!isEqual(countryMapSettings, prevCountryMapSettings)) {
+      this.setMapCountryBounds();
+    }
   }
 
   componentWillUnmount() {
@@ -316,6 +308,24 @@ class MapComponent extends Component {
       this.state.compareMap.remove();
     }
   }
+
+  setMapCountryBounds = () => {
+    const { mapBounds, countryMapSettings, location } = this.props;
+
+    const { type, adm0 } = location;
+
+    if (
+      (!type || (type === "country" && !adm0)) &&
+      mapBounds &&
+      mapBounds.length === 0 &&
+      countryMapSettings &&
+      countryMapSettings.bbox
+    ) {
+      this.setState({
+        bounds: { bbox: countryMapSettings.bbox, options: { padding: 50 } },
+      });
+    }
+  };
 
   onViewportChange = debounce((viewport, mapSide) => {
     const { setMapSettings, location } = this.props;

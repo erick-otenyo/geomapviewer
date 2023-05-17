@@ -277,8 +277,7 @@ class Map extends Component {
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
           preventStyleDiffing
-          disableTokenWarning={false}
-          mapboxApiAccessToken={process.env.MAPBOX_TOKEN}
+          disableTokenWarning={true}
         >
           {loaded &&
             !!this.map &&

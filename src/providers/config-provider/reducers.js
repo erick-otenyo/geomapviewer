@@ -6,6 +6,7 @@ export const initialState = {
   error: false,
   sections: [],
   basemaps: {},
+  country: {},
 };
 
 const setConfigLoading = (state, { payload }) => ({

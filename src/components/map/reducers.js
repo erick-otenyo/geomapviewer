@@ -1,6 +1,5 @@
 import { POLITICAL_BOUNDARIES_DATASET } from "@/data/datasets";
 import { POLITICAL_BOUNDARIES } from "@/data/layers";
-import { COUNTRY_ISO3_CODE } from "@/utils/constants";
 
 import * as actions from "./actions";
 
@@ -41,7 +40,6 @@ export const initialState = {
     drawingMode: "draw_polygon",
     clipToGeostore: false,
     mapBounds: [],
-    countryIso: COUNTRY_ISO3_CODE,
     datasets: [
       // admin boundaries
       {
