@@ -1,7 +1,7 @@
 import { getCapAlertsGeojson } from "@/services/cap";
 
 export const createCapDataset = (capConfig) => {
-  const { category, subCategory, baseUrl, initialVisible } = capConfig || {};
+  const { category, subCategory, baseUrl, initialVisible, metadata } = capConfig || {};
 
   const canShow = !!(category && subCategory && baseUrl);
 
@@ -17,7 +17,7 @@ export const createCapDataset = (capConfig) => {
       layer: "cap_alerts",
       initialVisible: initialVisible,
       isCapAlert: true,
-      metadata: "",
+      metadata: metadata,
       category: category,
       sub_category: subCategory,
       capabilities: ["nearRealTime"],
