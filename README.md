@@ -13,15 +13,14 @@ The GeoMapViewer web app is built with [Nextjs](https://nextjs.org/), [React](ht
 The app is developed to be deployed alongside the [GeoManager](https://github.com/wmo-raf/geomanager) on a single server using [Docker](https://www.docker.com/)
 
 The [GeoManager](https://github.com/wmo-raf/geomanager) is a [Wagtail](https://github.com/wagtail/wagtail) based application that should be installed
-in a Wagtail Project. The Geomanager serves as the backend system for this appliaction. For a complete setup, you need to have both components installed, up and running.
+in a Wagtail Project. The Geomanager serves as the backend system for this map viewer application. For a complete setup, you need to have both components installed, up and running.
 
-This means you need to have a Wagtail Project up and running and install the [GeoManager](https://github.com/wmo-raf/geomanager)
-package first.
+This means you need to have a Wagtail project setup, with [GeoManager](https://github.com/wmo-raf/geomanager) package installed.
 
 Below are general steps to get your started:
 
 - Have a Wagtail project up and running. If starting from scratch, you can use the sample project at [https://github.com/wmo-raf/geomanager/tree/main/sandbox](https://github.com/wmo-raf/geomanager/tree/main/sandbox) to get you started.
-- Install the Geomanager package in your wagtail project. Follow the instructions at [GeoManager](https://github.com/wmo-raf/geomanager)
+- Install the GeoManager package in your wagtail project. Follow the instructions at [GeoManager](https://github.com/wmo-raf/geomanager)
 - Follow the instructions below to install and run the web app
 
 ## Installing the app
