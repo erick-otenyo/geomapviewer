@@ -5,7 +5,7 @@ A dynamic web based online system for visualizing georeferenced data at differen
 This repository contains the frontend code for the [GeoManager](https://github.com/wmo-raf/geomanager) package.
 The GeoManager is the backend system that helps to manage and organize datasets visualized by this mapviewer.
 
-![Map Sample](./screenshots/map.png)
+![Map Sample](./screenshots/geomapviewer_with_backend.png)
 # Getting started
 
 The GeoMapViewer web app is built with [Nextjs](https://nextjs.org/), [React](https://reactjs.org/) and [Redux](https://redux.js.org/).
