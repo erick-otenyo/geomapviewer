@@ -6,6 +6,8 @@ import { CMS_API } from "@/utils/apis";
 import { getApiDatasets } from "@/services/datasets";
 import { createCapDataset } from "./datasets/cap";
 
+import { setConfig } from "../config-provider/actions";
+
 // import hwDatasets from "./datasets";
 
 export const setDatasetsLoading = createAction("setDatasetsLoading");
@@ -29,7 +31,11 @@ export const fetchDatasets = createThunkAction(
     let countryBoundaryDataset = [];
 
     getApiDatasets()
-      .then(({ datasets: apiDatasets, config = {} }) => {
+      .then(({ datasets: apiDatasets, config = {}, icons = [] }) => {
+        if (icons) {
+          dispatch(setConfig({ icons }));
+        }
+
         let capDataset = [];
         const { capConfig, boundaryTilesUrl } = config;
 

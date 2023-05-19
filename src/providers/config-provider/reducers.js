@@ -7,6 +7,8 @@ export const initialState = {
   sections: [],
   basemaps: {},
   country: {},
+  svgById: {},
+  icons: [],
 };
 
 const setConfigLoading = (state, { payload }) => ({

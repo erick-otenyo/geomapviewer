@@ -125,8 +125,6 @@ export const getCapAlertsGeojson = (capBaseUrl) => {
         });
       });
 
-      console.log(featureCollection);
-
       return featureCollection;
     });
 };

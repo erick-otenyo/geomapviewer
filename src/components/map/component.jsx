@@ -6,6 +6,7 @@ import debounce from "lodash/debounce";
 import cx from "classnames";
 
 import { trackMapLatLon, trackEvent } from "@/utils/analytics";
+import { svgStringToImage } from "@/utils/svg";
 
 import Loader from "@/components/ui/loader";
 import Icon from "@/components/ui/icon";
@@ -173,6 +174,7 @@ class MapComponent extends Component {
       geostoreType,
       printRequests,
       countryMapSettings,
+      configIcons,
     } = this.props;
 
     const {
@@ -187,6 +189,7 @@ class MapComponent extends Component {
       location: prevLocation,
       printRequests: prevPrintRequests,
       countryMapSettings: prevCountryMapSettings,
+      configIcons: prevConfigIcons,
     } = prevProps;
 
     if (!drawing && prevDrawing) {
@@ -301,6 +304,10 @@ class MapComponent extends Component {
     if (!isEqual(countryMapSettings, prevCountryMapSettings)) {
       this.setMapCountryBounds();
     }
+
+    if (!isEqual(configIcons, prevConfigIcons)) {
+      this.loadMapImages();
+    }
   }
 
   componentWillUnmount() {
@@ -308,6 +315,27 @@ class MapComponent extends Component {
       this.state.compareMap.remove();
     }
   }
+
+  loadMapImages = async () => {
+    const { configIcons, svgById } = this.props;
+
+    if (configIcons && !!configIcons.length && this.map) {
+      configIcons.forEach(async (iconItem) => {
+        if (iconItem.type === "sprite") {
+          const svgString = svgById[iconItem.icon];
+          const svgImage = await svgStringToImage(svgString);
+
+          this.map.addImage(iconItem.icon, svgImage, {
+            sdf: Boolean(iconItem["icon-color"]),
+          });
+        }
+      });
+    }
+  };
+
+  handleMissingImage = () => {
+    console.log("HEllo");
+  };
 
   setMapCountryBounds = () => {
     const { mapBounds, countryMapSettings, location } = this.props;
@@ -387,7 +415,11 @@ class MapComponent extends Component {
     // Listeners
     if (this.map) {
       this.map.once("styledata", this.onStyleLoad);
+
+      this.map.on("styleimagemissing", this.handleMissingImage);
     }
+
+    this.loadMapImages();
 
     // add images
 

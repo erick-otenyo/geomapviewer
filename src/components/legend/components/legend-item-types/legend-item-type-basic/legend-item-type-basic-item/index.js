@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+import Icon from "@/components/ui/icon";
+
 import "./styles.scss";
 
 class LegendItem extends React.PureComponent {
@@ -10,6 +12,7 @@ class LegendItem extends React.PureComponent {
     name: PropTypes.string,
     icon: PropTypes.string, // triangle, circle, square, line
     hideIcon: PropTypes.bool,
+    iconSource: PropTypes.string,
   };
 
   static defaultProps = {
@@ -18,10 +21,11 @@ class LegendItem extends React.PureComponent {
     name: "",
     icon: "square",
     hideIcon: false,
+    iconSource: "url",
   };
 
   getIconHtml = (iconName) => {
-    const { name, hideIcon, color, size, icon } = this.props;
+    const { name, hideIcon, color, size, icon, iconSource } = this.props;
 
     if (hideIcon) {
       return null;
@@ -56,6 +60,20 @@ class LegendItem extends React.PureComponent {
           className={`icon-${icon}`}
           style={{ width: size, height: size, backgroundColor: color }}
         />
+      );
+    }
+
+    if (iconSource === "sprite") {
+      const style = {};
+
+      if (color) {
+        style.fill = color;
+      }
+
+      return (
+        <div className="custom-icon">
+          <Icon icon={`icon-${icon}`} style={{ ...style }} />
+        </div>
       );
     }
 

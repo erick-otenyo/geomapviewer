@@ -1,5 +1,4 @@
 import { createAction, createThunkAction } from "@/redux/actions";
-
 import { getConfig } from "@/services/config";
 
 export const setConfigLoading = createAction("setConfigLoading");
@@ -46,7 +45,6 @@ export const fetchConfig = createThunkAction(
         dispatch(setConfig(appConfig));
       })
       .catch((err) => {
-        console.log(err);
         dispatch(setConfigLoading({ loading: false, error: true }));
       });
   }
