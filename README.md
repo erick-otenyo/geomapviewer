@@ -10,10 +10,10 @@ The GeoManager is the backend system that helps to manage and organize datasets 
 
 The GeoMapViewer web app is built with [Nextjs](https://nextjs.org/), [React](https://reactjs.org/) and [Redux](https://redux.js.org/).
 
-The app is developed to be deployed alongside the [GeoManager](https://github.com/wmo-raf/geomanager) in a single server using [Docker](https://www.docker.com/)
+The app is developed to be deployed alongside the [GeoManager](https://github.com/wmo-raf/geomanager) on a single server using [Docker](https://www.docker.com/)
 
-The [GeoManager](https://github.com/wmo-raf/geomanager) is a [Wagtail](https://github.com/wagtail/wagtail) application that is installed
-in a Wagtail Project. This means you need to have a Wagtail Project up and running and install the [GeoManager](https://github.com/wmo-raf/geomanager)
+The [GeoManager](https://github.com/wmo-raf/geomanager) is a [Wagtail](https://github.com/wagtail/wagtail) based application that should be installed
+in a Wagtail Project. The Geomanager serves as the backend system for this appliactions.git This means you need to have a Wagtail Project up and running and install the [GeoManager](https://github.com/wmo-raf/geomanager)
 package first. 
 
 Below are the steps to get your started:
