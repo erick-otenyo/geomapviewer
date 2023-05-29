@@ -1,7 +1,10 @@
-import { PureComponent } from "react";
+import { PureComponent, createRef } from "react";
 import bbox from "@turf/bbox";
-import { isEmpty, isEqual } from "lodash";
+import { isEmpty } from "lodash";
 import { connect } from "react-redux";
+import { wrap } from "comlink";
+
+import { parse, end, toSeconds, pattern } from "iso8601-duration";
 
 import * as ownActions from "./actions";
 import { getDatasetProps } from "./selectors";
@@ -13,6 +16,8 @@ const actions = {
 };
 
 class LayerUpdate extends PureComponent {
+  wmsWorkerRef = createRef();
+
   componentDidMount() {
     const { updateInterval } = this.props;
     this.doUpdate({ isInitial: true });
@@ -22,13 +27,41 @@ class LayerUpdate extends PureComponent {
     }
   }
 
+  initWmsWorker = () => {
+    if (!this.wmsWorkerRef.current) {
+      this.wmsWorkerRef.current = wrap(
+        new Worker(new URL("./wms-getcaps-worker.js", import.meta.url))
+      );
+    }
+  };
+
   componentWillUnmount() {
     if (this.interval) {
       clearInterval(this.interval);
     }
   }
 
-  doUpdate = ({ isInitial }) => {
+  getWMSTimestamps = async () => {
+    const { layer } = this.props;
+
+    const {
+      id: layerId,
+      getCapabilitiesUrl,
+      layerName,
+      autoUpdateInterval,
+    } = layer;
+
+    this.initWmsWorker();
+
+    if (this.wmsWorkerRef.current) {
+      return await this.wmsWorkerRef.current.wmsGetLayerTimeFromCapabilities(
+        getCapabilitiesUrl,
+        layerName
+      );
+    }
+  };
+
+  doUpdate = async ({ isInitial }) => {
     const {
       layer,
       getTimestamps,
@@ -43,19 +76,28 @@ class LayerUpdate extends PureComponent {
       zoomToDataExtent,
     } = this.props;
 
-    // update timestamps
-    if (getTimestamps) {
-      console.log(`Updating layer : ${layer}, fetching latest timestamps`);
+    const { id: layerId, layerType } = layer;
 
-      setLayerUpdatingStatus({ [layer]: true });
+    let getLayerTimestamps = getTimestamps;
+
+    if (!getTimestamps && layerType === "wms") {
+      getLayerTimestamps = this.getWMSTimestamps;
+    }
+
+    // update timestamps
+    if (getLayerTimestamps) {
+      console.log(`Updating layer : ${layerId}, fetching latest timestamps`);
+
+      setLayerUpdatingStatus({ [layerId]: true });
 
       if (isInitial) {
-        setLayerLoadingStatus({ [layer]: true });
+        setLayerLoadingStatus({ [layerId]: true });
       }
 
-      getTimestamps()
+      //
+      getLayerTimestamps()
         .then((timestamps) => {
-          setTimestamps({ [layer]: timestamps });
+          setTimestamps({ [layerId]: timestamps });
 
           const newParams = { time: timestamps[timestamps.length - 1] };
 
@@ -67,7 +109,7 @@ class LayerUpdate extends PureComponent {
 
           const newDatasets = activeDatasets.map((l) => {
             const dataset = { ...l };
-            if (l.layers.includes(layer)) {
+            if (l.layers.includes(layerId)) {
               dataset.params = {
                 ...dataset.params,
                 ...newParams,
@@ -80,37 +122,39 @@ class LayerUpdate extends PureComponent {
             datasets: newDatasets,
           });
 
-          setLayerUpdatingStatus({ [layer]: false });
+          setLayerUpdatingStatus({ [layerId]: false });
 
           if (isInitial) {
-            setLayerLoadingStatus({ [layer]: false });
+            setLayerLoadingStatus({ [layerId]: false });
           }
         })
         .catch((err) => {
-          setLayerUpdatingStatus({ [layer]: false });
+          setTimestamps({ [layerId]: [] });
 
-          setLayerLoadingStatus({ [layer]: false });
+          setLayerUpdatingStatus({ [layerId]: false });
+
+          setLayerLoadingStatus({ [layerId]: false });
         });
     }
 
     // update data
     if (getData) {
-      console.log(`Updating layer : ${layer}, fetching latest data`);
+      console.log(`Updating layer : ${layerId}, fetching latest data`);
 
-      setLayerUpdatingStatus({ [layer]: true });
+      setLayerUpdatingStatus({ [layerId]: true });
 
       if (isInitial) {
-        setLayerLoadingStatus({ [layer]: true });
+        setLayerLoadingStatus({ [layerId]: true });
       }
 
       getData()
         .then((data) => {
           if (data) {
-            setGeojsonData({ [layer]: data });
+            setGeojsonData({ [layerId]: data });
             setLayerUpdatingStatus({ [layer]: false });
 
             if (isInitial) {
-              setLayerLoadingStatus({ [layer]: false });
+              setLayerLoadingStatus({ [layerId]: false });
             }
 
             // zoom to data extents
@@ -120,8 +164,8 @@ class LayerUpdate extends PureComponent {
           }
         })
         .catch((err) => {
-          setLayerUpdatingStatus({ [layer]: false });
-          setLayerLoadingStatus({ [layer]: false });
+          setLayerUpdatingStatus({ [layerId]: false });
+          setLayerLoadingStatus({ [layerId]: false });
         });
     }
   };

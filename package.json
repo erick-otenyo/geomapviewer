@@ -54,6 +54,7 @@
     "imagemin-mozjpeg": "8.0.0",
     "imagemin-optipng": "7.1.0",
     "imagemin-svgo": "7.1.0",
+    "iso8601-duration": "^2.1.1",
     "javascript-color-gradient": "^2.4.4",
     "jszip": "^3.10.1",
     "jszip-utils": "^0.1.0",
@@ -118,7 +119,8 @@
     "use-deep-compare-effect": "^1.8.1",
     "viewport-mercator-project": "^7.0.4",
     "webp-loader": "^0.6.0",
-    "wms-capabilities": "^0.6.0"
+    "wms-capabilities": "^0.6.0",
+    "xmldom": "^0.6.0"
   },
   "devDependencies": {
     "eslint": "8.37.0",

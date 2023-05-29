@@ -45,6 +45,7 @@ const MapLegendContent = ({
   onChangeLayer,
   onChangeParam,
   onChangeFilterParam,
+  onChangeLayerSetting,
   onChangeInfo,
   loading,
   className,
@@ -211,6 +212,10 @@ const MapLegendContent = ({
                     return null;
                   }
 
+                  const { autoUpdateInterval, settings = {} } = activeLayer;
+
+                  const { autoUpdateActive = true } = settings;
+
                   //datetime selector
                   if (
                     paramConfig.type === "datetime" &&
@@ -231,6 +236,13 @@ const MapLegendContent = ({
                         onChange={(value) => {
                           onChangeParam(activeLayer, {
                             [paramConfig.key]: value,
+                          });
+                        }}
+                        autoUpdate={Boolean(autoUpdateInterval)}
+                        autoUpdateActive={autoUpdateActive}
+                        onToggleAutoUpdate={() => {
+                          onChangeLayerSetting(activeLayer, {
+                            autoUpdateActive: !autoUpdateActive,
                           });
                         }}
                       />

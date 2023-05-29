@@ -218,6 +218,23 @@ class Legend extends PureComponent {
     setMapSettings({ datasets: newActiveDatasets || [] });
   };
 
+  onChangeLayerSetting = (currentLayer, setting) => {
+    const { setMapSettings, activeDatasets } = this.props;
+
+    setMapSettings({
+      datasets: activeDatasets.map((l) => {
+        const dataset = { ...l };
+        if (l.layers.includes(currentLayer.id)) {
+          dataset.settings = {
+            ...(dataset.settings || {}),
+            ...setting,
+          };
+        }
+        return dataset;
+      }),
+    });
+  };
+
   render() {
     return createElement(Component, {
       ...this.props,
@@ -232,6 +249,7 @@ class Legend extends PureComponent {
       onChangeFilterParam: this.onChangeFilterParam,
       setConfirmed: this.setConfirmed,
       onChangeMapSide: this.onChangeMapSide,
+      onChangeLayerSetting: this.onChangeLayerSetting,
     });
   }
 }

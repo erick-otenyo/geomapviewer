@@ -279,6 +279,7 @@ export const getDatasetsWithConfig = createSelector(
         summary = null,
         layerFilterParams,
         mapSide,
+        settings = {},
       } = layerConfig || {};
 
       return {
@@ -312,11 +313,15 @@ export const getDatasetsWithConfig = createSelector(
                 ...params,
               },
             }),
-
             ...(!isEmpty(l.layerFilterParams) && {
               layerFilterParams: {
                 ...l.layerFilterParams,
                 ...layerFilterParams,
+              },
+            }),
+            ...(!isEmpty(settings) && {
+              settings: {
+                ...settings,
               },
             }),
           };

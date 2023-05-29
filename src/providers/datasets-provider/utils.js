@@ -3,10 +3,17 @@ import { getTimeValuesFromWMS } from "@/utils/wms";
 import { getNextDate } from "@/utils/time";
 
 const rasterFileUpdateProvider = (layer) => {
-  const { id: layerId, currentTimeMethod, autoUpdateInterval } = layer;
+  const {
+    id: layerId,
+    currentTimeMethod,
+    autoUpdateInterval,
+    settings = {},
+  } = layer;
+
+  const { autoUpdateActive = true } = settings;
 
   return {
-    layer: layerId,
+    layer: layer,
     getTimestamps: () => {
       return fetchRasterTimestamps(layerId).then((timestamps) => {
         return timestamps;
@@ -28,9 +35,10 @@ const rasterFileUpdateProvider = (layer) => {
 
       return currentTime;
     },
-    ...(!!autoUpdateInterval && {
-      updateInterval: autoUpdateInterval,
-    }),
+    ...(!!autoUpdateInterval &&
+      autoUpdateActive && {
+        updateInterval: autoUpdateInterval,
+      }),
   };
 };
 
@@ -43,14 +51,7 @@ const wmsUpdateProvider = (layer) => {
   } = layer;
 
   return {
-    layer: layerId,
-    getTimestamps: () => {
-      return getTimeValuesFromWMS(getCapabilitiesUrl, layerName).then(
-        (timestamps) => {
-          return timestamps;
-        }
-      );
-    },
+    layer: layer,
     getCurrentLayerTime: (timestamps) => {
       const nextDate = getNextDate(timestamps);
 

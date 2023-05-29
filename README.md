@@ -28,19 +28,23 @@ Below are general steps to get your started:
 Clone the repo:
 
 ```bash
-$ git clone https://github.com/wmo-raf/geomapviewer.git
+git clone https://github.com/wmo-raf/geomapviewer.git
+```
+
+```bash
+
 ```
 
 Installing dependencies:
 
 ```bash
-$ yarn
+yarn
 ```
 
 Copy the `.env.sample` to `.env`, and start the server:
 
 ```bash
-$ yarn dev
+yarn dev
 ```
 
 The app should now be accessible on [http://0.0.0.0:3000](http://0.0.0.0:3000).

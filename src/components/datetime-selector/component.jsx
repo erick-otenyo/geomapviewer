@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 
 import Icon from "@/components/ui/icon";
 import DateTimePicker from "./components/datepicker";
+import Button from "@/components/ui/button";
+import cx from "classnames";
 
 import { defined } from "@/utils/core";
 
 import prevIcon from "@/assets/icons/prev.svg?sprite";
 import nextIcon from "@/assets/icons/next.svg?sprite";
+import refreshIcon from "@/assets/icons/auto-update.svg?sprite";
 
 import { dFormatter } from "@/utils/date-format";
 
@@ -100,7 +103,14 @@ class DateTimeSelectorSection extends Component {
     let discreteTime;
     let format;
 
-    const { selectedTime, availableDates, dateFormat } = this.props;
+    const {
+      selectedTime,
+      availableDates,
+      dateFormat,
+      autoUpdate,
+      autoUpdateActive,
+      onToggleAutoUpdate,
+    } = this.props;
 
     if (defined(selectedTime)) {
       const time = selectedTime;
@@ -125,7 +135,7 @@ class DateTimeSelectorSection extends Component {
     return (
       <div className="datetimeSelector">
         <div className="datetimeSelectorInner">
-          <div className="datetimeAndPicker">
+          <div className={cx("datetimeAndPicker", { small: autoUpdate })}>
             <button
               className="datetimePrevious"
               disabled={this.isPreviousTimeAvaliable()}
@@ -164,6 +174,18 @@ class DateTimeSelectorSection extends Component {
             />
           </div>
         </div>
+        {autoUpdate && (
+          <Button
+            theme="theme-button-clear"
+            className={cx("datetimeToggleAutoUpdate", {
+              active: autoUpdateActive,
+            })}
+            tooltip={{ text: "Toggle auto-update" }}
+            onClick={onToggleAutoUpdate}
+          >
+            <Icon icon={refreshIcon} className="auto-update-icon" />
+          </Button>
+        )}
       </div>
     );
   }
