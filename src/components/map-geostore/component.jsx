@@ -14,8 +14,6 @@ import { getGeostore } from "@/services/geostore";
 
 import Map from "@/components/ui/map";
 
-import BASEMAPS from "@/components/map/basemaps-sample";
-
 import "./styles.scss";
 
 const DEFAULT_VIEWPORT = {
@@ -24,7 +22,7 @@ const DEFAULT_VIEWPORT = {
   lng: 0,
 };
 
-const { satellite } = BASEMAPS;
+const { satellite } = {};
 
 const basemap = {
   ...satellite,

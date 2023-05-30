@@ -527,6 +527,7 @@ export const getActiveLayers = createSelector(
     return filteredLayers.concat({
       id: geojson.id,
       name: "Geojson",
+      analysisEndpoint: "admin",
       layerConfig: {
         type: "geojson",
         source: {

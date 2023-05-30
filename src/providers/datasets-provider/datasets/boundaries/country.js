@@ -6,6 +6,7 @@ const getCountryBoundaryDataset = (tilesUrl, sourceLayer) => {
       name: "Political Boundaries",
       layer: "political-boundaries",
       isBoundary: true,
+      public: true,
       layers: [
         {
           isBoundary: true,
@@ -32,76 +33,8 @@ const getCountryBoundaryDataset = (tilesUrl, sourceLayer) => {
                   type: "fill",
                 },
                 {
-                  filter: ["all", ["==", "size", "huge"], ["==", "level", 0]],
-                  maxzoom: 3,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: [
-                    "all",
-                    ["==", "size", "very big"],
-                    ["==", "level", 0],
-                  ],
-                  maxzoom: 4,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "big"], ["==", "level", 0]],
-                  maxzoom: 5,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "medium"], ["==", "level", 0]],
+                  filter: ["==", "level", 1],
                   maxzoom: 6,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "small"], ["==", "level", 0]],
-                  maxzoom: 7,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: [
-                    "all",
-                    ["==", "size", "very small"],
-                    ["==", "level", 0],
-                  ],
-                  maxzoom: 8,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "huge"], ["==", "level", 1]],
-                  maxzoom: 5,
                   minzoom: 3,
                   paint: {
                     "fill-color": "#ffffff",
@@ -111,129 +44,8 @@ const getCountryBoundaryDataset = (tilesUrl, sourceLayer) => {
                   type: "fill",
                 },
                 {
-                  filter: [
-                    "all",
-                    ["==", "size", "very big"],
-                    ["==", "level", 1],
-                  ],
-                  maxzoom: 6,
-                  minzoom: 4,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "big"], ["==", "level", 1]],
-                  maxzoom: 7,
-                  minzoom: 5,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "medium"], ["==", "level", 1]],
-                  maxzoom: 8,
+                  filter: ["==", "level", 2],
                   minzoom: 6,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "small"], ["==", "level", 1]],
-                  maxzoom: 8,
-                  minzoom: 7,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: [
-                    "all",
-                    ["==", "size", "very small"],
-                    ["==", "level", 1],
-                  ],
-                  maxzoom: 9,
-                  minzoom: 8,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "huge"], ["==", "level", 2]],
-                  minzoom: 5,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: [
-                    "all",
-                    ["==", "size", "very big"],
-                    ["==", "level", 2],
-                  ],
-                  minzoom: 6,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "big"], ["==", "level", 2]],
-                  minzoom: 7,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "medium"], ["==", "level", 2]],
-                  minzoom: 8,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: ["all", ["==", "size", "small"], ["==", "level", 2]],
-                  minzoom: 8,
-                  paint: {
-                    "fill-color": "#ffffff",
-                    "fill-opacity": 0,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "fill",
-                },
-                {
-                  filter: [
-                    "all",
-                    ["==", "size", "very small"],
-                    ["==", "level", 2],
-                  ],
-                  minzoom: 9,
                   paint: {
                     "fill-color": "#ffffff",
                     "fill-opacity": 0,
@@ -245,7 +57,7 @@ const getCountryBoundaryDataset = (tilesUrl, sourceLayer) => {
                   filter: ["==", "level", 0],
                   paint: {
                     "line-color": "#C0FF24",
-                    "line-width": 2,
+                    "line-width": 1,
                     "line-offset": 1,
                   },
                   "source-layer": sourceLayer,
@@ -255,14 +67,14 @@ const getCountryBoundaryDataset = (tilesUrl, sourceLayer) => {
                   filter: ["==", "level", 0],
                   paint: {
                     "line-color": "#000",
-                    "line-width": 2.5,
+                    "line-width": 1.5,
                   },
                   "source-layer": sourceLayer,
                   type: "line",
                 },
                 {
-                  filter: ["all", ["==", "size", "huge"], ["==", "level", 1]],
-                  maxzoom: 5,
+                  filter: ["==", "level", 1],
+                  maxzoom: 6,
                   minzoom: 3,
                   paint: {
                     "line-color": "#8b8b8b",
@@ -272,134 +84,8 @@ const getCountryBoundaryDataset = (tilesUrl, sourceLayer) => {
                   type: "line",
                 },
                 {
-                  filter: [
-                    "all",
-                    ["==", "size", "very big"],
-                    ["==", "level", 1],
-                  ],
-                  maxzoom: 6,
-                  minzoom: 4,
-                  paint: {
-                    "line-color": "#8b8b8b",
-                    "line-width": 1,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "line",
-                },
-                {
-                  filter: ["all", ["==", "size", "big"], ["==", "level", 1]],
-                  maxzoom: 7,
-                  minzoom: 5,
-                  paint: {
-                    "line-color": "#8b8b8b",
-                    "line-width": 1,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "line",
-                },
-                {
-                  filter: ["all", ["==", "size", "medium"], ["==", "level", 1]],
-                  maxzoom: 8,
+                  filter: ["==", "level", 2],
                   minzoom: 6,
-                  paint: {
-                    "line-color": "#8b8b8b",
-                    "line-width": 1,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "line",
-                },
-                {
-                  filter: ["all", ["==", "size", "small"], ["==", "level", 1]],
-                  maxzoom: 8,
-                  minzoom: 7,
-                  paint: {
-                    "line-color": "#8b8b8b",
-                    "line-width": 1,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "line",
-                },
-                {
-                  filter: [
-                    "all",
-                    ["==", "size", "very small"],
-                    ["==", "level", 1],
-                  ],
-                  maxzoom: 9,
-                  minzoom: 8,
-                  paint: {
-                    "line-color": "#8b8b8b",
-                    "line-width": 1,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "line",
-                },
-                {
-                  filter: ["all", ["==", "size", "huge"], ["==", "level", 2]],
-                  minzoom: 5,
-                  paint: {
-                    "line-color": "#444444",
-                    "line-dasharray": [2, 4],
-                    "line-width": 0.7,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "line",
-                },
-                {
-                  filter: [
-                    "all",
-                    ["==", "size", "very big"],
-                    ["==", "level", 2],
-                  ],
-                  minzoom: 6,
-                  paint: {
-                    "line-color": "#444444",
-                    "line-dasharray": [2, 4],
-                    "line-width": 0.7,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "line",
-                },
-                {
-                  filter: ["all", ["==", "size", "big"], ["==", "level", 2]],
-                  minzoom: 7,
-                  paint: {
-                    "line-color": "#444444",
-                    "line-dasharray": [2, 4],
-                    "line-width": 0.7,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "line",
-                },
-                {
-                  filter: ["all", ["==", "size", "medium"], ["==", "level", 2]],
-                  minzoom: 8,
-                  paint: {
-                    "line-color": "#444444",
-                    "line-dasharray": [2, 4],
-                    "line-width": 0.7,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "line",
-                },
-                {
-                  filter: ["all", ["==", "size", "small"], ["==", "level", 2]],
-                  minzoom: 8,
-                  paint: {
-                    "line-color": "#444444",
-                    "line-dasharray": [2, 4],
-                    "line-width": 0.7,
-                  },
-                  "source-layer": sourceLayer,
-                  type: "line",
-                },
-                {
-                  filter: [
-                    "all",
-                    ["==", "size", "very small"],
-                    ["==", "level", 2],
-                  ],
-                  minzoom: 9,
                   paint: {
                     "line-color": "#444444",
                     "line-dasharray": [2, 4],

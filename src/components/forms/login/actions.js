@@ -14,12 +14,12 @@ export const loginUser = createThunkAction(
           dispatch(getUserProfile());
         }
       })
-      .catch((error) => {
-        const { errors } = (error.response && error.response.data) || {};
+      .catch((err) => {
+        const error = (err.response && err.response.data) || {};
 
         return {
           [FORM_ERROR]:
-            (errors && errors[0].detail) || (error.message && error.message),
+            (error && error.detail) || (error.message && error.message),
         };
       })
 );
@@ -29,11 +29,17 @@ export const registerUser = createThunkAction(
   (data) => () =>
     register(data)
       .then(() => {})
-      .catch((error) => {
-        const { errors } = error.response.data;
+      .catch((err) => {
+        const error = err.response.data;
+
+        let message = "Error occured. Please try again later";
+
+        if (error.username) {
+          message = error.username[0];
+        }
 
         return {
-          [FORM_ERROR]: errors[0].detail,
+          [FORM_ERROR]: message,
         };
       })
 );
@@ -43,11 +49,17 @@ export const resetUserPassword = createThunkAction(
   (data) => () =>
     resetPassword(data)
       .then(() => {})
-      .catch((error) => {
-        const { errors } = error.response.data;
+      .catch((err) => {
+        const error = err.response.data;
+
+        let message = "Error occured. Please try again later"
+
+        if(error.username){
+          message = error.username
+        }
 
         return {
-          [FORM_ERROR]: errors[0].detail,
+          [FORM_ERROR]: message,
         };
       })
 );

@@ -31,7 +31,7 @@ class Popup extends Component {
   };
 
   state = {
-    useClickedPoint: false,
+    useClickedPoint: true,
   };
 
   componentDidUpdate(prevProps) {

@@ -62,15 +62,22 @@ export const getExploreType = createSelector(
 
 // build datasets with available countries data
 export const getDatasetSections = createSelector(
-  [getApiSections, getDatasets],
-  (apiSections, datasets) => {
+  [getApiSections, getDatasets, selectLoggedIn],
+  (apiSections, allDatasets, loggedIn) => {
     const sections = apiSections.map((section) => ({
       ...section,
       icon: icons[section.icon] ? icons[section.icon] : { id: section.icon },
       Component: Datasets,
     }));
 
-    if (isEmpty(datasets)) return sections;
+    if (isEmpty(allDatasets)) return sections;
+
+    let datasets = allDatasets;
+
+    // show only public datasets if not logged in
+    if (!loggedIn) {
+      datasets = allDatasets.filter((d) => d.public);
+    }
 
     // loop thru each section
     return (

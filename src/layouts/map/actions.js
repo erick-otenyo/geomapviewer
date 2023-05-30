@@ -23,6 +23,7 @@ export const setMainMapAnalysisView = createThunkAction(
           type: "point",
           adm0: latlng.lat,
           adm1: latlng.lng,
+          adm2: "latlng",
         };
       } else {
         if (data) {

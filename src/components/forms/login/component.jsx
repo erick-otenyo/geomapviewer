@@ -119,10 +119,9 @@ class LoginForm extends PureComponent {
                 <Fragment>
                   {!simple && (
                     <Column>
-                      <h1>Login to my HW</h1>
+                      <h1>Login</h1>
                       <h3>
-                        Log in is required so you can view, manage, and delete
-                        your data and areas of interest.
+                        <p>Log in to manage your account</p>
                       </h3>
                     </Column>
                   )}
@@ -136,7 +135,7 @@ class LoginForm extends PureComponent {
                     )}
                     <form className="c-login-form" onSubmit={handleSubmit}>
                       <Input
-                        name="email"
+                        name="username"
                         type="email"
                         label="email"
                         validate={[email]}

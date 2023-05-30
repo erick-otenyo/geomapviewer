@@ -1,0 +1,186 @@
+@import "@/styles/settings.scss";
+
+.c-aoi-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  @media screen and (min-width: $screen-m) {
+    flex-direction: row;
+  }
+
+  .aoi-card-map {
+    width: 100%;
+    min-width: 100%;
+    height: rem(120px);
+    background: $border;
+    margin-bottom: rem(20px);
+    overflow: hidden;
+
+    .tile-loader {
+      background-color: $border;
+    }
+
+    @media screen and (min-width: $screen-m) {
+      margin-right: rem(15px);
+      width: rem(140px);
+      min-width: rem(140px);
+      height: rem(140px);
+      margin-bottom: 0;
+    }
+  }
+
+  .item-body {
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      line-height: rem(25px);
+      margin-bottom: rem(10px);
+      font-size: rem(18px);
+      color: $slate-light;
+      margin-right: 20px;
+
+      @media screen and (min-width: $screen-m) {
+        margin-right: 0;
+      }
+    }
+
+    .created {
+      font-size: rem(12px);
+      color: $grey;
+      margin-bottom: rem(8px);
+    }
+
+    .tags,
+    .subscribed {
+      margin-right: rem(20px);
+      display: flex;
+      margin-bottom: rem(8px);
+
+      p,
+      button {
+        font-size: rem(12px);
+        color: $grey;
+        line-height: rem(16px);
+        text-align: left;
+      }
+
+      button {
+        padding-bottom: 0;
+      }
+
+      button:hover {
+        color: $slate;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      svg {
+        margin-right: rem(4px);
+      }
+
+      .subscribed-icon {
+        min-width: rem(15px);
+      }
+
+      .warning-icon {
+        min-width: rem(12px);
+      }
+    }
+
+    .activity {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      color: $slate;
+      margin-bottom: 15px;
+      font-size: rem(12px);
+
+      @media screen and (min-width: $screen-m) {
+        flex-wrap: nowrap;
+        margin-bottom: 0;
+      }
+
+      p {
+        font-size: rem(12px);
+        display: inline-block;
+      }
+
+      > span {
+        margin-right: rem(20px);
+      }
+
+      .activity-intro {
+        width: 100%;
+        margin-bottom: rem(10px);
+
+        @media screen and (min-width: $screen-m) {
+          width: auto;
+          margin-bottom: 0;
+        }
+      }
+
+      .glad,
+      .glad p {
+        color: $loss;
+      }
+
+      .viirs,
+      .viirs p {
+        color: $fires;
+      }
+
+      .data-error-msg {
+        color: $error;
+        font-weight: 500;
+      }
+
+      .glad,
+      .viirs {
+        min-width: rem(100px);
+
+        svg {
+          margin-top: rem(6px);
+        }
+      }
+
+      .activity-data {
+        font-size: rem(16px);
+        font-weight: 500;
+      }
+    }
+  }
+
+  &.simple {
+    flex-direction: row;
+
+    .item-body {
+      @media screen and (min-width: $screen-m) {
+        max-width: rem(150px);
+      }
+    }
+
+    .aoi-card-map {
+      width: rem(76px);
+      height: rem(76px);
+      min-width: rem(76px);
+      margin-bottom: 0;
+      margin-right: 20px;
+
+      @media screen and (min-width: $screen-m) {
+        width: rem(76px);
+        height: rem(76px);
+        min-width: rem(76px);
+      }
+    }
+
+    .title {
+      font-size: rem(14px);
+      margin-bottom: 0;
+      padding-bottom: rem(5px);
+      padding-right: rem(5px);
+      line-height: 1.4;
+    }
+  }
+}

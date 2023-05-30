@@ -1,4 +1,4 @@
-@import '@/styles/settings.scss';
+@import "@/styles/settings.scss";
 
 .c-profile-form {
   max-width: rem(500px);
@@ -49,5 +49,6 @@
     margin: auto;
     width: rem(200px);
     margin-top: rem(30px);
+    background-color: $primary-color;
   }
 }

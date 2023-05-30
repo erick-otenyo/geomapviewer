@@ -2,6 +2,22 @@ import { apiRequest, apiAuthRequest } from "@/utils/request";
 
 const isServer = typeof window === "undefined";
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 export function setServerCookie(token) {
   fetch("/api/set-cookie", { method: "POST", body: JSON.stringify({ token }) });
 }
@@ -23,34 +39,67 @@ export const setRefreshToken = (token) => {
   }
 };
 
-export const login = (formData) =>
-  apiRequest({
+export const login = async (formData) => {
+  const csrfToken = getCookie("csrftoken");
+  const headers = {};
+  if (csrfToken) {
+    headers["X-CSRFToken"] = csrfToken;
+  }
+
+  const response = await apiRequest({
     method: "POST",
-    url: "/auth/login",
+    url: "/auth/token/",
     data: formData,
-  }).then((response) => {
-    if (response.status < 400 && response.data) {
-      const { data } = response;
-
-      setUserToken(data.token);
-      setRefreshToken(data.refreshToken);
-    }
-
-    return response;
+    headers: headers,
   });
 
-export const register = (formData) =>
-  apiRequest.post("/auth/sign-up", { ...formData });
+  if (response.status < 400 && response.data) {
+    const { data } = response;
 
-export const resetPassword = (formData) =>
-  apiRequest.post("/auth/reset-password", formData);
+    setUserToken(data.access);
+    setRefreshToken(data.refresh);
+  }
+  return response;
+};
 
-export const updateProfile = (id, data) =>
-  apiAuthRequest({
+export const register = (formData) => {
+  const csrfToken = getCookie("csrftoken");
+  const headers = {};
+  if (csrfToken) {
+    headers["X-CSRFToken"] = csrfToken;
+  }
+  return apiRequest.post(
+    "/auth/register/",
+    { ...formData },
+    { headers: headers }
+  );
+};
+
+export const resetPassword = (formData) => {
+  const csrfToken = getCookie("csrftoken");
+  const headers = {};
+  if (csrfToken) {
+    headers["X-CSRFToken"] = csrfToken;
+  }
+  return apiRequest.post("/auth/reset-password/", formData, {
+    headers: headers,
+  });
+};
+
+export const updateProfile = (id, data) => {
+  const csrfToken = getCookie("csrftoken");
+  const headers = {};
+  if (csrfToken) {
+    headers["X-CSRFToken"] = csrfToken;
+  }
+
+  return apiAuthRequest({
     method: "PATCH",
     data,
-    url: `/user/${id}`,
+    url: `/geomanager/user/${id}/`,
+    headers: headers,
   });
+};
 
 export const checkLoggedIn = (token) => {
   if (
@@ -60,30 +109,37 @@ export const checkLoggedIn = (token) => {
     setUserToken(token);
   }
 
+  const csrfToken = getCookie("csrftoken");
+  const headers = {};
+  if (csrfToken) {
+    headers["X-CSRFToken"] = csrfToken;
+  }
+
   const refreshToken = localStorage.getItem("refreshToken");
 
   let payload = {};
 
   if (refreshToken) {
     payload = {
-      refreshToken: refreshToken,
-      grantType: "refresh_token",
+      refresh: refreshToken,
+      token: token,
     };
   }
 
-  return apiAuthRequest.post("/auth/check-logged", payload).then((res) => {
-    const { access_token, refresh_token } = res.data;
+  return apiAuthRequest
+    .post("/auth/token/verify/", payload, { headers: headers })
+    .then((res) => {
+      const { access } = res.data;
 
-    if (access_token && refresh_token) {
-      setUserToken(access_token);
-      setRefreshToken(refresh_token);
-    }
+      if (access) {
+        setUserToken(access);
+      }
 
-    return res;
-  });
+      return res;
+    });
 };
 
-export const getProfile = (id) => apiAuthRequest.get(`/user/${id}`);
+export const getProfile = (id) => apiAuthRequest.get(`/geomanager/user/${id}`);
 
 export const logout = () => {
   const refreshToken = localStorage.getItem("refreshToken");
