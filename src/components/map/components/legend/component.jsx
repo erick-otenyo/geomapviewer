@@ -36,6 +36,7 @@ import moveRightIcon from "@/assets/icons/move-right.svg?sprite";
 
 import "./styles.scss";
 import "./themes/vizzuality-legend.scss";
+import LayerSettings from "@/components/layer-settings/component";
 
 const MapLegendContent = ({
   layerGroups,
@@ -54,6 +55,7 @@ const MapLegendContent = ({
   activeCompareSide,
   comparing,
   mapSide,
+  location,
   ...rest
 }) => {
   let filteredLayerGroups = layerGroups;
@@ -277,6 +279,21 @@ const MapLegendContent = ({
                   return null;
                 })}
             </div>
+
+            {activeLayer && (
+              <div className="settings-toggle">
+                <LayerSettings
+                  layer={activeLayer}
+                  location={location}
+                  onToggleSetting={(setting, isActive) => {
+                    onChangeLayerSetting(activeLayer, {
+                      [setting]: isActive,
+                    });
+                  }}
+                />
+              </div>
+            )}
+
             {activeLayer &&
               layerFilterParams &&
               layerFilterParamsConfig &&
@@ -425,6 +442,7 @@ MapLegend.propTypes = {
   onChangeLayer: PropTypes.func,
   onChangeInfo: PropTypes.func,
   layers: PropTypes.array,
+  location: PropTypes.object,
 };
 
 export default MapLegend;

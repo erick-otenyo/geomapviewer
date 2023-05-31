@@ -16,6 +16,7 @@ const selectCountryDataLoading = (state) =>
   state.countryData && state.countryData.loading;
 const selectLayerTimestamps = (state) =>
   state.datasets && state.datasets.timestamps;
+const getLocation = (state) => state.location && state.location.payload;
 
 export const getLoading = createSelector(
   [selectDatasetsLoading, selectCountryDataLoading],
@@ -106,4 +107,5 @@ export const getLegendProps = createStructuredSelector({
   activeLayers: getActiveLayers,
   compareLinks: getLegendCompareLinks,
   activeCompareSide: getActiveCompareSide,
+  location: getLocation,
 });

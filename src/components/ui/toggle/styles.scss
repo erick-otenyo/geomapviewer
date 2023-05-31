@@ -1,4 +1,4 @@
-@import '@/styles/settings.scss';
+@import "@/styles/settings.scss";
 
 .c-toggle {
   width: rem(16px);
@@ -10,7 +10,7 @@
   cursor: pointer;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 2px;
     width: 6px;

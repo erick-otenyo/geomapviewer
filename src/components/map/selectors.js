@@ -422,11 +422,13 @@ export const getLayersWithData = createSelector(
 );
 
 export const getLayersWithParams = createSelector(
-  [getLayersWithData, selectDatasetParams],
-  (layers, datasetParams) => {
+  [getLayersWithData, selectDatasetParams, selectGeostore],
+  (layers, datasetParams, geostore) => {
     if (isEmpty(layers)) return null;
+
     return layers.map((l) => {
       const layer = { ...l };
+
       if (
         layer.dataset &&
         !isEmpty(datasetParams) &&
@@ -443,12 +445,45 @@ export const getLayersWithParams = createSelector(
   }
 );
 
-// flatten datasets into layers for the layer manager
-export const getAllLayers = createSelector(getLayersWithParams, (layers) => {
-  if (isEmpty(layers)) return null;
+export const getLayersWithSettingsParams = createSelector(
+  [getLayersWithParams, selectGeostore],
+  (layers, geostore) => {
+    if (isEmpty(layers)) return null;
 
-  return layers;
-});
+    return layers.map((l) => {
+      const layer = { ...l };
+
+      const { settings = {}, canClip } = layer;
+      const settingsParams = {};
+
+      if (canClip) {
+        if (settings.clippingActive && geostore && geostore.id) {
+          settingsParams["geostore_id"] = geostore.id;
+        } else {
+          settingsParams["geostore_id"] = "";
+        }
+      }
+
+      if (layer.dataset && !isEmpty(settingsParams)) {
+        layer.params = {
+          ...layer.params,
+          ...settingsParams,
+        };
+      }
+      return layer;
+    });
+  }
+);
+
+// flatten datasets into layers for the layer manager
+export const getAllLayers = createSelector(
+  getLayersWithSettingsParams,
+  (layers) => {
+    if (isEmpty(layers)) return null;
+
+    return layers;
+  }
+);
 
 // all layers for importing by other components
 export const getActiveLayers = createSelector(

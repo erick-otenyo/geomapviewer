@@ -11,8 +11,6 @@ export const selectmapLocationGeostore = (state) =>
   state.geostore && state.geostore.mapLocationGeostore;
 export const selectLocation = (state) =>
   state.location && state.location.payload;
-export const selectClipToGeostore = (state) =>
-  state.map?.settings?.clipToGeostore;
 const selectMapLocationContext = (state) =>
   state.mapMenu?.settings?.mapLocationContext;
 const selectDatasetParams = (state) => state.datasets?.params;
@@ -54,7 +52,6 @@ export const getDatasetProps = createStructuredSelector({
   geostore: selectGeostore,
   mapLocationGeostore: selectmapLocationGeostore,
   location: selectLocation,
-  clipToGeostore: selectClipToGeostore,
   mapLocationContext: selectMapLocationContext,
   datasetParams: selectDatasetParams,
 });

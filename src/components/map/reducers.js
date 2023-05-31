@@ -38,7 +38,6 @@ export const initialState = {
     comparing: false,
     activeCompareSide: null,
     drawingMode: "draw_polygon",
-    clipToGeostore: false,
     mapBounds: [],
     datasets: [
       // admin boundaries

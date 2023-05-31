@@ -44,7 +44,6 @@ const Basemaps = ({
   selectBasemap,
   onClose,
   setMapSettings,
-  clipToGeostore,
 }) => {
   const [showBasemaps, setShowBasemaps] = useState(false);
   const selectedBoundaries = activeBoundaries
@@ -153,31 +152,6 @@ const Basemaps = ({
             onSelectBasemap={selectBasemap}
           />
         )}
-        {/* {isDesktop && (
-          <div className="analysis-settings">
-            <Row>
-              <Column>
-                <Desktop>
-                  <h4>Settings</h4>
-                </Desktop>
-              </Column>
-              <Column>
-                <Row>
-                  <div className="setting-toggle ">
-                    <Toggle
-                      theme="toggle-large"
-                      value={clipToGeostore}
-                      onToggle={() =>
-                        setMapSettings({ clipToGeostore: !clipToGeostore })
-                      }
-                    />
-                    <div>Clip To Boundary</div>
-                  </div>
-                </Row>
-              </Column>
-            </Row>
-          </div>
-        )} */}
       </div>
     </div>
   );

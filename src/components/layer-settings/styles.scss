@@ -1,0 +1,10 @@
+@import "@/styles/settings";
+
+.setting-toggle {
+  display: flex;
+  align-items: center;
+
+  .setting-label {
+    margin-left: 8px;
+  }
+}

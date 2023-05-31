@@ -25,7 +25,6 @@ const getAnalysisLoading = (state) => state.analysis && state.analysis.loading;
 const getDatasets = (state) => state.datasets && state.datasets.data;
 const getLocation = (state) => state.location && state.location.payload;
 const getApiSections = (state) => (state.config && state.config.sections) || [];
-const selectClipToGeostore = (state) => state.map?.settings?.clipToGeostore;
 export const selectmapLocationGeostore = (state) =>
   state.geostore && state.geostore.mapLocationGeostore;
 const selectLoggedIn = (state) => state.auth?.data?.loggedIn;
@@ -265,7 +264,6 @@ export const getMenuProps = createStructuredSelector({
   zoom: getMapZoom,
   comparing: getComparing,
   activeCompareSide: getActiveCompareSide,
-  clipToGeostore: selectClipToGeostore,
   geostore: selectGeostore,
   mapLocationGeostore: selectmapLocationGeostore,
   allDatasets: getDatasets,
