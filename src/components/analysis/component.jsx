@@ -45,6 +45,7 @@ class AnalysisComponent extends PureComponent {
       endpoints,
       widgetLayers,
     } = this.props;
+
     const hasLayers = endpoints && !!endpoints.length;
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
 

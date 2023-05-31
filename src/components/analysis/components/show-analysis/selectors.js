@@ -10,6 +10,7 @@ import { getWidgetLayers, getLoading } from "@/components/analysis/selectors";
 const selectLocation = (state) => state.location && state.location.payload;
 const selectData = (state) => state.analysis && state.analysis.data;
 const selectError = (state) => state.analysis && state.analysis.error;
+const selectGeostore = (state) => state.geostore && state.geostore.data;
 
 export const getDataFromLayers = createSelector(
   [getActiveLayers, selectData, selectLocation, getWidgetLayers],
@@ -79,4 +80,5 @@ export const getShowAnalysisProps = createStructuredSelector({
   zoomLevel: getMapZoom,
   analysisTitle: getGeodescriberTitle,
   location: selectLocation,
+  geostore: selectGeostore,
 });

@@ -7,6 +7,7 @@ import NoContent from "@/components/ui/no-content";
 import Button from "@/components/ui/button";
 import Widgets from "@/components/widgets";
 import DynamicSentence from "@/components/ui/dynamic-sentence";
+import LayersFeatureInfo from "./layers-feature-info";
 
 import arrowDownIcon from "@/assets/icons/arrow-down.svg?sprite";
 import shareIcon from "@/assets/icons/share.svg?sprite";
@@ -33,6 +34,7 @@ class ShowAnalysis extends PureComponent {
     zoomLevel: PropTypes.number,
     showAnalysisDisclaimer: PropTypes.bool,
     location: PropTypes.object,
+    geostore: PropTypes.object,
   };
 
   state = {
@@ -51,9 +53,32 @@ class ShowAnalysis extends PureComponent {
       zoomLevel,
       analysisTitle,
       analysisDescription,
+      layers,
+      location,
+      geostore,
     } = this.props;
 
     const hasWidgets = widgetLayers && !!widgetLayers.length;
+
+    const adminLocationTypes = ["country", "geostore", "aoi"];
+
+    const { type: locationType } = location;
+
+    const layersWithFeatureInfoAnalysis = layers.filter(
+      (l) =>
+        l.analysisConfig &&
+        l.analysisConfig.find(
+          (config) =>
+            config.locationType === locationType ||
+            (config.locationType === "admin" &&
+              adminLocationTypes.includes(locationType))
+        )
+    );
+
+    const hasLayersWithFeatureInfo =
+      layersWithFeatureInfoAnalysis && !!layersWithFeatureInfoAnalysis.length;
+
+    const hasAnalysisLayers = hasLayers || hasLayersWithFeatureInfo;
 
     return (
       <div className="c-show-analysis">
@@ -105,26 +130,37 @@ class ShowAnalysis extends PureComponent {
               sentence={analysisDescription}
             />
           )}
+
           <div className="results">
-            {hasLayers &&
+            {hasAnalysisLayers &&
+              !hasLayersWithFeatureInfo &&
               !hasWidgets &&
               !loading &&
               !error &&
               isEmpty(data) && (
                 <NoContent message="No analysis data available" />
               )}
-            {!hasLayers && !hasWidgets && !loading && (
+
+            {hasLayersWithFeatureInfo && (
+              <LayersFeatureInfo
+                location={location}
+                layers={layersWithFeatureInfoAnalysis}
+                geostore={geostore}
+              />
+            )}
+
+            {!hasAnalysisLayers && !hasWidgets && !loading && (
               <NoContent>Select a data layer to analyze.</NoContent>
             )}
-            {(hasLayers || hasWidgets) && !loading && !error && (
+
+            {(hasAnalysisLayers || hasWidgets) && !loading && !error && (
               <Fragment>
                 <Widgets simple analysis />
                 <div className="disclaimers">
                   {zoomLevel < 11 && (
                     <p>
-                      The results are approximated by sampling the
-                      selected area. Results are more accurate at closer zoom
-                      levels.
+                      The results are approximated by sampling the selected
+                      area. Results are more accurate at closer zoom levels.
                     </p>
                   )}
                 </div>

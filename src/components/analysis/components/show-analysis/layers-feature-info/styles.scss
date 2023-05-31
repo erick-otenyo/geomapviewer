@@ -1,0 +1,51 @@
+@import "@/styles/settings";
+
+.feature-info {
+  padding: 15px 0;
+  border-bottom: solid 1px #e5e5df;
+  position: relative;
+
+  .feature-info-layer {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #555;
+    text-transform: uppercase;
+    line-height: 1.54;
+
+    .c-icon {
+      fill: $primary-color;
+      margin-right: 4px;
+    }
+  }
+
+  .feature-info-items {
+    font-size: 14px;
+    padding-top: 8px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+      .label {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        margin-right: 4px;
+
+        .c-icon {
+          fill: $primary-color;
+          margin-right: 8px;
+        }
+      }
+
+      &.date {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
