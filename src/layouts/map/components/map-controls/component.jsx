@@ -311,7 +311,10 @@ class MapControlsButtons extends PureComponent {
               !isServer &&
               (window.location.href.includes("embed")
                 ? window.location.href
-                : window.location.href.replace("/map", "/embed/map")),
+                : window.location.href.replace(
+                    "/mapviewer",
+                    "/embed/mapviewer"
+                  )),
           })
         }
         tooltip={{ text: "Share or embed this view" }}
@@ -322,13 +325,14 @@ class MapControlsButtons extends PureComponent {
   }
 
   renderMapReloadButton() {
+    const { location } = this.props;
     return (
       <Button
         className="map-control -reload"
         theme="theme-button-map-control"
         onClick={() => {
           // reload map page without query params
-          window.location = window.location.pathname;
+          window.location = "/mapviewer";
         }}
         tooltip={{ text: "Reload Map" }}
       >
@@ -493,6 +497,7 @@ MapControlsButtons.propTypes = {
   metaModalOpen: PropTypes.bool,
   printRequests: PropTypes.number,
   mapPrinting: PropTypes.bool,
+  location: PropTypes.object,
 };
 
 export default connect()(MapControlsButtons);
