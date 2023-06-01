@@ -73,6 +73,8 @@ export const getGeodescriberTitle = createSelector(
       const lng = Number(location.adm1).toFixed(2);
 
       return { sentence: `Clicked Point - Lat ${lat}, Lng: ${lng}` };
+    } else if (location.type === "geostore") {
+      return { sentence: "Custom drawn Area" };
     }
 
     return {
