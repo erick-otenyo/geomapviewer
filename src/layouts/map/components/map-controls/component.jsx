@@ -307,14 +307,6 @@ class MapControlsButtons extends PureComponent {
               (window.location.href.includes("embed")
                 ? window.location.href.replace("/embed", "")
                 : window.location.href),
-            embedUrl:
-              !isServer &&
-              (window.location.href.includes("embed")
-                ? window.location.href
-                : window.location.href.replace(
-                    "/mapviewer",
-                    "/embed/mapviewer"
-                  )),
           })
         }
         tooltip={{ text: "Share or embed this view" }}
