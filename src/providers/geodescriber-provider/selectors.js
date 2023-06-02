@@ -2,6 +2,7 @@ import { createSelector, createStructuredSelector } from "reselect";
 import isEmpty from "lodash/isEmpty";
 
 import { getDataLocation, buildFullLocationName } from "@/utils/location";
+import { getActiveArea } from "@/providers/aoi-provider/selectors";
 
 export const selectGeojson = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.geojson;
@@ -66,8 +67,18 @@ export const getAdminLocationName = createSelector(
 );
 
 export const getGeodescriberTitle = createSelector(
-  [getDataLocation, getAdminLocationName],
-  (location, adminTitle) => {
+  [getDataLocation, getAdminLocationName, getActiveArea],
+  (location, adminTitle, activeArea) => {
+    if (
+      (location.type === "aoi" || location.areaId) &&
+      activeArea &&
+      activeArea.userArea
+    ) {
+      return {
+        sentence: activeArea.name,
+      };
+    }
+
     if (location.type === "point" && location.adm0 && location.adm1) {
       const lat = Number(location.adm0).toFixed(2);
       const lng = Number(location.adm1).toFixed(2);
