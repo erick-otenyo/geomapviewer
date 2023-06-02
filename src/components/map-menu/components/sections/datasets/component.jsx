@@ -20,7 +20,7 @@ class Datasets extends PureComponent {
       <div className="login-header">
         <h3 className="title-login">Please log in</h3>
         <p>Log in is required so you can view datasets in this section</p>
-        <LoginForm className="myhw-login" simple narrow />
+        <LoginForm className="my-account-login" simple narrow />
       </div>
     );
   }

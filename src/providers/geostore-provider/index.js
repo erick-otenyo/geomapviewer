@@ -41,34 +41,35 @@ class GeostoreProvider extends PureComponent {
       activeArea,
       clearGeostore,
     } = this.props;
+
     const hasAdm0Changed = adm0 && adm0 !== prevProps.location.adm0;
     const hasAdm1Changed = adm0 && adm1 !== prevProps.location.adm1;
     const hasAdm2Changed = adm0 && adm1 && adm2 !== prevProps.location.adm2;
     const hasAoiChanged =
       activeArea && !isEqual(activeArea, prevProps.activeArea);
 
-    if (type !== "point") {
-      if (!adm0 && adm0 !== prevProps.location.adm0) {
-        this.cancelGeostoreFetch();
-        clearGeostore({});
-      }
+    if (!adm0 && adm0 !== prevProps.location.adm0) {
+      this.cancelGeostoreFetch();
+      clearGeostore({});
+    }
 
-      if (
-        (type !== "aoi" && hasAdm0Changed) ||
-        hasAdm1Changed ||
-        hasAdm2Changed ||
-        hasAoiChanged
-      ) {
-        this.handleGetGeostore();
-      }
+    if (
+      (type !== "aoi" && hasAdm0Changed) ||
+      hasAdm1Changed ||
+      hasAdm2Changed ||
+      hasAoiChanged
+    ) {
+      this.handleGetGeostore();
     }
   }
 
   handleGetGeostore = () => {
     const { type } = this.props.location;
+
     if (type !== "point") {
       this.cancelGeostoreFetch();
       this.geostoreFetch = cancelToken();
+
       this.props.fetchGeostore({
         ...this.props.location,
         token: this.geostoreFetch.token,

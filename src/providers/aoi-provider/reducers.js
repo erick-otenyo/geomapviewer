@@ -1,5 +1,5 @@
-import findIndex from 'lodash/findIndex';
-import * as actions from './actions';
+import findIndex from "lodash/findIndex";
+import * as actions from "./actions";
 
 export const initialState = {
   loading: false,
@@ -8,27 +8,17 @@ export const initialState = {
 };
 
 const setAreaLocation = (area) => {
-  const { geostore, use, admin, wdpaid } = area || {};
+  const { geostore_id, adm0, adm1, adm2 } = area || {};
+
   return {
-    type: 'geostore',
-    adm0: geostore,
-    ...(admin &&
-      admin.adm0 && {
-        type: 'country',
-        adm0: admin.adm0,
-        adm1: admin.adm1,
-        adm2: admin.adm2,
-      }),
-    ...(wdpaid && {
-      type: 'wdpa',
-      adm0: wdpaid,
+    type: "geostore",
+    adm0: geostore_id,
+    ...(adm0 && {
+      type: "country",
+      adm0: admin.adm0,
+      adm1: admin.adm1,
+      adm2: admin.adm2,
     }),
-    ...(use?.id &&
-      use?.name && {
-        type: 'use',
-        adm0: use?.name,
-        adm1: use?.id,
-      }),
   };
 };
 
@@ -45,8 +35,9 @@ const setArea = (state, { payload }) => {
     ...payload,
     location: setAreaLocation(payload),
   };
+
   const { data: areas } = state;
-  const index = findIndex(areas, ['id', area.id]);
+  const index = findIndex(areas, ["id", area.id]);
   const data = [...areas];
   if (index > -1) {
     data.splice(index, 1, area); // substitution

@@ -24,7 +24,7 @@ class DatasetsProvider extends PureComponent {
   getLayerUpdateComponents = () => {
     const { updateProviders } = this.props;
 
-    return updateProviders.map((t) => <LayerUpdate key={t.layer} {...t} />);
+    return updateProviders.map((t) => <LayerUpdate key={t.layer.id} {...t} />);
   };
 
   render() {

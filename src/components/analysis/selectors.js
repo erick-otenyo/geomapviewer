@@ -6,6 +6,7 @@ import flatMap from "lodash/flatMap";
 
 import { getAllLayers, getActiveDatasets } from "@/components/map/selectors";
 import { getWidgets } from "@/components/widgets/selectors";
+import { getActiveArea } from "@/providers/aoi-provider/selectors";
 
 import { getDataLocation, locationLevelToStr } from "@/utils/location";
 
@@ -169,4 +170,5 @@ export const getAnalysisProps = createStructuredSelector({
   analysisLocation: selectAnalysisLocation,
   search: selectSearch,
   areaTooLarge: checkGeostoreSize,
+  activeArea: getActiveArea,
 });

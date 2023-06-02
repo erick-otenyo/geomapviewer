@@ -1,6 +1,6 @@
 @import "@/styles/settings.scss";
 
-.c-map-menu-my-hw {
+.c-map-menu-my-account {
   position: relative;
   height: 100%;
   .aoi-tag {
@@ -39,7 +39,7 @@
       margin: rem(10px) 0;
       line-height: 1.7;
     }
-    .myhw-login {
+    .my-hw-login {
       margin: rem(40px) 0;
     }
     .aoi-tags {
@@ -55,11 +55,11 @@
       }
     }
   }
-  .my-hw {
+  .my-account {
     position: relative;
-    .my-hw-footer {
+    .my-account-footer {
       bottom: rem(50px);
-      height: rem(76px);
+      height: 76px;
       width: 100%;
       padding-right: rem(20px);
       background: $white;
@@ -67,26 +67,31 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       @media screen and (min-width: $screen-m) {
         position: fixed;
-        bottom: 0;
+        bottom: 30px;
       }
+
       .edit-button {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         color: $slate;
         font-size: 12px;
         line-height: 14px;
         text-transform: initial;
         font-weight: 400;
-        margin-left: rem(16px);
-        .name {
-          margin-bottom: rem(10px);
-          font-weight: 500;
-        }
-        .email {
-          font-style: italic;
+
+        .button-wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          .name {
+            margin-bottom: rem(10px);
+            font-weight: 500;
+          }
+          .email {
+            font-style: italic;
+          }
         }
       }
       .logout-button {
@@ -139,9 +144,9 @@
   .areas-pagination {
     margin-bottom: rem(20px);
   }
-  .my-hw-login-image {
+  .my-account-login-image {
     position: absolute;
-    bottom: rem(76px);
+    bottom: 116px;
     &.--login {
       position: relative;
       bottom: 0;

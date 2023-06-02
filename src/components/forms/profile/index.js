@@ -18,8 +18,7 @@ const splitLastName = (fullName) => {
 };
 
 const mapStateToProps = ({ auth, countryData }) => {
-  const { howDoYouUse, sector, firstName, fullName, lastName } =
-    auth.data || {};
+  const { how_do_you_use: howDoYouUse, sector } = auth.data || {};
 
   const sectorHasOther = sector && sector.includes("Other");
   const sectorSplit = sectorHasOther && sector.split("Other:");
@@ -41,11 +40,9 @@ const mapStateToProps = ({ auth, countryData }) => {
       auth.data && {
         initialValues: {
           ...auth.data,
-          firstName: firstName || (fullName && splitFirstName(fullName)),
-          lastName: lastName || (fullName && splitLastName(fullName)),
           sector: sectorOther ? "Other:" : sector,
           sector_otherInput: sectorOther,
-          howDoYouUse: howDoYouUseOther
+          how_do_you_use: howDoYouUseOther
             ? [
                 ...(howDoYouUse &&
                   howDoYouUse.filter((use) => !use.includes("Other"))),

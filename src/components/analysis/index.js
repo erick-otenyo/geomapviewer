@@ -5,6 +5,7 @@ import isEqual from "lodash/isEqual";
 
 import reducerRegistry from "@/redux/registry";
 
+import { setAreaOfInterestModalSettings } from "@/components/modals/area-of-interest/actions";
 import { setShareModal } from "@/components/modals/share/actions";
 
 import * as actions from "./actions";
@@ -102,4 +103,5 @@ reducerRegistry.registerModule("analysis", {
 export default connect(getAnalysisProps, {
   ...actions,
   setShareModal,
+  setAreaOfInterestModalSettings,
 })(AnalysisContainer);

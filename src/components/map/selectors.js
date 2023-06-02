@@ -7,6 +7,7 @@ import uniqBy from "lodash/unionBy";
 
 import { defined } from "@/utils/core";
 import { selectActiveLang, getMapboxLang } from "@/utils/lang";
+import { getActiveArea } from "@/providers/aoi-provider/selectors";
 
 // map state
 const selectMapLoading = (state) => state.map && state.map.loading;
@@ -487,8 +488,8 @@ export const getAllLayers = createSelector(
 
 // all layers for importing by other components
 export const getActiveLayers = createSelector(
-  [getAllLayers, selectGeostore, selectLocation],
-  (layers, geostore, location) => {
+  [getAllLayers, selectGeostore, selectLocation, getActiveArea],
+  (layers, geostore, location, activeArea) => {
     if (isEmpty(layers)) return [];
     const filteredLayers = layers.filter((l) => !l.confirmedOnly);
 
@@ -497,14 +498,24 @@ export const getActiveLayers = createSelector(
 
     if (!hasClickedPoint) {
       if (!geostore || !geostore.id) return filteredLayers;
+      const { type, adm0 } = location || {};
+      const isAoI = type === "aoi" && adm0;
 
       const geojson = {
         ...geostore.geojson,
+        ...(activeArea && {
+          features: [
+            {
+              ...geostore.geojson.features?.[0],
+              properties: activeArea,
+            },
+          ],
+        }),
       };
 
       const parsedLayers = filteredLayers.concat({
         id: geostore.id,
-        name: "Geojson",
+        name: isAoI ? "Area of Interest" : "Geojson",
         config: {
           type: "geojson",
           source: {
@@ -523,20 +534,25 @@ export const getActiveLayers = createSelector(
                 type: "line",
                 paint: {
                   "line-color": "#C0FF24",
-                  "line-width": 1,
-                  "line-offset": 0,
+                  "line-width": isAoI ? 2 : 1,
+                  "line-offset": isAoI ? 1.5 : 0,
                 },
               },
               {
                 type: "line",
                 paint: {
                   "line-color": "#000",
-                  "line-width": 2,
+                  "line-width": 1.5,
                 },
               },
             ],
           },
         },
+        ...(isAoI && {
+          interactionConfig: {
+            output: [],
+          },
+        }),
         zIndex: 1060,
       });
 
@@ -562,7 +578,6 @@ export const getActiveLayers = createSelector(
     return filteredLayers.concat({
       id: geojson.id,
       name: "Geojson",
-      analysisEndpoint: "admin",
       layerConfig: {
         type: "geojson",
         source: {

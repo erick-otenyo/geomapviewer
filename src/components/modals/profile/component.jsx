@@ -7,16 +7,10 @@ import ProfileForm from "@/components/forms/profile";
 
 import "./styles.scss";
 
-const ProfileModal = ({ setProfileModalOpen, profileComplete }) => {
+const ProfileModal = ({ setProfileModalOpen }) => {
   const {
     query: { profile },
   } = useRouter();
-
-  useEffect(() => {
-    if (!profileComplete) {
-      setProfileModalOpen(true);
-    }
-  }, []);
 
   return (
     <Modal
@@ -25,7 +19,7 @@ const ProfileModal = ({ setProfileModalOpen, profileComplete }) => {
       onRequestClose={() => setProfileModalOpen(false)}
     >
       <div className="c-profile-modal">
-        <ProfileForm source="myHw" />
+        <ProfileForm source="myAccount" />
       </div>
     </Modal>
   );

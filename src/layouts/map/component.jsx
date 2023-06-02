@@ -8,12 +8,15 @@ import CountryDataProvider from "@/providers/country-data-provider";
 import GeostoreProvider from "@/providers/geostore-provider";
 import DatasetsProvider from "@/providers/datasets-provider";
 import AuthProvider from "@/providers/auth-provider";
+import AOIProvider from "@/providers/aoi-provider";
 
 import ModalWelcome from "@/components/modals/welcome";
 import MetaModal from "@/components/modals/meta";
 import ShareModal from "@/components/modals/share";
-import MapPrint from "@/components/map-print";
+import ProfileModal from "@/components/modals/profile";
+import AreaOfInterestModal from "@/components/modals/area-of-interest";
 
+import MapPrint from "@/components/map-print";
 import Map from "@/components/map";
 import MapPrompts from "@/components/prompts/map-prompts";
 import MapMenu from "@/components/map-menu";
@@ -115,6 +118,9 @@ class MainMapComponent extends PureComponent {
         <CountryDataProvider />
         <GeostoreProvider />
         <AuthProvider />
+        <AreaOfInterestModal viewAfterSave clearAfterDelete canDelete />
+        <ProfileModal />
+        <AOIProvider />
       </div>
     );
   }

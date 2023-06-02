@@ -9,6 +9,8 @@ import ShowAnalysis from "@/components/analysis/components/show-analysis";
 
 import "./styles.scss";
 
+const isServer = typeof window === "undefined";
+
 class AnalysisComponent extends PureComponent {
   static propTypes = {
     clearAnalysis: PropTypes.func,
@@ -27,6 +29,9 @@ class AnalysisComponent extends PureComponent {
     checkingShape: PropTypes.bool,
     areaTooLarge: PropTypes.bool,
     uploadingShape: PropTypes.bool,
+    activeArea: PropTypes.object,
+    areaTooLarge: PropTypes.bool,
+    setAreaOfInterestModalSettings: PropTypes.func,
   };
 
   render() {
@@ -44,6 +49,10 @@ class AnalysisComponent extends PureComponent {
       handleFetchAnalysis,
       endpoints,
       widgetLayers,
+      activeArea,
+      areaTooLarge,
+      setAreaOfInterestModalSettings,
+      setShareModal,
     } = this.props;
 
     const hasLayers = endpoints && !!endpoints.length;
@@ -98,6 +107,74 @@ class AnalysisComponent extends PureComponent {
               handleCancelAnalysis={handleCancelAnalysis}
             />
           )}
+          {!loading &&
+            !error &&
+            location &&
+            location.type &&
+            location.adm0 != undefined && (
+              <div className="analysis-actions">
+                {/* {location.type === "country" && !location.areaId && (
+                <Button
+                  className="analysis-action-btn"
+                  theme="theme-button-light"
+                  {...linkProps}
+                  onClick={() =>
+                    trackEvent({
+                      category: "Map analysis",
+                      action: "User goes to dashboards",
+                      label: location.adm0,
+                    })
+                  }
+                >
+                  DASHBOARD
+                </Button>
+              )}
+              {activeArea && (
+                <Button
+                  className="analysis-action-btn"
+                  theme="theme-button-light"
+                  link={activeArea && `/dashboards/aoi/${activeArea.id}`}
+                  tooltip={{ text: "Go to Areas of Interest dashboard" }}
+                >
+                  DASHBOARD
+                </Button>
+              )} */}
+                {location.type !== "point" &&
+                  (!activeArea || (activeArea && !activeArea.userArea)) && (
+                    <Button
+                      className="analysis-action-btn save-to-myhw-btn"
+                      onClick={() => setAreaOfInterestModalSettings(true)}
+                      disabled={areaTooLarge}
+                      {...(areaTooLarge && {
+                        tooltip: {
+                          text: "Your area is too large! Please try again with an area smaller than 1 billion hectares (approximately the size of Brazil).",
+                        },
+                      })}
+                    >
+                      save area
+                    </Button>
+                  )}
+                {activeArea && activeArea.userArea && (
+                  <Button
+                    className="analysis-action-btn"
+                    onClick={() =>
+                      setShareModal({
+                        title: "Share this view",
+                        shareUrl:
+                          !isServer &&
+                          (window.location.href.includes("embed")
+                            ? window.location.href.replace("/embed", "")
+                            : window.location.href),
+                        areaId: activeArea?.id,
+                      })
+                    }
+                    tooltip={{ text: "Share this area" }}
+                  >
+                    Share area
+                  </Button>
+                )}
+              </div>
+            )}
         </div>
       </Fragment>
     );

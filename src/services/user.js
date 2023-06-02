@@ -2,7 +2,7 @@ import { apiRequest, apiAuthRequest } from "@/utils/request";
 
 const isServer = typeof window === "undefined";
 
-function getCookie(name) {
+export function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
     const cookies = document.cookie.split(";");
@@ -86,6 +86,9 @@ export const resetPassword = (formData) => {
   });
 };
 
+export const getProfile = (id) =>
+  apiAuthRequest.get(`/geomanager-profile/${id}`);
+
 export const updateProfile = (id, data) => {
   const csrfToken = getCookie("csrftoken");
   const headers = {};
@@ -96,7 +99,7 @@ export const updateProfile = (id, data) => {
   return apiAuthRequest({
     method: "PATCH",
     data,
-    url: `/geomanager/user/${id}/`,
+    url: `/geomanager-profile/update/${id}`,
     headers: headers,
   });
 };
@@ -138,8 +141,6 @@ export const checkLoggedIn = (token) => {
       return res;
     });
 };
-
-export const getProfile = (id) => apiAuthRequest.get(`/geomanager/user/${id}`);
 
 export const logout = () => {
   const refreshToken = localStorage.getItem("refreshToken");

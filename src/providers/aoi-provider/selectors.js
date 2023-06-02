@@ -1,15 +1,15 @@
-import { createSelector, createStructuredSelector } from 'reselect';
-import sortBy from 'lodash/sortBy';
-import isEmpty from 'lodash/isEmpty';
-import flatMap from 'lodash/flatMap';
-import uniq from 'lodash/uniq';
+import { createSelector, createStructuredSelector } from "reselect";
+import sortBy from "lodash/sortBy";
+import isEmpty from "lodash/isEmpty";
+import flatMap from "lodash/flatMap";
+import uniq from "lodash/uniq";
 
 export const selectAreaLoading = (state) => state.areas && state.areas.loading;
 export const selectLocation = (state) =>
   state && state.location && state.location.payload;
-export const selectLoggingIn = (state) => state.myHw?.loading;
+export const selectLoggingIn = (state) => state.auth?.loading;
 export const selectLoggedIn = (state) =>
-  state && !!state.myHw && !isEmpty(state.myHw.data);
+  state && !!state.auth && !isEmpty(state.auth.data);
 
 export const getAllAreas = (state) =>
   state &&
@@ -19,7 +19,7 @@ export const getAllAreas = (state) =>
       ...a,
       lowercaseName: a.name && a.name.toLowerCase(),
     })),
-    'lowercaseName'
+    "lowercaseName"
   );
 
 export const getUserAreas = createSelector(
@@ -32,9 +32,7 @@ export const getActiveArea = createSelector(
   (location, areas) => {
     if (isEmpty(areas)) return null;
 
-    return areas.find(
-      (a) => a.id === location.adm0 || a.subscriptionId === location.adm0
-    );
+    return areas.find((a) => a.id === location.adm0);
   }
 );
 
@@ -43,10 +41,10 @@ export const getAreaTags = createSelector([getUserAreas], (areas) => {
 
   return sortBy(
     uniq(flatMap(areas.map((area) => area.tags))).map((t) => ({
-      label: t && t.length > 15 ? t.substring(0, 15).concat('...') : t,
+      label: t && t.length > 15 ? t.substring(0, 15).concat("...") : t,
       value: t,
     })),
-    'label'
+    "label"
   ).filter((t) => t.value && t.label);
 });
 

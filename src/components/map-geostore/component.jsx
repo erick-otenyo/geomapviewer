@@ -22,7 +22,19 @@ const DEFAULT_VIEWPORT = {
   lng: 0,
 };
 
-const { satellite } = {};
+const satellite = {
+  label: "satellite",
+  description: "Highest resolution imagery 1-3 years old (global)",
+  value: "satellite",
+  color: "#131620",
+  baseStyle: true,
+  hasSettings: false,
+  infoModal: "satellite_basemap",
+  basemapGroup: "basemap-satellite",
+  labelsGroup: "labels-dark",
+  mapStyle: "http://20.56.94.119/tileserver-gl/styles/ahw/style.json",
+  url: "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+};
 
 const basemap = {
   ...satellite,
@@ -58,6 +70,7 @@ class MapGeostore extends Component {
   componentDidMount() {
     this.mounted = true;
     const { location } = this.props;
+
     if (location && location.adm0) {
       this.handleGetGeostore();
     }

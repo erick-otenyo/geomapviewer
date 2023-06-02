@@ -52,7 +52,7 @@ export const typeOfOrganization = [
   "Government",
   "Intergovernmental Organization (UN / IGAD / EAC / AU)",
   "NGO",
-  "Private Sector, Academia / Research, Youth / Student, Media, Donor / Finantial Institution",
+  "Private Sector, Academia / Research, Youth / Student, Media, Donor / Financial Institution",
   "Other",
 ];
 

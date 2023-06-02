@@ -5,7 +5,7 @@ const LARGE_ISOS = [];
 
 const GEOSTORE_URL_PATH = "/geostore/";
 
-export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
+export const getGeostore = async ({ type, adm0, adm1, adm2, token }) => {
   if (!type || !adm0) return null;
 
   let thresh = adm1 ? 0.0005 : 0.005;

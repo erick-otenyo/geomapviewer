@@ -102,9 +102,9 @@ class ProfileForm extends PureComponent {
                       </h3>
                     </div>
                     <div className="column small-12">
-                      <Input name="firstName" label="first name" />
+                      <Input name="first_name" label="first name" />
                       <Input
-                        name="lastName"
+                        name="last_name"
                         label="last name / surname"
                         required
                       />
@@ -115,14 +115,6 @@ class ProfileForm extends PureComponent {
                           { label: "Male", value: "M" },
                           { label: "Female", value: "F" },
                         ]}
-                        required
-                      />
-                      <Input
-                        name="email"
-                        type="email"
-                        label="email"
-                        placeholder="Your emal"
-                        validate={[validateEmail]}
                         required
                       />
                       <Select
@@ -145,7 +137,7 @@ class ProfileForm extends PureComponent {
                         required
                       />
                       <Select
-                        name="organizationType"
+                        name="organization_type"
                         label="Type of Organization"
                         options={typeOfOrgOptions}
                         placeholder="Select type of your organization"
@@ -159,7 +151,7 @@ class ProfileForm extends PureComponent {
                         }
                       />
                       <Select
-                        name="scaleOfOperations"
+                        name="scale_of_operations"
                         label="Scale of Operations"
                         options={scaleOfOperationsOptions}
                         placeholder="Select scale of operations"

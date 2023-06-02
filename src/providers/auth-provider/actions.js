@@ -11,6 +11,7 @@ export const getUserProfile = createThunkAction(
   "getUserProfile",
   (urlToken) => (dispatch) => {
     const token = !isServer && (urlToken || localStorage.getItem("userToken"));
+
     if (token) {
       dispatch(setAuthLoading({ loading: true, error: false }));
       checkLoggedIn(token)
@@ -18,13 +19,13 @@ export const getUserProfile = createThunkAction(
           getProfile(authResponse.data.id)
             .then((response) => {
               if (response.status < 400 && response.data) {
-                const { data } = response.data;
+                const { data } = response;
 
                 dispatch(
                   setAuth({
                     loggedIn: true,
-                    id: authResponse.data.id,
-                    ...(data && data.attributes),
+                    id: data.user_id,
+                    ...(data && data),
                   })
                 );
               }

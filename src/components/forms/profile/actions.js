@@ -10,9 +10,9 @@ export const saveProfile = createThunkAction(
       id,
       signUpForNewsletter,
       sector,
-      sector_otherInput,
-      howDoYouUse,
-      howDoYouUse_otherInput,
+      sector_other_input: sector_otherInput,
+      how_do_you_use: howDoYouUse,
+      how_do_you_use_other_input: howDoYouUse_otherInput,
       loggedIn,
       ...rest
     }) =>
@@ -23,7 +23,7 @@ export const saveProfile = createThunkAction(
           sector && sector.includes("Other")
             ? `Other: ${sector_otherInput || ""}`
             : sector,
-        howDoYouUse:
+        how_do_you_use:
           howDoYouUse && howDoYouUse.includes("Other")
             ? [
                 ...howDoYouUse.filter((use) => use !== "Other"),
@@ -34,32 +34,31 @@ export const saveProfile = createThunkAction(
 
       return updateProfile(id, postData)
         .then((response) => {
-          if (response.data && response.data.data) {
-            const { attributes } = response.data.data;
+          if (response.data) {
+            const { data } = response;
+
             dispatch(
               setAuth({
                 loggedIn: true,
-                id: response.data.data.id,
-                ...attributes,
+                id: data.user_id,
+                ...data,
               })
             );
           }
 
           return true;
         })
-        .catch((error) => {
-          const { errors } = (error.response && error.response.data) || {};
+        .catch((err) => {
+          const error = (err.response && err.response.data) || {};
 
-          if (errors && errors[0] && errors[0].detail) {
-            err = errors[0].detail;
-          } else {
-            if (error.message) {
-              err = error.message;
-            }
+          let message = "Error occured. Please try again later";
+
+          if (error.detail) {
+            message = error.detail;
           }
 
           return {
-            [FORM_ERROR]: err,
+            [FORM_ERROR]: message,
           };
         });
     }

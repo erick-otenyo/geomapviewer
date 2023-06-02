@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import cx from "classnames";
 import intersection from "lodash/intersection";
 import slice from "lodash/slice";
-import Link from "next/link";
 
 import { logout } from "@/services/user";
 import { trackEvent } from "@/utils/analytics";
@@ -19,7 +18,6 @@ import Paginate from "@/components/paginate";
 
 import editIcon from "@/assets/icons/edit.svg?sprite";
 import shareIcon from "@/assets/icons/share.svg?sprite";
-import dashboardIcon from "@/assets/icons/dashboard.svg?sprite";
 import logoutIcon from "@/assets/icons/logout.svg?sprite";
 import screenImg1x from "@/assets/images/aois/aoi-dashboard.png";
 import screenImg2x from "@/assets/images/aois/aoi-dashboard@2x.png";
@@ -30,7 +28,7 @@ import "./styles.scss";
 
 const isServer = typeof window === "undefined";
 
-class MapMenuMyHW extends PureComponent {
+class MapMenuMyAccount extends PureComponent {
   static propTypes = {
     isDesktop: PropTypes.bool,
     loggedIn: PropTypes.bool,
@@ -45,6 +43,7 @@ class MapMenuMyHW extends PureComponent {
     userData: PropTypes.object,
     setMapPromptsSettings: PropTypes.func,
     setShareModal: PropTypes.func,
+    setProfileModalOpen: PropTypes.func,
   };
 
   state = {
@@ -100,7 +99,7 @@ class MapMenuMyHW extends PureComponent {
 
         {section && sectionsMessages[section] && sectionsMessages[section]}
 
-        <LoginForm className="myhw-login" simple narrow />
+        <LoginForm className="my-account-login" simple narrow />
       </div>
     );
   }
@@ -150,18 +149,6 @@ class MapMenuMyHW extends PureComponent {
         onChange={this.handleAreaActions}
         theme={cx("theme-button-medium theme-dropdown-no-border small square")}
         options={[
-          {
-            value: "open_dashboard",
-            component: (
-              <Button
-                theme={btnTheme}
-                link={activeArea && `/dashboards/aoi/${activeArea.id}`}
-              >
-                <Icon icon={dashboardIcon} />
-                Open Dashboard
-              </Button>
-            ),
-          },
           {
             value: "edit_area",
             component: (
@@ -273,10 +260,8 @@ class MapMenuMyHW extends PureComponent {
           <Fragment>
             {areas &&
               areas.map((area, i) => {
-                const active =
-                  activeArea &&
-                  (activeArea.id === area.id ||
-                    activeArea.id === area.subscriptionId);
+                const active = activeArea && activeArea.id === area.id;
+
                 return (
                   <div
                     className={cx("aoi-item", {
@@ -321,33 +306,42 @@ class MapMenuMyHW extends PureComponent {
     );
   }
 
+  openProfileModal = () => {
+    const { setProfileModalOpen } = this.props;
+
+    setProfileModalOpen(true);
+  };
+
   renderMyAOI() {
     const { areas, userData, loggedIn } = this.props;
-    const { email, fullName } = userData || {};
+    const { email, full_name } = userData || {};
 
     if (!loggedIn) {
       return this.renderLoginWindow("myAOI");
     }
 
     return (
-      <div className="my-hw">
-        <div className="my-hw-aois">
+      <div className="my-account">
+        <div className="my-account-aois">
           {areas && areas.length > 0
             ? this.renderAreas()
             : this.renderNoAreas()}
         </div>
-        <div className="my-hw-footer">
-          <Link href="/my-hw">
-            <a className="edit-button">
-              {fullName && <span className="name">{fullName}</span>}
-              {email && (
-                <span className="email">
-                  <i>{email}</i>
-                </span>
-              )}
-              {!fullName && !email && <span>view profile</span>}
-            </a>
-          </Link>
+        <div className="my-account-footer">
+          <Button
+            theme="theme-button-clear"
+            className="edit-button"
+            onClick={this.openProfileModal}
+          >
+            {full_name && <span className="name">{full_name}</span>}
+            {email && (
+              <span className="email">
+                <i>{email}</i>
+              </span>
+            )}
+            {!full_name && !email && <span>view profile</span>}
+          </Button>
+
           <Button
             theme="theme-button-clear"
             className="logout-button"
@@ -373,7 +367,7 @@ class MapMenuMyHW extends PureComponent {
           setMenuSettings({ myHWType: "myAOI" });
           trackEvent({
             category: "Map menu",
-            action: "Select myHW category",
+            action: "Select myAccount category",
             label: "My AOI",
           });
         },
@@ -381,11 +375,11 @@ class MapMenuMyHW extends PureComponent {
     ];
 
     return (
-      <div className="c-map-menu-my-hw">
+      <div className="c-map-menu-my-account">
         {loading && <Loader />}
         <SubnavMenu
           links={links}
-          className="myhw-menu"
+          className="my-account-menu"
           theme="theme-subnav-small-light"
         />
         <div className="content">
@@ -402,7 +396,7 @@ class MapMenuMyHW extends PureComponent {
         {/* {!loading && !loggedIn && this.renderLoginWindow()} */}
         {!loading && loggedIn && !(areas && areas.length > 0) && isDesktop && (
           <img
-            className={cx("my-hw-login-image", { "--login": !loggedIn })}
+            className={cx("my-account-login-image", { "--login": !loggedIn })}
             src={screenImg1x}
             srcSet={`${screenImg1x} 1x, ${screenImg2x} 2x`}
             alt="aoi screenshot"
@@ -413,4 +407,4 @@ class MapMenuMyHW extends PureComponent {
   }
 }
 
-export default MapMenuMyHW;
+export default MapMenuMyAccount;
