@@ -93,14 +93,6 @@ const datasets = [
           add: 7,
           template: "Selected Period : {time}",
         },
-        hidePastTimestamps: true, // we might need to hide past forecast
-        data_path: timestampsDataPath,
-        analysisConfig: [
-          {
-            key: "temperature_forecast",
-            type: "admin",
-          },
-        ],
       },
     ],
   },

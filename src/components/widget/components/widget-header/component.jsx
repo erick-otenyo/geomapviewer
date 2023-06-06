@@ -2,11 +2,14 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
 import cx from "classnames";
-import { format } from "d3-format";
+
 import WidgetMapButton from "./components/widget-map-button";
 import WidgetSettingsButton from "./components/widget-settings-button";
 import WidgetInfoButton from "./components/widget-info-button";
 import WidgetShareButton from "./components/widget-share-button";
+import Icon from "@/components/ui/icon";
+
+import analysisIcon from "@/assets/icons/analysis.svg?sprite";
 
 import "./styles.scss";
 
@@ -71,7 +74,12 @@ class WidgetHeader extends PureComponent {
 
     return (
       <div className={cx("c-widget-header", { simple })}>
-        <div className="title">{title}</div>
+        <div className="title">
+          <span>
+            <Icon className="analysis-icon" icon={analysisIcon} />
+          </span>
+          <span>{title}</span>
+        </div>
         <div className="options">
           {showMapBtn && (
             <WidgetMapButton

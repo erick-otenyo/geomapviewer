@@ -43,32 +43,38 @@ class WidgetContainer extends Component {
 
   componentDidMount() {
     this._mounted = true;
-    const { location, settings, meta, status } = this.props;
-    const params = { ...location, ...settings, status };
 
-    this.handleGetWidgetData({ ...params });
+    this.handleGetWidgetData();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { location, settings, refetchKeys, status, meta } = this.props;
+    const { location, settings, refetchKeys, timestamps } = this.props;
 
     const { error } = this.state;
+
     const hasLocationChanged =
       location && !isEqual(location, prevProps.location);
     const hasErrorChanged =
       !error &&
       prevState.error !== undefined &&
       !isEqual(error, prevState.error);
+
+    const hasTimestampsChanged =
+      timestamps && !isEqual(timestamps, prevProps.timestamps);
+
     const refetchSettings = pick(settings, refetchKeys);
 
     const refetchPrevSettings = pick(prevProps.settings, refetchKeys);
     const hasSettingsChanged = !isEqual(refetchSettings, refetchPrevSettings);
 
     // refetch data if error, settings, or location changes
-    if (hasSettingsChanged || hasLocationChanged || hasErrorChanged) {
-      const params = { ...location, ...settings, status };
-
-      this.handleGetWidgetData({ ...params });
+    if (
+      hasSettingsChanged ||
+      hasLocationChanged ||
+      hasErrorChanged ||
+      hasTimestampsChanged
+    ) {
+      this.handleGetWidgetData();
     }
   }
 
@@ -100,8 +106,27 @@ class WidgetContainer extends Component {
     return { downloadDisabled: false, maxSize };
   }
 
-  handleGetWidgetData = (params) => {
-    const { location, requiresTime, wpsIdentifier, owsNameSpace } = this.props;
+  handleGetWidgetData = () => {
+    const {
+      location,
+      settings,
+      refetchKeys,
+      status,
+      meta,
+      layerId,
+      requiresTime,
+      timestamps,
+      aggregationMethod,
+    } = this.props;
+
+    const params = {
+      ...location,
+      ...settings,
+      status,
+      layerId,
+      timestamps,
+      aggregationMethod,
+    };
 
     const isPoint = Boolean(
       location.type &&
@@ -120,7 +145,7 @@ class WidgetContainer extends Component {
 
       let canFetch = true;
 
-      if (requiresTime && !params.time) {
+      if (requiresTime && !params.time && !!timestamps.length) {
         canFetch = false;
       }
 
@@ -133,8 +158,6 @@ class WidgetContainer extends Component {
           ...params,
           geostore,
           token: this.widgetDataFetch.token,
-          wpsIdentifier: wpsIdentifier,
-          owsNameSpace: owsNameSpace,
         })
           .then((data) => {
             setWidgetData(data);

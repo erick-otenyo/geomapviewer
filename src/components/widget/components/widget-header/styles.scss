@@ -1,4 +1,4 @@
-@import '@/styles/settings.scss';
+@import "@/styles/settings.scss";
 
 .c-widget-header {
   position: relative;
@@ -9,6 +9,8 @@
   padding-bottom: rem(20px);
 
   .title {
+    display: flex;
+    align-items: flex-start;
     width: 100%;
     font-size: rem(13px);
     font-weight: 500;
@@ -16,6 +18,11 @@
     color: $slate;
     text-transform: uppercase;
     padding-right: rem(20px);
+
+    .analysis-icon {
+      margin-right: 4px;
+      fill: $primary-color;
+    }
   }
 
   .options {

@@ -7,6 +7,7 @@ import { getApiDatasets } from "@/services/datasets";
 import { createCapDataset } from "./datasets/cap";
 
 import { setConfig } from "../config-provider/actions";
+import { getTimeseriesConfig } from "./utils";
 
 // import hwDatasets from "./datasets";
 
@@ -60,6 +61,42 @@ export const fetchDatasets = createThunkAction(
           (d) => d.initialVisible
         );
 
+        const datasetsWithAnalysis = allDatasets.reduce(
+          (allDatasets, dataset) => {
+            const layers = dataset.layers.reduce((dLayers, layer) => {
+              if (
+                layer.analysisConfig &&
+                (layer.analysisConfig.pointTimeseriesAnalysis ||
+                  layer.analysisConfig.areaTimeseriesAnalysis)
+              ) {
+                // mark as has analysis
+                layer.hasTimeseriesAnalysis = true;
+
+                if (layer.layerType === "file") {
+                  if (layer.analysisConfig.pointTimeseriesAnalysis) {
+                    layer.analysisConfig.pointTimeseriesAnalysis.config =
+                      getTimeseriesConfig(layer, "point");
+                  }
+
+                  if (layer.analysisConfig.areaTimeseriesAnalysis) {
+                    layer.analysisConfig.areaTimeseriesAnalysis.config =
+                      getTimeseriesConfig(layer, "area");
+                  }
+                }
+              }
+              dLayers.push(layer);
+              return dLayers;
+            }, []);
+
+            dataset.layers = layers;
+
+            allDatasets.push(dataset);
+
+            return allDatasets;
+          },
+          []
+        );
+
         const { query } = getState().location;
 
         const hasDatasetsInUrlState =
@@ -87,10 +124,10 @@ export const fetchDatasets = createThunkAction(
           dispatch(setMapSettings({ datasets: newDatasets }));
         }
 
-        dispatch(updateDatasets(allDatasets));
+        dispatch(updateDatasets(datasetsWithAnalysis));
         dispatch(setDatasetsLoading({ loading: false, error: false }));
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(setDatasetsLoading({ loading: false, error: true }));
       });
   }

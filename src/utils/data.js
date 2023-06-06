@@ -1,6 +1,7 @@
 import reduce from "lodash/reduce";
 import isEqual from "lodash/isEqual";
 import { parseISO, getDaysInMonth } from "date-fns";
+
 import { getPentadFromDateString } from "./date-format";
 
 export const objDiff = (obj1, obj2) => {

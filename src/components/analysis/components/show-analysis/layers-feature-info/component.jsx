@@ -103,6 +103,7 @@ class FeatureInfo extends PureComponent {
   formatValue = (value) => {
     const { config } = this.props;
     const { unit } = config;
+
     return `${isInteger(value) ? value : value.toFixed(2)} ${unit}`;
   };
 
@@ -146,8 +147,6 @@ class FeatureInfo extends PureComponent {
       }
 
       if (valueType === "minmeanmax") {
-        console.log(value);
-
         if (value.min !== undefined) {
           values.push({ label: "Minimum", value: this.formatValue(value.min) });
         }
@@ -231,25 +230,23 @@ class LayersFeatureInfo extends PureComponent {
     const adminLocationTypes = ["country", "geostore", "aoi"];
 
     const items = layers.reduce((all, layer) => {
-      const analysisConfig = layer.analysisConfig.filter(
-        (config) =>
-          config.analysisType === "instance" &&
-          (config.locationType === locationType ||
-            (config.locationType === "admin" &&
-              adminLocationTypes.includes(locationType)))
-      );
+      const config =
+        locationType === "point"
+          ? layer.analysisConfig.pointInstanceAnalysis
+          : layer.analysisConfig.areaInstanceAnalysis;
 
-      if (!!analysisConfig.length) {
-        const viz = analysisConfig.map((config) => (
+      if (config) {
+        const viz = (
           <FeatureInfo
+            key={layer.id}
             layer={layer}
             config={config}
             location={location}
             geostore={geostore}
           />
-        ));
+        );
 
-        all = all.concat(...viz);
+        all.push(viz);
       }
 
       return all;

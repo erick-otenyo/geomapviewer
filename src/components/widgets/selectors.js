@@ -24,6 +24,8 @@ import {
 
 import customWidgets from "./manifest";
 
+import getTimeseriesWidget from "./timeseries-widget";
+
 const isServer = typeof window === "undefined";
 
 const buildLocationDict = (locations) =>
@@ -80,6 +82,8 @@ export const selectModalClosing = (state) =>
 export const selectNonGlobalDatasets = (state) =>
   state.widgets && state.widgets.data.nonGlobalDatasets;
 const selectDatasets = (state) => state.datasets && state.datasets.data;
+const selectLayerTimestamps = (state) =>
+  state.datasets && state.datasets.timestamps;
 
 export const getLocationObj = createSelector([getDataLocation], (location) => {
   return {
@@ -182,7 +186,8 @@ export const getDatasetLayersWithAnalysis = createSelector(
       const layers =
         (dataset.layers &&
           dataset.layers.filter(
-            (l) => !isEmpty(l.analysisConfig) || !isEmpty(l.gskyAnalysisConfig)
+            (l) =>
+              !isEmpty(l.analysisConfig) || !isEmpty(l.timeseriesAnalysisConfig)
           )) ||
         [];
 
@@ -191,17 +196,29 @@ export const getDatasetLayersWithAnalysis = createSelector(
   }
 );
 
-export const getGskyLayerWidgets = createSelector(
-  [getActiveLayers],
-  (activeLayers) => {
-    const widgets = activeLayers.reduce((all, layer) => {
-      if (layer.gskyAnalysisConfig) {
-        const { widget } = layer.gskyAnalysisConfig;
+export const getTimeseriesLayerWidgets = createSelector(
+  [getActiveLayers, getLocationObj],
+  (activeLayers, locationObj) => {
+    const { type: locationType } = locationObj;
 
-        all[widget] = {
-          ...getWidget(layer.gskyAnalysisConfig),
-          isGskyAnalysis: true,
-        };
+    const widgets = activeLayers.reduce((all, layer) => {
+      if (layer.hasTimeseriesAnalysis) {
+        let analysis = layer.analysisConfig.pointTimeseriesAnalysis || {};
+
+        if (locationType !== "point") {
+          analysis = layer.analysisConfig.areaTimeseriesAnalysis || {};
+        }
+
+        const { config = {}, unit, aggregationMethod } = analysis || {};
+
+        if (config && config.widget) {
+          all[config.widget] = {
+            ...getTimeseriesWidget(config),
+            unit,
+            aggregationMethod,
+            isTimeseriesAnalysis: true,
+          };
+        }
       }
 
       return all;
@@ -220,7 +237,7 @@ export const filterWidgetsByLocation = createSelector(
     getDatasetLayersWithAnalysis,
     getActiveLayers,
     selectAnalysis,
-    getGskyLayerWidgets,
+    getTimeseriesLayerWidgets,
   ],
   (
     location,
@@ -230,11 +247,11 @@ export const filterWidgetsByLocation = createSelector(
     analysisLayers,
     activeLayers,
     showAnalysis,
-    gskyWidgets
+    timeseriesWidgets
   ) => {
     const { adminLevel, type, adm0, adm1, areaId } = location;
 
-    const allWidgets = { ...customWidgets };
+    const allWidgets = { ...timeseriesWidgets, ...customWidgets };
 
     // map colors to widgets
     const widgets = Object.values(allWidgets).map((w) => {
@@ -248,46 +265,23 @@ export const filterWidgetsByLocation = createSelector(
 
     if (embed && widget) return widgets.filter((w) => w.widget === widget);
 
-    let layersWithAnalysis = [];
+    const layersWithAnalysis =
+      showAnalysis &&
+      Object.keys(timeseriesWidgets).map((key) => {
+        const w = timeseriesWidgets[key];
 
-    if (showAnalysis) {
-      layersWithAnalysis =
-        activeLayers &&
-        activeLayers
-          .filter((l) => l.analysisConfig)
-          .map((l) => ({
-            id: l.id,
-            dataset: l.dataset,
-            keys: uniq(l.analysisConfig.map((k) => k.key)),
-          }));
-    } else {
-      // dashboards
-      layersWithAnalysis = analysisLayers.map((l) => ({
-        id: l.id,
-        dataset: l.dataset,
-        keys: uniq(l.analysisConfig?.map((k) => k.key)),
-        types: uniq(l.analysisConfig?.map((k) => k.type)),
-      }));
-    }
-
-    const gskyLayersWithAnalysis = Object.keys(gskyWidgets).map((key) => {
-      const w = gskyWidgets[key];
-
-      return {
-        id: w.widget,
-        dataset: w.widget,
-      };
-    });
-
-    layersWithAnalysis.push(...gskyLayersWithAnalysis);
+        return {
+          id: w.layerId,
+          dataset: w.datasetId,
+        };
+      });
 
     const datasetIds =
       layersWithAnalysis && layersWithAnalysis.map((l) => l.dataset);
-    const layerAnalysisKeys =
-      layersWithAnalysis && flatMap(layersWithAnalysis.map((l) => l.keys));
 
     const widgets_ = widgets.filter((w) => {
-      const { types, admins, datasets, visible, isGskyAnalysis } = w || {};
+      const { types, admins, datasets, visible, isTimeseriesAnalysis } =
+        w || {};
 
       const { status } = locationData || {};
 
@@ -311,29 +305,6 @@ export const filterWidgetsByLocation = createSelector(
         w.layers = widgetLayers;
       }
 
-      let analysisKeyIntersection;
-
-      // skip checking for intersection keys if is gskyAnalysis: TODO: Time for a refactor of how we get widgets for analysis?
-      if (isGskyAnalysis) {
-        analysisKeyIntersection = [w.widget];
-      } else {
-        analysisKeyIntersection =
-          datasets &&
-          intersection(
-            compact(
-              flatMap(
-                datasets
-                  .filter((d) => !d.boundary)
-                  .map((d) => {
-                    const keysArray = Array.isArray(d.keys) && d.keys;
-                    return keysArray;
-                  })
-              )
-            ),
-            layerAnalysisKeys
-          );
-      }
-
       const hasLocation =
         types &&
         types.includes(areaId && status === "saved" ? "aoi" : type) &&
@@ -346,119 +317,22 @@ export const filterWidgetsByLocation = createSelector(
         (showAnalysis &&
           visible &&
           visible.includes("analysis") &&
-          !isEmpty(datasetIntersection) &&
-          !isEmpty(analysisKeyIntersection)) ||
+          !isEmpty(datasetIntersection)) ||
         (!showAnalysis &&
           visible &&
-          !isEmpty(datasetIntersection) &&
-          !isEmpty(analysisKeyIntersection));
+          visible.includes("dashboard") &&
+          !isEmpty(datasetIntersection));
 
       return hasLocation && isWidgetVisible;
     });
-
-    if (type === "use" && adm0 && adm1) {
-      // filter widgets with layers that match adm0
-
-      return widgets_.filter(
-        (w) =>
-          w.types &&
-          w.types.includes(type) &&
-          w.layers &&
-          w.layers.length &&
-          w.layers.includes(adm0)
-      );
-    }
 
     return widgets_;
   }
 );
 
-export const getWidgetCategories = createSelector(
-  [filterWidgetsByLocation],
-  (widgets) => {
-    return flatMap(widgets.map((w) => w.categories));
-  }
-);
-
-export const getActiveCategory = createSelector(
-  [selectCategory, getWidgetCategories],
-  (activeCategory, widgetCats) => {
-    if (!widgetCats) {
-      return null;
-    }
-
-    return widgetCats.includes(activeCategory) ? activeCategory : "summary";
-  }
-);
-
-export const filterWidgetsByCategory = createSelector(
-  [
-    filterWidgetsByLocation,
-    getActiveCategory,
-    selectAnalysis,
-    getLocationData,
-    selectEmbed,
-    selectActiveWidget,
-  ],
-  (widgets, category, showAnalysis, locationData, embed, widget) => {
-    if (isEmpty(widgets)) return null;
-
-    if (embed && widget) return widgets.filter((w) => w.widget === widget);
-
-    if (showAnalysis) {
-      return sortBy(widgets, "sortOrder.summary");
-    }
-    return sortBy(
-      widgets.filter((w) => w.categories.includes(category)),
-      `sortOrder[${camelCase(category)}]`
-    );
-  }
-);
-
-export const getLayerEndpoints = createSelector(
-  [getDatasetLayersWithAnalysis, getActiveLayers, getDataLocation],
-  (layers, activeLayers, location) => {
-    const { type } = location;
-
-    const routeType =
-      type === "country" || type === "geostore" ? "admin" : type;
-
-    return layers.map((l) => {
-      // get ONLY one analysis config from list, with type that matches the relevant geostore/region /admin level
-      const analysisConfig =
-        l.analysisConfig?.find(
-          (a) => a.type === routeType || routeType === "use"
-        ) || {};
-
-      const { params, decodeParams } = l;
-
-      const activeLayer = activeLayers.find((al) => al.id === l.id);
-
-      return {
-        ...analysisConfig,
-        analysisProperty: l.analysisProperty,
-        name: l.name,
-        layer: l.id,
-        dataset: l.dataset,
-        datasetIdentifier: l.dataset_identifier,
-        slug: analysisConfig.service,
-        params: {
-          ...decodeParams,
-          ...params,
-          ...(activeLayer &&
-            activeLayer.params && {
-              ...activeLayer.params,
-            }),
-          query: analysisConfig.query,
-        },
-      };
-    });
-  }
-);
-
 export const getWidgets = createSelector(
   [
-    filterWidgetsByCategory,
+    filterWidgetsByLocation,
     getLocationObj,
     getLocationData,
     selectWidgetsData,
@@ -469,7 +343,7 @@ export const getWidgets = createSelector(
     getActiveLayers,
     selectAnalysis,
     selectActiveWidget,
-    getLayerEndpoints,
+    selectLayerTimestamps,
   ],
   (
     widgets,
@@ -483,7 +357,7 @@ export const getWidgets = createSelector(
     activeLayers,
     analysis,
     activeWidgetKey,
-    endpoints
+    layerTimestamps
   ) => {
     if (isEmpty(widgets) || !locationObj || !widgetsData) {
       return null;
@@ -514,9 +388,7 @@ export const getWidgets = createSelector(
       // layer matching widget
       let widgetLayer =
         layers &&
-        layers.find(
-          (l) => w.layers && l.default && flatMap(w.layers).includes(l.id)
-        );
+        layers.find((l) => w.layers && flatMap(w.layers).includes(l.id));
 
       if (
         widgetLayer &&
@@ -526,15 +398,18 @@ export const getWidgets = createSelector(
         widgetLayer = activeLayers.find((l) => l.id === widgetLayer.id);
       }
 
-      const { params: layerParams, decodeParams } = widgetLayer || {};
+      const { params: layerParams } = widgetLayer || {};
 
       const widgetQuerySettings = widgetSettings && widgetSettings[widget];
       const widgetInteraction = interactions && interactions[widget];
 
       const layerSettings = {
         ...layerParams,
-        ...decodeParams,
       };
+
+      const timestamps =
+        (widgetLayer && layerTimestamps && layerTimestamps[widgetLayer.id]) ||
+        [];
 
       // get initial settings from layer layer params if a widget setting is initally empty
       // we might need to refactor this if we can have not empty params
@@ -610,6 +485,7 @@ export const getWidgets = createSelector(
         title: titleTemplate,
         settingsConfig: settingsConfigFiltered,
         optionsSelected,
+        timestamps: timestamps,
       };
 
       const parsedProps = props.getWidgetProps && props.getWidgetProps(props);
@@ -667,20 +543,15 @@ export const getActiveWidget = createSelector(
   }
 );
 
-export const getNoDataMessage = createSelector(
-  [getActiveCategory],
-  (category) => {
-    if (!category) return "No data available";
-    return `No ${lowerCase(category)} data available `;
-  }
-);
+export const getNoDataMessage = createSelector([], () => {
+  return "No data available";
+});
 
 export const getWidgetsProps = () =>
   createStructuredSelector({
     loadingData: selectLoadingFilterData,
     loadingMeta: selectLoadingMeta,
     widgets: getWidgets,
-    analysisEndpoints: getLayerEndpoints,
     activeWidget: getActiveWidget,
     location: getDataLocation,
     embed: selectEmbed,

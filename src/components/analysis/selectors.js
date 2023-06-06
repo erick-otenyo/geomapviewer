@@ -82,69 +82,6 @@ export const getWidgetLayers = createSelector(
     )
 );
 
-export const getLayerEndpoints = createSelector(
-  [getAllLayers, getDataLocation, getWidgetLayers],
-  (layers, location, widgetLayers) => {
-    if (!layers || !layers.length) return null;
-
-    const { type, adm2 } = location;
-    const routeType = type === "country" ? "admin" : type;
-    const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
-
-    const admLevel = locationLevelToStr(location);
-    const endpoints = compact(
-      layers
-        .filter(
-          (l) =>
-            l.analysisConfig &&
-            !l.analysisDisabled &&
-            (!hasWidgetLayers || !widgetLayers.includes(l.id)) &&
-            (!l.admLevels || l.admLevels.includes(admLevel))
-        )
-        .map((l) => {
-          const analysisConfig =
-            l.analysisConfig.find(
-              (a) =>
-                a.type === routeType ||
-                (routeType === "use" && a.type === "geostore")
-            ) || {};
-          const { params } = l;
-          return {
-            name: l.name,
-            slug: analysisConfig.service,
-            params: {
-              ...params,
-            },
-          };
-        })
-    );
-
-    const groupedEndpoints = groupBy(endpoints, "slug");
-    const parsedEndpoints = Object.keys(groupedEndpoints)
-      .filter((slug) => slug !== "undefined")
-      .map((slug) => {
-        let params = {};
-        groupedEndpoints[slug].forEach((e) => {
-          params = {
-            ...params,
-            ...e.params,
-          };
-        });
-
-        return {
-          slug,
-          params,
-          version: groupedEndpoints[slug][0].version,
-          name: groupedEndpoints[slug][0].name,
-        };
-      });
-
-    return adm2
-      ? parsedEndpoints.filter((e) => !e.slug.includes("forma"))
-      : parsedEndpoints;
-  }
-);
-
 export const checkGeostoreSize = createSelector(
   [selectGeostoreSize, getDataLocation],
   (areaHa, location) => {
@@ -162,7 +99,6 @@ export const getAnalysisProps = createStructuredSelector({
   error: selectError,
   geostoreError: selectGeostoreError,
   embed: selectEmbed,
-  endpoints: getLayerEndpoints,
   location: getDataLocation,
   boundaries: getAllBoundaries,
   activeBoundary: getActiveBoundaryDatasets,

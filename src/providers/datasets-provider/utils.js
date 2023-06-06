@@ -1,6 +1,10 @@
 import { fetchRasterTimestamps } from "@/services/timestamps";
 import { getTimeValuesFromWMS } from "@/utils/wms";
 import { getNextDate } from "@/utils/time";
+import { format, parseISO } from "date-fns";
+
+import { POLITICAL_BOUNDARIES_DATASET } from "@/data/datasets";
+import { POLITICAL_BOUNDARIES } from "@/data/layers";
 
 const rasterFileUpdateProvider = (layer) => {
   const {
@@ -93,4 +97,84 @@ export const createUpdateProviders = (activeLayers) => {
   }, []);
 
   return providers;
+};
+
+export const getTimeseriesConfig = (layer, analysisType) => {
+  let config = layer.analysisConfig.pointTimeseriesAnalysis;
+
+  if (analysisType !== "point") {
+    config = layer.analysisConfig.areaTimeseriesAnalysis;
+  }
+
+  const { chartType, chartColor } = config;
+
+  return {
+    widget: `widget-${layer.id}`,
+    layerId: layer.id,
+    datasetId: layer.dataset,
+    title: `${layer.name} - Timeseries Analysis for {location}`,
+    categories: [""],
+    types: ["country", "geostore", "point"],
+    admins: ["adm0", "adm1", "adm2"],
+    large: true,
+    metaKey: "",
+    sortOrder: {},
+    visible: ["analysis"],
+    chartType: "composedChart",
+    colors: "weather",
+    sentences: {},
+    settings: {
+      time: "",
+    },
+    refetchKeys: ["time"],
+    requiresTime: true,
+    datasets: [
+      {
+        dataset: POLITICAL_BOUNDARIES_DATASET,
+        layers: [POLITICAL_BOUNDARIES],
+        boundary: true,
+      },
+      {
+        dataset: layer.dataset,
+        layers: [layer.id],
+      },
+    ],
+    plotConfig: {
+      simpleNeedsAxis: true,
+      height: 250,
+      yKeys: {
+        [chartType]: {
+          value: {
+            yAxisId: "value",
+            fill: chartColor,
+            stroke: chartColor,
+          },
+        },
+      },
+      unit: config.unit || "",
+      yAxis: {
+        yAxisId: "value",
+        domain: ["auto", "auto"],
+      },
+      xAxis: {
+        dataKey: "date",
+        tickFormatter: (date) => format(parseISO(date), "dd MMM yy"),
+      },
+      tooltip: [
+        {
+          key: "date",
+          label: "Date",
+          formatConfig: {
+            formatDate: true,
+            dateFormat: "yyyy-mm-dd HH:MM",
+          },
+        },
+        {
+          key: "value",
+          label: "Value",
+          formatConfig: { formatNumber: true, units: config.unit || "" },
+        },
+      ],
+    },
+  };
 };

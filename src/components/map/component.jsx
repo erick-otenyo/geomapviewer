@@ -333,10 +333,6 @@ class MapComponent extends Component {
     }
   };
 
-  handleMissingImage = () => {
-    console.log("HEllo");
-  };
-
   setMapCountryBounds = () => {
     const { mapBounds, countryMapSettings, location } = this.props;
 
@@ -415,8 +411,6 @@ class MapComponent extends Component {
     // Listeners
     if (this.map) {
       this.map.once("styledata", this.onStyleLoad);
-
-      this.map.on("styleimagemissing", this.handleMissingImage);
     }
 
     this.loadMapImages();

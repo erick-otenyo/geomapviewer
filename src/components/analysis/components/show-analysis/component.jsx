@@ -67,12 +67,8 @@ class ShowAnalysis extends PureComponent {
     const layersWithFeatureInfoAnalysis = layers.filter(
       (l) =>
         l.analysisConfig &&
-        l.analysisConfig.find(
-          (config) =>
-            config.locationType === locationType ||
-            (config.locationType === "admin" &&
-              adminLocationTypes.includes(locationType))
-        )
+        (l.analysisConfig.pointInstanceAnalysis ||
+          l.analysisConfig.areaInstanceAnalysis)
     );
 
     const hasLayersWithFeatureInfo =
