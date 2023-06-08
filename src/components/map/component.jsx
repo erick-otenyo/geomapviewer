@@ -1,4 +1,4 @@
-import React, { Component, Fragment, PureComponent, createRef } from "react";
+import React, { Component, PureComponent, createRef } from "react";
 import PropTypes from "prop-types";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
@@ -74,7 +74,7 @@ class RenderMap extends PureComponent {
         }}
       >
         {(map) => (
-          <Fragment>
+          <>
             {/* LAYER MANAGER */}
             <LayerManagerWrapper map={map} mapSide={mapSide} />
 
@@ -101,7 +101,7 @@ class RenderMap extends PureComponent {
                 />
               </>
             )}
-          </Fragment>
+          </>
         )}
       </Map>
     );

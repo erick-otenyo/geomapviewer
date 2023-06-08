@@ -191,6 +191,7 @@ export const getActiveSectionWithData = createSelector(
   [getActiveSection],
   (section) => {
     if (!section) return null;
+
     const subCatsWithData =
       section.subCategories &&
       section.subCategories.filter((s) => !isEmpty(s.datasets));

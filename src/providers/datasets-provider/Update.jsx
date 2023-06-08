@@ -151,7 +151,7 @@ class LayerUpdate extends PureComponent {
         .then((data) => {
           if (data) {
             setGeojsonData({ [layerId]: data });
-            setLayerUpdatingStatus({ [layer]: false });
+            setLayerUpdatingStatus({ [layerId]: false });
 
             if (isInitial) {
               setLayerLoadingStatus({ [layerId]: false });

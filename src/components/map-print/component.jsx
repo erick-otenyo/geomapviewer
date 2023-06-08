@@ -10,7 +10,7 @@ import Checkbox from "@/components/ui/checkbox";
 import Button from "@/components/ui/button";
 import MapPreview from "./preview-map";
 
-import brandingLogo from "@/assets/logos/logo-placeholder.png?webp";
+import geomapviewerLogo from "@/assets/logos/geomapviewer.png?webp";
 
 import "./styles.scss";
 
@@ -38,7 +38,7 @@ class MapPrint extends PureComponent {
       activeLayers.map((layer) => {
         if (layer && (!isEmpty(layer.legendConfig) || layer.legendImage)) {
           return (
-            <Column className="layer-legend" width={[1 / 3]}>
+            <Column className="layer-legend" width={[1 / 2]}>
               <div className="layer-title">{layer.name}</div>
               {layer.legendImage && layer.legendImage.url ? (
                 <div className="legend-image">
@@ -57,7 +57,7 @@ class MapPrint extends PureComponent {
   };
 
   render() {
-    const { onCancel, mapPrintConfig, activeLayers } = this.props;
+    const { onCancel, mapPrintConfig, activeLayers, logo } = this.props;
     const { mapStyle, viewport, bounds } = mapPrintConfig || {};
     const { previewMapLoaded, mounted, title } = this.state;
 
@@ -103,7 +103,11 @@ class MapPrint extends PureComponent {
             <div className="report-body">
               <div className="page-header">
                 <div className="brand">
-                  <img className="logo" src={brandingLogo} alt="Brand Logo" />
+                  <img
+                    className="logo"
+                    src={logo || geomapviewerLogo}
+                    alt="Brand Logo"
+                  />
                 </div>
                 {title && (
                   <h1 className="report-title" contentEditable>

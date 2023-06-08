@@ -109,6 +109,26 @@
           .map-print-preview {
             height: 451px;
             width: 100%;
+
+            .zoom-controls {
+              position: absolute;
+              top: 12px;
+              right: 12px;
+              display: flex;
+              flex-direction: column;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+              background-color: $white;
+
+              @media print {
+                display: none;
+              }
+            }
+
+            .map-scale {
+              position: absolute;
+              bottom: 12px;
+              right: 12px;
+            }
           }
         }
 
@@ -124,8 +144,8 @@
             }
             .map-legend {
               .layer-legend {
-                max-width: 250px;
-                margin-bottom: 20px;
+                // max-width: 250px;
+                margin-bottom: 10px;
                 .layer-title {
                   font-size: 14px;
                   font-weight: 500;

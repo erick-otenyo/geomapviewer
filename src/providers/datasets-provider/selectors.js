@@ -31,14 +31,14 @@ export const getUpdateProviders = createSelector(
       activeLayers.filter((l) => !l.isBoundary)
     );
 
-    const hasCapAlert = activeLayers.find((l) => l.id === "cap_alerts");
+    const capAlertLayer = activeLayers.find((l) => l.id === "cap_alerts");
     const capDataset = allDatasets.find((d) => d.dataset === "cap_alerts");
 
     const capUpdateProvider =
-      (hasCapAlert &&
+      (capAlertLayer &&
         capDataset &&
         capDataset.capConfig &&
-        createCapUpdateProvider(capDataset.capConfig)) ||
+        createCapUpdateProvider(capDataset.capConfig, capAlertLayer)) ||
       [];
 
     return updateProviders.concat(...capUpdateProvider);

@@ -24,16 +24,16 @@
       z-index: 5;
 
       @media screen and (min-width: $screen-m) {
-        right: rem(255px);
+        right: rem(355px);
         bottom: rem(15px);
         justify-content: flex-end;
         width: auto;
       }
     }
-
+    
     .map-scale {
       @media screen and (min-width: $screen-m) {
-        right: rem(255px);
+        right: rem(355px);
         bottom: rem(50px);
         left: auto;
         top: auto;
