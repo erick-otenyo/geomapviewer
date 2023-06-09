@@ -162,7 +162,7 @@ class ProfileForm extends PureComponent {
                         required
                       />
 
-                      <Input name="position" label="Position" />
+                      <Input name="position" label="Position" required />
                       <p className="section-name">Where are you located?</p>
                       <Select
                         name="country"

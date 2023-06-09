@@ -69,7 +69,7 @@ class MapPreview extends Component {
                   <Button
                     className="map-control"
                     theme="theme-button-map-control"
-                    onClick={() => map.zoomIn()}
+                    // onClick={() => map.zoomIn()}
                     tooltip={{ text: "Zoom in" }}
                     disabled={zoom >= maxZoom}
                   >
@@ -78,7 +78,7 @@ class MapPreview extends Component {
                   <Button
                     className="map-control"
                     theme="theme-button-map-control"
-                    onClick={() => map.zoomOut()}
+                    // onClick={() => map.zoomOut()}
                     tooltip={{ text: "Zoom out" }}
                     disabled={zoom <= minZoom}
                   >
