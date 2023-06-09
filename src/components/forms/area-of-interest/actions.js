@@ -91,10 +91,16 @@ export const deleteAreaOfInterest = createThunkAction(
           }
         })
         .catch((error) => {
-          const { errors } = error?.response?.data || {};
+          const { detail } = error?.response?.data || {};
+
+          let message = "Error occured. Pleas try again later";
+
+          if (detail) {
+            message = detail;
+          }
 
           return {
-            [FORM_ERROR]: errors[0].detail,
+            [FORM_ERROR]: message,
           };
         });
     }

@@ -61,10 +61,18 @@ export const saveArea = (data, areaId) => {
 };
 
 export const deleteArea = (id) => {
+  const csrfToken = getCookie("csrftoken");
+
+  const headers = {};
+  if (csrfToken) {
+    headers["X-CSRFToken"] = csrfToken;
+  }
+
   trackEvent({
     category: "User AOIs",
     action: "User deletes aoi",
     label: id,
   });
-  return apiAuthRequest.delete(`/aoi/${id}`);
+
+  return apiAuthRequest.delete(`/aoi/${id}`, { headers });
 };
