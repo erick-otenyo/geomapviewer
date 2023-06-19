@@ -5,6 +5,8 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 
+const ASSET_PREFIX = process.env.ASSET_PREFIX;
+
 const nextConfig = {
   // disable css-modules component styling
   webpack(config) {
@@ -40,6 +42,7 @@ const nextConfig = {
   },
   swcMinify: true,
   trailingSlash: true,
+  ...(ASSET_PREFIX && { assetPrefix: ASSET_PREFIX }),
   env: {
     DEBUG: process.env.DEBUG,
     FEATURE_ENV: process.env.FEATURE_ENV,

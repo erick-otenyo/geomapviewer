@@ -93,7 +93,7 @@ export const deleteAreaOfInterest = createThunkAction(
         .catch((error) => {
           const { detail } = error?.response?.data || {};
 
-          let message = "Error occured. Pleas try again later";
+          let message = "Error occured. Please try again later";
 
           if (detail) {
             message = detail;
