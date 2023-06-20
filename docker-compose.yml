@@ -1,0 +1,21 @@
+services:
+  hazardswatch:
+    platform: linux/x86_64
+    build:
+      context: .
+      args:
+        - NODE_ENV=${NODE_ENV}
+        - ANALYTICS_PROPERTY_ID=${ANALYTICS_PROPERTY_ID}
+        - BITLY_TOKEN=${BITLY_TOKEN}
+        - DEBUG= ${DEBUG}
+        - FEATURE_ENV=${FEATURE_ENV}
+        - GOOGLE_CUSTOM_SEARCH_CX=${GOOGLE_CUSTOM_SEARCH_CX}
+        - GOOGLE_SEARCH_API_KEY=${GOOGLE_SEARCH_API_KEY}
+        - CMS_API=${CMS_API}
+        - ASSET_PREFIX=${ASSET_PREFIX}
+    ports:
+      - ${PORT}:3000
+networks:
+    default:
+      name:  ${AHW_DOCKER_NETWORK}
+      external: true
