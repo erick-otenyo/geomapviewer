@@ -2,10 +2,10 @@ services:
   geomapviewer:
     platform: linux/x86_64
     container_name: geomapviewer
+    command: tail -F anything
     build:
       context: .
       args:
-        - NODE_ENV=${NODE_ENV}
         - ANALYTICS_PROPERTY_ID=${ANALYTICS_PROPERTY_ID}
         - BITLY_TOKEN=${BITLY_TOKEN}
         - DEBUG= ${DEBUG}
@@ -13,7 +13,7 @@ services:
         - GOOGLE_CUSTOM_SEARCH_CX=${GOOGLE_CUSTOM_SEARCH_CX}
         - GOOGLE_SEARCH_API_KEY=${GOOGLE_SEARCH_API_KEY}
         - CMS_API=${CMS_API}
-        - ASSET_PREFIX=${ASSET_PREFIX}
+        - BASE_PATH=${BASE_PATH}
     ports:
       - ${PORT}:3000
 networks:
