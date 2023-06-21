@@ -2,7 +2,6 @@ services:
   geomapviewer:
     platform: linux/x86_64
     container_name: geomapviewer
-    command: tail -F anything
     build:
       context: .
       args:
