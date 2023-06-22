@@ -41,7 +41,7 @@ const nextConfig = {
   swcMinify: true,
   trailingSlash: true,
   basePath: process.env.BASE_PATH ? process.env.BASE_PATH : "",
-  assetPrefix: process.env.ASSET_PREFIX ? process.env.ASSET_PREFIX : "",
+  assetPrefix: "http://20.56.94.119/cms/",
   env: {
     DEBUG: process.env.DEBUG,
     FEATURE_ENV: process.env.FEATURE_ENV,
