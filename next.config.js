@@ -40,8 +40,8 @@ const nextConfig = {
   },
   swcMinify: true,
   trailingSlash: true,
-  basePath: "/cms",
-  assetPrefix: "/cms",
+  basePath: process.env.BASE_PATH ? process.env.BASE_PATH : "",
+  assetPrefix: process.env.ASSET_PREFIX ? process.env.ASSET_PREFIX : "",
   env: {
     DEBUG: process.env.DEBUG,
     FEATURE_ENV: process.env.FEATURE_ENV,
