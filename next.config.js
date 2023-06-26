@@ -40,8 +40,8 @@ const nextConfig = {
   },
   swcMinify: true,
   trailingSlash: true,
-  basePath: process.env.BASE_PATH ? process.env.BASE_PATH : "",
-  assetPrefix: process.env.ASSET_PREFIX ? process.env.ASSET_PREFIX : "",
+  basePath: process.env.BASE_PATH ? process.env.BASE_PATH : undefined,
+  assetPrefix: process.env.ASSET_PREFIX ? process.env.ASSET_PREFIX : undefined,
   env: {
     DEBUG: process.env.DEBUG,
     FEATURE_ENV: process.env.FEATURE_ENV,
