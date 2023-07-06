@@ -6,9 +6,10 @@ export const initialState = {
   error: false,
   sections: [],
   basemaps: {},
-  country: {},
   svgById: {},
   icons: [],
+  bounds: null,
+  boundaryDataSource: "",
 };
 
 const setConfigLoading = (state, { payload }) => ({

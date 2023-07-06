@@ -153,7 +153,7 @@ class MapComponent extends Component {
   mapCompareContainer = createRef();
 
   componentDidMount() {
-    this.setMapCountryBounds();
+    this.setMapBoundaryBounds();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -173,7 +173,7 @@ class MapComponent extends Component {
       location,
       geostoreType,
       printRequests,
-      countryMapSettings,
+      boundaryBounds,
       configIcons,
     } = this.props;
 
@@ -188,7 +188,7 @@ class MapComponent extends Component {
       basemap: prevBasemap,
       location: prevLocation,
       printRequests: prevPrintRequests,
-      countryMapSettings: prevCountryMapSettings,
+      boundaryBounds: prevBoundaryBounds,
       configIcons: prevConfigIcons,
     } = prevProps;
 
@@ -301,8 +301,8 @@ class MapComponent extends Component {
       this.requestPrintMap();
     }
 
-    if (!isEqual(countryMapSettings, prevCountryMapSettings)) {
-      this.setMapCountryBounds();
+    if (!isEqual(boundaryBounds, prevBoundaryBounds)) {
+      this.setMapBoundaryBounds();
     }
 
     if (!isEqual(configIcons, prevConfigIcons)) {
@@ -333,8 +333,8 @@ class MapComponent extends Component {
     }
   };
 
-  setMapCountryBounds = () => {
-    const { mapBounds, countryMapSettings, location } = this.props;
+  setMapBoundaryBounds = () => {
+    const { mapBounds, boundaryBounds, location } = this.props;
 
     const { type, adm0 } = location;
 
@@ -342,11 +342,11 @@ class MapComponent extends Component {
       (!type || (type === "country" && !adm0)) &&
       mapBounds &&
       mapBounds.length === 0 &&
-      countryMapSettings &&
-      countryMapSettings.bbox
+      boundaryBounds &&
+      !!boundaryBounds.length
     ) {
       this.setState({
-        bounds: { bbox: countryMapSettings.bbox, options: { padding: 50 } },
+        bounds: { bbox: boundaryBounds, options: { padding: 50 } },
       });
     }
   };

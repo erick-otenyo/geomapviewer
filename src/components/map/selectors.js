@@ -35,7 +35,7 @@ const selectDatasetParams = (state) => state.datasets?.params;
 const selectMapPrinting = (state) => state.map && state.map?.settings?.printing;
 const getMainMapSettings = (state) => state.mainMap || {};
 export const getBasemaps = (state) => state.config?.basemaps || {};
-const getCountryConfig = (state) => state.config?.country || {};
+const selectBoundaryBounds = (state) => state.config?.bounds || [];
 const getConfigIcons = (state) => state.config?.icons || [];
 const getSvgById = (state) => state.config?.svgById || {};
 
@@ -768,13 +768,6 @@ export const getPrintRequests = createSelector(
   (settings) => settings.printRequests
 );
 
-export const getCountryMapSettings = createSelector(
-  [getCountryConfig],
-  (countryConfig) => {
-    return countryConfig;
-  }
-);
-
 export const getMapProps = createStructuredSelector({
   viewport: getMapViewport,
   loading: getMapLoading,
@@ -782,7 +775,7 @@ export const getMapProps = createStructuredSelector({
   minZoom: getMapMinZoom,
   maxZoom: getMapMaxZoom,
   mapBounds: getMapBounds,
-  countryMapSettings: getCountryMapSettings,
+  boundaryBounds: selectBoundaryBounds,
   mapStyle: getMapStyle,
   mapLabels: getMapLabels,
   mapRoads: getMapRoads,
