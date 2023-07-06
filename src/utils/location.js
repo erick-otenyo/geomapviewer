@@ -59,14 +59,20 @@ export const buildFullLocationName = (
     const adm0Obj = adm0s && adm0s.find((a) => a.value === adm0);
     location = adm0Obj ? adm0Obj.label : "";
   }
+
   if (adm1) {
-    const adm1Obj = adm1s && adm1s.find((a) => a.value === parseInt(adm1, 10));
+    const adm1Obj =
+      adm1s &&
+      adm1s.find((a) => a.value === adm1 || a.value === parseInt(adm1, 10));
+
     location = adm1Obj
       ? `${adm1Obj.label || "unnamed region"}, ${location}`
       : location;
   }
   if (adm2) {
-    const adm2Obj = adm2s && adm2s.find((a) => a.value === parseInt(adm2, 10));
+    const adm2Obj =
+      adm2s &&
+      adm2s.find((a) => a.value === adm2 || a.value === parseInt(adm2, 10));
     location = adm2Obj
       ? `${adm2Obj.label || "unnamed region"}, ${location}`
       : location;

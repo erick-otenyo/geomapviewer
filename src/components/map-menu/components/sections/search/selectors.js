@@ -1,10 +1,10 @@
-import { createSelector, createStructuredSelector } from 'reselect';
-import { deburrUpper } from '@/utils/strings';
-import { getGadm36Id } from '@/utils/gadm';
-import sortBy from 'lodash/sortBy';
-import { translateText, selectActiveLang } from '@/utils/lang';
+import { createSelector, createStructuredSelector } from "reselect";
+import { deburrUpper } from "@/utils/strings";
+import { getAdmId } from "@/utils/boundary";
+import sortBy from "lodash/sortBy";
+import { translateText, selectActiveLang } from "@/utils/lang";
 
-import { getActiveDatasetsFromState } from '@/components/map/selectors';
+import { getActiveDatasetsFromState } from "@/components/map/selectors";
 
 const selectSearch = (state) => state.mapMenu?.settings?.search;
 const selectLocation = (state) => state.location && state.location.payload;
@@ -23,9 +23,9 @@ const getDatasetWithUrlState = createSelector(
         datasets.map((d) => ({
           ...d,
           active: datasetIds.includes(d.id),
-          localeName: lang === 'en' ? d.name : translateText(d.name),
+          localeName: lang === "en" ? d.name : translateText(d.name),
         })),
-        ['name', 'localName']
+        ["name", "localName"]
       )
     );
   }
@@ -49,7 +49,7 @@ const getLocations = createSelector(
   (locations, location) => {
     if (!locations) return null;
     const { adm0, adm1, adm2 } = location;
-    const gadmId = getGadm36Id(adm0, adm1, adm2);
+    const gadmId = getAdmId(adm0, adm1, adm2);
 
     return locations
       .map((l) => ({

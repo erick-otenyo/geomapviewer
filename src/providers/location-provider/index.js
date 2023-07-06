@@ -20,9 +20,9 @@ const getLocationFromParams = (url, params, asPath) => {
     // dont parse point data
     return {
       type,
-      adm0: type === "point" || isNaN(adm0) ? adm0 : parseInt(adm0, 10),
-      adm1: type === "point" || isNaN(adm1) ? adm1 : parseInt(adm1, 10),
-      adm2: type === "point" || isNaN(adm2) ? adm2 : parseInt(adm2, 10),
+      adm0: type === "point" || isNaN(adm0) ? adm0 : parseInt(adm0, 10) || adm0,
+      adm1: type === "point" || isNaN(adm1) ? adm1 : parseInt(adm1, 10) || adm1,
+      adm2: type === "point" || isNaN(adm2) ? adm2 : parseInt(adm2, 10) || adm2,
     };
   }
 

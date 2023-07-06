@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from "@/redux/actions";
-import { getGadmLocationByLevel } from "@/utils/gadm";
+import { getAdmLocationByLevel } from "@/utils/boundary";
 import compact from "lodash/compact";
 
 import useRouter from "@/utils/router";
@@ -9,7 +9,9 @@ export const setMainMapSettings = createAction("setMainMapSettings");
 export const setMainMapAnalysisView = createThunkAction(
   "setMainMapAnalysisView",
   ({ data, layer, isPoint, latlng }) =>
-    () => {
+    (dispatch, getState) => {
+      const { boundaryDataSource } = getState().config || {};
+
       const { cartodb_id, wdpaid } = data || {};
       const { analysisEndpoint, tableName } = layer || {};
       const { query, pushQuery } = useRouter();
@@ -30,7 +32,7 @@ export const setMainMapAnalysisView = createThunkAction(
           if (analysisEndpoint === "admin") {
             payload = {
               type: "country",
-              ...getGadmLocationByLevel(data),
+              ...getAdmLocationByLevel(data, boundaryDataSource),
             };
           } else if (analysisEndpoint === "wdpa" && (cartodb_id || wdpaid)) {
             payload = {

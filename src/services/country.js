@@ -1,5 +1,5 @@
 import { apiRequest } from "@/utils/request";
-import { getGadm36Id } from "@/utils/gadm";
+import { getAdmId } from "@/utils/boundary";
 
 const convertCountriesToOptions = (countries) =>
   countries.map((c) => ({
@@ -28,8 +28,20 @@ export const getRegionsProvider = ({ adm0, token }) => {
   });
 };
 
-export const getSubRegionsProvider = (adm0, adm1, token) => {
-  const url = `/country/${adm0}/${getGadm36Id(adm0, adm1)}`;
+export const getSubRegionsProvider = (
+  adm0,
+  adm1,
+  boundaryDataSource,
+  token
+) => {
+  let url = `/country/${adm0}`;
+
+  if (boundaryDataSource && boundaryDataSource === "gadm41") {
+    url = `${url}/${getAdmId(adm0, adm1)}`;
+  } else {
+    url = `${url}/${adm1}`;
+  }
+
   return apiRequest.get(url, { cancelToken: token }).then((resp) => {
     resp.data = {
       rows: resp.data.map((c) => ({ ...c, name: c.name_2, id: c.gid_2 })),
@@ -39,13 +51,13 @@ export const getSubRegionsProvider = (adm0, adm1, token) => {
 };
 
 export const getCategorisedCountries = (asOptions = false) =>
-  getCountriesProvider().then((gadm36Countries) => {
+  getCountriesProvider().then((countries) => {
     return {
       gadmCountries: asOptions
-        ? convertCountriesToOptions(gadm36Countries.data.rows)
-        : gadm36Countries.data.rows,
+        ? convertCountriesToOptions(countries.data.rows)
+        : countries.data.rows,
       countries: asOptions
-        ? convertCountriesToOptions(gadm36Countries.data.rows)
-        : gadm36Countries.data.rows,
+        ? convertCountriesToOptions(countries.data.rows)
+        : countries.data.rows,
     };
   });

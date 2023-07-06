@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from "@/redux/actions";
-import { parseGadm36Id } from "@/utils/gadm";
+import { parseAdmId } from "@/utils/boundary";
 import uniqBy from "lodash/uniqBy";
 
 import {
@@ -43,22 +43,28 @@ export const getCountries = createThunkAction(
 
 export const getRegions = createThunkAction(
   "getRegions",
-  (country) => (dispatch) => {
+  (country) => (dispatch, getState) => {
     dispatch(setRegionsLoading(true));
+
+    const { boundaryDataSource } = getState().config || {};
 
     getRegionsProvider(country)
       .then((response) => {
         const parsedResponse = [];
-        uniqBy(response.data.rows).forEach((row) => {
+
+        uniqBy(response.data.rows, "gid_1").forEach((row) => {
+          const id = parseAdmId(row, boundaryDataSource).adm1;
+
           parsedResponse.push({
-            id: parseGadm36Id(row.id).adm1,
+            id: id,
             name: row.name,
           });
         });
-        dispatch(setRegions(parsedResponse, "id"));
+
+        dispatch(setRegions(parsedResponse));
         dispatch(setRegionsLoading(false));
       })
-      .catch(() => {
+      .catch((err) => {
         dispatch(setRegionsLoading(false));
       });
   }
@@ -67,19 +73,24 @@ export const getRegions = createThunkAction(
 export const getSubRegions = createThunkAction(
   "getSubRegions",
   ({ adm0, adm1, token }) =>
-    (dispatch) => {
+    (dispatch, getState) => {
       dispatch(setSubRegionsLoading(true));
+
+      const { boundaryDataSource } = getState().config || {};
+
       getSubRegionsProvider(adm0, adm1, token)
         .then((subRegions) => {
-          const { rows } = subRegions.data;
           const parsedResponse = [];
-          uniqBy(rows).forEach((row) => {
+
+          uniqBy(subRegions.data.rows, "gid_2").forEach((row) => {
+            const id = parseAdmId(row, boundaryDataSource).adm2;
             parsedResponse.push({
-              id: parseGadm36Id(row.id).adm2,
+              id,
               name: row.name,
             });
           });
-          dispatch(setSubRegions(uniqBy(parsedResponse, "id")));
+
+          dispatch(setSubRegions(parsedResponse));
           dispatch(setSubRegionsLoading(false));
         })
         .catch(() => {

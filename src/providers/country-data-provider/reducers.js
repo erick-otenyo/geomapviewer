@@ -17,7 +17,7 @@ export const initialState = {
 const mapLocations = (locations, options) => {
   const locationsMapped = [];
   locations.forEach((location) => {
-    if (location.iso || location.id > 0) {
+    if (location.iso || location.id != 0) {
       locationsMapped.push({
         label: location.name,
         value: location.iso || location.id,
