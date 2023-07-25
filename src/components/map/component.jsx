@@ -60,7 +60,7 @@ class RenderMap extends PureComponent {
         onViewportChange={onViewportChange}
         onClick={onClick}
         onMouseMove={onMouseMove}
-        onLoad={({ map: _map }) => onLoad(_map, mapSide)}
+        onLoad={({ ...args }) => onLoad(args, mapSide)}
         interactiveLayerIds={interactiveLayerIds}
         attributionControl={false}
         minZoom={minZoom}
@@ -376,7 +376,7 @@ class MapComponent extends Component {
     this.applyRoads();
   };
 
-  onLoad = (map, mapSide) => {
+  onLoad = ({ map, mapContainer }, mapSide) => {
     const { setMapSettings } = this.props;
 
     // remove any if existing

@@ -19,10 +19,16 @@ const actions = {
 class ConfigProvider extends PureComponent {
   svgWorkerRef = createRef();
 
+  state = {
+    ready: false,
+  };
+
   componentDidMount() {
     const { fetchConfig } = this.props;
 
-    fetchConfig();
+    fetchConfig().then((res) => {
+      this.setState({ ready: true });
+    });
 
     if (!this.svgWorkerRef.current) {
       this.svgWorkerRef.current = wrap(
@@ -74,6 +80,13 @@ class ConfigProvider extends PureComponent {
   };
 
   render() {
+    const { ready } = this.state;
+    const { children } = this.props;
+
+    if (ready) {
+      return children;
+    }
+
     return null;
   }
 }

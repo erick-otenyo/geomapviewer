@@ -134,6 +134,7 @@ class Map extends Component {
     // Convert map reference to mapbox map instance before parsing map options
     this.map = this.mapRef.current.getMap();
     this.setState({ loaded: true });
+
     onLoad({
       map: this.map,
       mapContainer: this.mapContainer,

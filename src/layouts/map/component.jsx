@@ -80,12 +80,14 @@ class MainMapComponent extends PureComponent {
           tabIndex={0}
           onClick={handleClickMap}
         >
-          <Map
-            className="main-map"
-            onDrawComplete={onDrawComplete}
-            onClickAnalysis={handleClickAnalysis}
-            onGetMapPrintConfig={this.handleOnGetMapPrintConfig}
-          />
+          <ConfigProvider>
+            <Map
+              className="main-map"
+              onDrawComplete={onDrawComplete}
+              onClickAnalysis={handleClickAnalysis}
+              onGetMapPrintConfig={this.handleOnGetMapPrintConfig}
+            />
+          </ConfigProvider>
         </div>
         {!hidePanels && (
           <Desktop>
@@ -111,7 +113,6 @@ class MainMapComponent extends PureComponent {
             </Mobile>
           </>
         )}
-        <ConfigProvider />
         <DatasetsProvider />
         <ShareModal />
         <MetaModal />
