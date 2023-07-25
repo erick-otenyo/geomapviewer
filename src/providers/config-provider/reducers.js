@@ -10,6 +10,7 @@ export const initialState = {
   icons: [],
   bounds: null,
   boundaryDataSource: "",
+  vectorLayerIcons:[]
 };
 
 const setConfigLoading = (state, { payload }) => ({

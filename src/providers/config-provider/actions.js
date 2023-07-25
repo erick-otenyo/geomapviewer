@@ -19,6 +19,7 @@ export const fetchConfig = createThunkAction(
         logo,
         bounds,
         boundaryDataSource,
+        vectorLayerIcons
       } = config;
 
       const sections = categories
@@ -43,6 +44,7 @@ export const fetchConfig = createThunkAction(
         logo,
         countries,
         boundaryDataSource,
+        vectorLayerIcons,
         bounds,
         sections: sections,
         basemaps: basemaps.reduce((all, item) => {

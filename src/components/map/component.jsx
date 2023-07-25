@@ -140,6 +140,7 @@ class MapComponent extends Component {
     printRequests: PropTypes.number,
     mapPrinting: PropTypes.bool,
     onMapGetStyle: PropTypes.func,
+    vectorLayerIcons: PropTypes.array,
   };
 
   state = {
@@ -174,7 +175,7 @@ class MapComponent extends Component {
       geostoreType,
       printRequests,
       boundaryBounds,
-      configIcons,
+      vectorLayerIcons,
     } = this.props;
 
     const {
@@ -189,7 +190,7 @@ class MapComponent extends Component {
       location: prevLocation,
       printRequests: prevPrintRequests,
       boundaryBounds: prevBoundaryBounds,
-      configIcons: prevConfigIcons,
+      vectorLayerIcons: prevVectorLayerIcons,
     } = prevProps;
 
     if (!drawing && prevDrawing) {
@@ -305,7 +306,7 @@ class MapComponent extends Component {
       this.setMapBoundaryBounds();
     }
 
-    if (!isEqual(configIcons, prevConfigIcons)) {
+    if (!isEqual(vectorLayerIcons, prevVectorLayerIcons)) {
       this.loadMapImages();
     }
   }
@@ -317,18 +318,15 @@ class MapComponent extends Component {
   }
 
   loadMapImages = async () => {
-    const { configIcons, svgById } = this.props;
+    const { vectorLayerIcons } = this.props;
 
-    if (configIcons && !!configIcons.length && this.map) {
-      configIcons.forEach(async (iconItem) => {
-        if (iconItem.type === "sprite") {
-          const svgString = svgById[iconItem.icon];
-          const svgImage = await svgStringToImage(svgString);
-
-          this.map.addImage(iconItem.icon, svgImage, {
-            sdf: Boolean(iconItem["icon-color"]),
-          });
-        }
+    if (vectorLayerIcons && !!vectorLayerIcons.length && this.map) {
+      vectorLayerIcons.forEach((icon) => {
+        this.map.loadImage(icon.url, (error, iconImage) => {
+          if (!error && iconImage) {
+            this.map.addImage(icon.name, iconImage);
+          }
+        });
       });
     }
   };

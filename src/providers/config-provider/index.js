@@ -1,8 +1,7 @@
-import { PureComponent, createRef } from "react";
+import { PureComponent } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import isEqual from "lodash/isEqual";
-import { wrap } from "comlink";
 
 import reducerRegistry from "@/redux/registry";
 
@@ -17,8 +16,6 @@ const actions = {
 };
 
 class ConfigProvider extends PureComponent {
-  svgWorkerRef = createRef();
-
   state = {
     ready: false,
   };
@@ -29,14 +26,6 @@ class ConfigProvider extends PureComponent {
     fetchConfig().then((res) => {
       this.setState({ ready: true });
     });
-
-    if (!this.svgWorkerRef.current) {
-      this.svgWorkerRef.current = wrap(
-        new Worker(new URL("./svg-worker.js", import.meta.url))
-      );
-    }
-
-    this.parseSvgSprite();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -55,29 +44,6 @@ class ConfigProvider extends PureComponent {
       }
     }
   }
-
-  parseSvgSprite = async () => {
-    const { setConfig } = this.props;
-    const dataSpriteEl = document.getElementById("svg-data-sprite");
-
-    if (dataSpriteEl && this.svgWorkerRef.current) {
-      const svgEl = dataSpriteEl.getElementsByTagName("svg");
-
-      if (svgEl) {
-        const defs = svgEl[0].getElementsByTagName("defs");
-
-        if (defs) {
-          const defsHTML = defs[0].outerHTML;
-
-          const svgById = await this.svgWorkerRef.current.parseSvgSymbols(
-            defsHTML
-          );
-
-          setConfig({ svgById });
-        }
-      }
-    }
-  };
 
   render() {
     const { ready } = this.state;

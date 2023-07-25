@@ -36,7 +36,7 @@ const selectMapPrinting = (state) => state.map && state.map?.settings?.printing;
 const getMainMapSettings = (state) => state.mainMap || {};
 export const getBasemaps = (state) => state.config?.basemaps || {};
 const selectBoundaryBounds = (state) => state.config?.bounds || [];
-const getConfigIcons = (state) => state.config?.icons || [];
+const getVectorLayerIcons = (state) => state.config?.vectorLayerIcons || [];
 const getSvgById = (state) => state.config?.svgById || {};
 
 // CONSTS
@@ -795,6 +795,6 @@ export const getMapProps = createStructuredSelector({
   hasHoverFeature: selectHoverFeature,
   printRequests: getPrintRequests,
   mapPrinting: selectMapPrinting,
-  configIcons: getConfigIcons,
+  vectorLayerIcons: getVectorLayerIcons,
   svgById: getSvgById,
 });
