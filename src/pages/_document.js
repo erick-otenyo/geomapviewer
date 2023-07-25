@@ -15,7 +15,7 @@ export default class MyDocument extends Document {
 
           <meta name="google-site-verification" content="" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
           <link
             href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i"
             rel="stylesheet"
