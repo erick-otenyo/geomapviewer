@@ -1,7 +1,6 @@
 import { fetchRasterTimestamps } from "@/services/timestamps";
 import { getTimeValuesFromWMS } from "@/utils/wms";
 import { getNextDate } from "@/utils/time";
-import { format, parseISO } from "date-fns";
 
 import { POLITICAL_BOUNDARIES_DATASET } from "@/data/datasets";
 import { POLITICAL_BOUNDARIES } from "@/data/layers";
@@ -158,7 +157,7 @@ export const getTimeseriesConfig = (layer, analysisType) => {
       },
       xAxis: {
         dataKey: "date",
-        tickFormatter: (date) => format(parseISO(date), "dd MMM yy"),
+        tickDateFormat: "dd MMM yy",
       },
       tooltip: [
         {

@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from "reselect";
-import { parseISO } from "date-fns";
+import { parseISO, format } from "date-fns";
 import {
   formatNumber as utilFormatNumber,
   formatDateTime,
@@ -77,7 +77,7 @@ export const parseData = createSelector(
 const parseConfig = createSelector(
   [getPlotConfig, getColors],
   (plotConfig, colors) => {
-    const { tooltip, ...rest } = plotConfig;
+    const { tooltip, xAxis, ...rest } = plotConfig;
 
     const config = {
       ...rest,
@@ -109,6 +109,15 @@ const parseConfig = createSelector(
       });
 
       config.tooltip = tooltipConfig;
+    }
+
+    if (xAxis && xAxis.tickDateFormat) {
+      const xAxisConfig = { ...xAxis };
+
+      xAxisConfig.tickFormatter = (date) =>
+        format(parseISO(date), xAxis.tickDateFormat);
+
+      config.xAxis = xAxisConfig;
     }
 
     return config;

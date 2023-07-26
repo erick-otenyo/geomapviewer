@@ -6,11 +6,9 @@ export const initialState = {
   error: false,
   sections: [],
   basemaps: {},
-  svgById: {},
-  icons: [],
   bounds: null,
   boundaryDataSource: "",
-  vectorLayerIcons:[]
+  vectorLayerIcons: [],
 };
 
 const setConfigLoading = (state, { payload }) => ({
