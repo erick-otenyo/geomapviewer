@@ -37,7 +37,7 @@ class CheckboxGroup extends PureComponent {
         {!!options.length &&
           options.map((option) => {
             const id = uniqueId(`checkbox-${option.value}-`);
-            const checked = find(value, { value: option.value });
+            const checked = Boolean(find(value, { value: option.value }));
             return (
               <div key={option.value} className="checkbox-option">
                 <button
