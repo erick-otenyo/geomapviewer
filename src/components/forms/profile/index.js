@@ -17,7 +17,7 @@ const splitLastName = (fullName) => {
     : fullName;
 };
 
-const mapStateToProps = ({ auth, countryData }) => {
+const mapStateToProps = ({ auth }) => {
   const { how_do_you_use: howDoYouUse, sector } = auth.data || {};
 
   const sectorHasOther = sector && sector.includes("Other");
@@ -35,7 +35,6 @@ const mapStateToProps = ({ auth, countryData }) => {
       : null;
 
   return {
-    countries: countryData && countryData.countries,
     ...(auth &&
       auth.data && {
         initialValues: {

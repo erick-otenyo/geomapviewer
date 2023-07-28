@@ -94,6 +94,7 @@
     "react-relative-portal": "^1.8.0",
     "react-scroll": "^1.8.9",
     "react-select": "^5.7.2",
+    "react-select-country-list": "^2.2.3",
     "react-simple-maps": "^3.0.0",
     "react-slick": "^0.29.0",
     "react-sortable-hoc": "1.9.1",
