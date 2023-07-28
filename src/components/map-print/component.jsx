@@ -92,7 +92,7 @@ class MapPrint extends PureComponent {
               <div className="r-control">
                 <Checkbox
                   id="title"
-                  value={title}
+                  value={Boolean(title)}
                   onChange={() => {
                     this.handleOnOptionToggle("title");
                   }}
