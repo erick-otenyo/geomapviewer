@@ -2,14 +2,10 @@ import { createAction, createThunkAction } from "@/redux/actions";
 
 import { setMapSettings } from "@/components/map/actions";
 import getCountryBoundaryDataset from "./datasets/boundaries/country";
-import { CMS_API } from "@/utils/apis";
 import { getApiDatasets } from "@/services/datasets";
 import { createCapDataset } from "./datasets/cap";
 
-import { setConfig } from "../config-provider/actions";
 import { getTimeseriesConfig } from "./utils";
-
-// import hwDatasets from "./datasets";
 
 export const setDatasetsLoading = createAction("setDatasetsLoading");
 export const setDatasets = createAction("setDatasets");
@@ -32,11 +28,7 @@ export const fetchDatasets = createThunkAction(
     let countryBoundaryDataset = [];
 
     getApiDatasets()
-      .then(({ datasets: apiDatasets, config = {}, icons = [] }) => {
-        if (icons) {
-          dispatch(setConfig({ icons }));
-        }
-
+      .then(({ datasets: apiDatasets, config = {} }) => {
         let capDataset = [];
         const { capConfig, boundaryTilesUrl } = config;
 

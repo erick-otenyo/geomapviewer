@@ -19,7 +19,8 @@ export const fetchConfig = createThunkAction(
         logo,
         bounds,
         boundaryDataSource,
-        vectorLayerIcons
+        vectorLayerIcons,
+        mapViewerBaseUrl,
       } = config;
 
       const sections = categories
@@ -46,6 +47,7 @@ export const fetchConfig = createThunkAction(
         boundaryDataSource,
         vectorLayerIcons,
         bounds,
+        mapViewerBaseUrl,
         sections: sections,
         basemaps: basemaps.reduce((all, item) => {
           item.value = item.label;
@@ -56,7 +58,7 @@ export const fetchConfig = createThunkAction(
 
       dispatch(setConfig(appConfig));
 
-      return appConfig
+      return appConfig;
     } catch (err) {
       dispatch(setConfigLoading({ loading: false, error: true }));
     }

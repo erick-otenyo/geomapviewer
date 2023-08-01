@@ -9,6 +9,9 @@ export const initialState = {
   bounds: null,
   boundaryDataSource: "",
   vectorLayerIcons: [],
+  logo: {},
+  mapViewerBaseUrl: "",
+  countries: [],
 };
 
 const setConfigLoading = (state, { payload }) => ({

@@ -317,14 +317,19 @@ class MapControlsButtons extends PureComponent {
   }
 
   renderMapReloadButton() {
-    const { location } = this.props;
+    const { mapViewerBaseUrl } = this.props;
+
+    if (!mapViewerBaseUrl) {
+      return null;
+    }
+
     return (
       <Button
         className="map-control -reload"
         theme="theme-button-map-control"
         onClick={() => {
           // reload map page without query params
-          window.location = "/mapviewer";
+          window.location = mapViewerBaseUrl;
         }}
         tooltip={{ text: "Reload Map" }}
       >
@@ -424,15 +429,6 @@ class MapControlsButtons extends PureComponent {
 
     return (
       <>
-        {/* {isDesktop && (
-          <div className="c-map-controls top-map-controls">
-            {!hidePanels && (
-              <div className="map-actions">
-                <div>Hello</div>
-              </div>
-            )}
-          </div>
-        )} */}
         <div className={`c-map-controls ${className || ""}`}>
           {isDesktop ? (
             <Fragment>
@@ -490,6 +486,7 @@ MapControlsButtons.propTypes = {
   printRequests: PropTypes.number,
   mapPrinting: PropTypes.bool,
   location: PropTypes.object,
+  mapViewerBaseUrl: PropTypes.string,
 };
 
 export default connect()(MapControlsButtons);
