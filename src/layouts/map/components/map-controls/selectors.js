@@ -17,7 +17,8 @@ const getMainMapSettings = (state) => state.mainMap || {};
 const getMapTourOpen = (state) => state.mapTour && state.mapTour.open;
 const getMetaModalOpen = (state) =>
   !!state.modalMeta?.metakey || state?.modalMeta?.closing;
-const selectMapViewerBaseUrl = (state) => state?.config?.mapViewerBaseUrl;
+const selectMapViewerBaseUrl = (state) =>
+  state?.config?.links?.mapViewerBaseUrl;
 
 export const getPrintRequests = createSelector(
   getMainMapSettings,

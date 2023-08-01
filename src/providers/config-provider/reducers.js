@@ -10,8 +10,8 @@ export const initialState = {
   boundaryDataSource: "",
   vectorLayerIcons: [],
   logo: {},
-  mapViewerBaseUrl: "",
   countries: [],
+  links: {},
 };
 
 const setConfigLoading = (state, { payload }) => ({

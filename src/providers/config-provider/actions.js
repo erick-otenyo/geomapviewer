@@ -20,7 +20,7 @@ export const fetchConfig = createThunkAction(
         bounds,
         boundaryDataSource,
         vectorLayerIcons,
-        mapViewerBaseUrl,
+        links,
       } = config;
 
       const sections = categories
@@ -47,7 +47,7 @@ export const fetchConfig = createThunkAction(
         boundaryDataSource,
         vectorLayerIcons,
         bounds,
-        mapViewerBaseUrl,
+        links,
         sections: sections,
         basemaps: basemaps.reduce((all, item) => {
           item.value = item.label;
