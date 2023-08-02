@@ -41,6 +41,7 @@ class ChoseAnalysis extends PureComponent {
     drawing: PropTypes.bool,
     setMapSettings: PropTypes.func,
     file: PropTypes.object,
+    termsOfServicePageUrl: PropTypes.string,
   };
 
   state = {
@@ -81,6 +82,7 @@ class ChoseAnalysis extends PureComponent {
       uploadStatus,
       file,
       drawingMode,
+      termsOfServicePageUrl,
     } = this.props;
     const hasError = error && errorMessage;
 
@@ -187,11 +189,18 @@ class ChoseAnalysis extends PureComponent {
               <Icon icon={infoIcon} className="info-icon" />
             </Button>
           </div>
-          <p>
-            By uploading data you agree to the{" "}
-            <a href="/terms" target="_blank" rel="noopenner nofollower">Terms of Service
-            </a>
-          </p>
+          {termsOfServicePageUrl && (
+            <p>
+              By uploading data you agree to the{" "}
+              <a
+                href={termsOfServicePageUrl}
+                target="_blank"
+                rel="noopenner nofollower"
+              >
+                Terms of Service
+              </a>
+            </p>
+          )}
         </div>
         <UploadShapeModal
           open={this.state.uploadModalOpen}

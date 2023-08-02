@@ -2,7 +2,6 @@ import React, { PureComponent, Fragment } from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-final-form";
 
-import CountryDataProvider from "@/providers/country-data-provider";
 import Input from "@/components/forms/components/input";
 import Select from "@/components/forms/components/select";
 
@@ -12,6 +11,8 @@ import Submit from "@/components/forms/components/submit";
 import ConfirmationMessage from "@/components/confirmation-message";
 import Button from "@/components/ui/button";
 import Error from "@/components/forms/components/error";
+
+import countryList from "react-select-country-list";
 
 import {
   email as validateEmail,
@@ -37,7 +38,10 @@ class ProfileForm extends PureComponent {
   };
 
   render() {
-    const { initialValues, countries, saveProfile, source } = this.props;
+    const { initialValues, saveProfile, source } = this.props;
+
+    const countryOptions = countryList().getData();
+
     const sectorsOptions = sectors.map((s) => ({
       label: s,
       value: s,
@@ -167,7 +171,7 @@ class ProfileForm extends PureComponent {
                       <Select
                         name="country"
                         label="country"
-                        options={countries}
+                        options={countryOptions}
                         placeholder="Select a country"
                         required
                       />
@@ -191,7 +195,6 @@ class ProfileForm extends PureComponent {
             </form>
           )}
         />
-        <CountryDataProvider />
       </Fragment>
     );
   }

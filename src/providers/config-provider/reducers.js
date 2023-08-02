@@ -9,6 +9,9 @@ export const initialState = {
   bounds: null,
   boundaryDataSource: "",
   vectorLayerIcons: [],
+  logo: {},
+  countries: [],
+  links: {},
 };
 
 const setConfigLoading = (state, { payload }) => ({

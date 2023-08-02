@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 
-import { CookiesBanner } from "@erick-otenyo/hw-components";
+import CookiesBanner from "@/components/cookies-banner";
 
 import { trackEvent, initAnalytics, trackPage } from "@/utils/analytics";
 import { getAgreedCookies, setAgreedCookies } from "@/utils/cookies";

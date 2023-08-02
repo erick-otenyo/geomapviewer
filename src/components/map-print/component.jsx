@@ -61,6 +61,8 @@ class MapPrint extends PureComponent {
     const { mapStyle, viewport, bounds } = mapPrintConfig || {};
     const { previewMapLoaded, mounted, title } = this.state;
 
+    const { imageUrl, linkUrl } = logo || {};
+
     let mapViewport = { ...viewport } || {};
 
     if (mounted && mapStyle && viewport && bounds) {
@@ -103,11 +105,13 @@ class MapPrint extends PureComponent {
             <div className="report-body">
               <div className="page-header">
                 <div className="brand">
-                  <img
-                    className="logo"
-                    src={logo || geomapviewerLogo}
-                    alt="Brand Logo"
-                  />
+                  <a href={linkUrl} target="_blank" rel="noreferrer noopener">
+                    <img
+                      className="logo"
+                      src={imageUrl || geomapviewerLogo}
+                      alt="Brand Logo"
+                    />
+                  </a>
                 </div>
                 {title && (
                   <h1 className="report-title" contentEditable>
@@ -180,6 +184,7 @@ MapPrint.propTypes = {
   onCancel: PropTypes.func,
   mapPrintConfig: PropTypes.object,
   activeLayers: PropTypes.array,
+  logo: PropTypes.object,
 };
 
 MapPrint.defaultProps = {

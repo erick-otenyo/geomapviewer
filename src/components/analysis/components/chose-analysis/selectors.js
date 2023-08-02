@@ -16,6 +16,8 @@ export const selectErrorMessage = (state) =>
 const selectUploading = (state) => state.analysis && state.analysis.uploading;
 const getShowDraw = (state) => state.analysis?.settings?.showDraw;
 const selectMapComparing = (state) => state.map?.settings?.comparing;
+const selectTermsOfServicePageUrl = (state) =>
+  state?.config?.links?.termsOfServicePageUrl;
 
 export const getChooseAnalysisProps = createStructuredSelector({
   showDraw: getShowDraw,
@@ -28,4 +30,5 @@ export const getChooseAnalysisProps = createStructuredSelector({
   drawingMode: getDrawingMode,
   uploading: selectUploading,
   isMapComparing: selectMapComparing,
+  termsOfServicePageUrl: selectTermsOfServicePageUrl,
 });
