@@ -1,5 +1,5 @@
 import React, { Component, PureComponent, createRef } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import debounce from "lodash/debounce";
@@ -152,10 +152,6 @@ class MapComponent extends Component {
   };
 
   mapCompareContainer = createRef();
-
-  componentDidMount() {
-    this.setMapBoundaryBounds();
-  }
 
   componentDidUpdate(prevProps, prevState) {
     const {
@@ -331,7 +327,7 @@ class MapComponent extends Component {
     }
   };
 
-  setMapBoundaryBounds = () => {
+  fitMapBoundaryBounds = () => {
     const { mapBounds, boundaryBounds, location } = this.props;
 
     const { type, adm0 } = location;
@@ -406,8 +402,10 @@ class MapComponent extends Component {
     //   mapBounds,
     // });
 
-    // Listeners
     if (this.map) {
+      this.fitMapBoundaryBounds();
+
+      // Listeners
       this.map.once("styledata", this.onStyleLoad);
     }
 
