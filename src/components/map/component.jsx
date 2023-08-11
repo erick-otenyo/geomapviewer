@@ -332,10 +332,13 @@ class MapComponent extends Component {
 
     const { type, adm0 } = location;
 
+    const hasMapBounds = mapBounds && !!mapBounds.length;
+
+    console.log(hasMapBounds, boundaryBounds, type);
+
     if (
       (!type || (type === "country" && !adm0)) &&
-      mapBounds &&
-      mapBounds.length === 0 &&
+      !hasMapBounds &&
       boundaryBounds &&
       !!boundaryBounds.length
     ) {
