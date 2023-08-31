@@ -49,6 +49,8 @@ const nextConfig = {
     BITLY_TOKEN: process.env.BITLY_TOKEN,
     GOOGLE_CUSTOM_SEARCH_CX: process.env.GOOGLE_CUSTOM_SEARCH_CX,
     GOOGLE_SEARCH_API_KEY: process.env.GOOGLE_SEARCH_API_KEY,
+    BASE_URL_PATH: process.env.BASE_URL_PATH,
+    ASSET_PREFIX: process.env.ASSET_PREFIX,
   },
 };
 
