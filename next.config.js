@@ -38,7 +38,7 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-  trailingSlash: true,
+  trailingSlash: false,
   basePath: process.env.BASE_URL_PATH ? process.env.BASE_URL_PATH : undefined,
   assetPrefix: process.env.ASSET_PREFIX ? process.env.ASSET_PREFIX : undefined,
   env: {
