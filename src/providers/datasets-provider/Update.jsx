@@ -49,6 +49,7 @@ class LayerUpdate extends PureComponent {
       getCapabilitiesUrl,
       layerName,
       autoUpdateInterval,
+      getCapabilitiesLayerName
     } = layer;
 
     this.initWmsWorker();
@@ -56,7 +57,7 @@ class LayerUpdate extends PureComponent {
     if (this.wmsWorkerRef.current) {
       return await this.wmsWorkerRef.current.wmsGetLayerTimeFromCapabilities(
         getCapabilitiesUrl,
-        layerName
+        getCapabilitiesLayerName || layerName
       );
     }
   };
