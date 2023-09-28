@@ -94,7 +94,17 @@ const getFeatureCollection = (alert) => {
   return featureColl;
 };
 
-export const getCapAlertsGeojson = (capBaseUrl) => {
+export const getCapAlertsGeojson = (capBaseUrlGeojson) => {
+  return request
+    .get(capBaseUrlGeojson)
+    .then((res) => res.data)
+    .then((geojson) => {
+      
+      return geojson;
+    });
+};
+
+export const getCapAlertsGeojsonFromXml = (capBaseUrl) => {
   return request
     .get(capBaseUrl)
     .then((res) => res.data)

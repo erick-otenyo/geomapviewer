@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from "reselect";
-import { parseISO, format } from "date-fns";
+import { parseISO, format, formatDistanceToNow } from "date-fns";
 
 const getInteractionData = (state, { data }) => data;
 
@@ -103,9 +103,16 @@ export const getCardData = createSelector(
         capData[key] = MAPPING_FIELDS[key][capData[key]];
       }
 
-      if (key === "onset" || key === "expires") {
+      if (key === "sent") {
         const isoDate = parseISO(capData[key]);
-        capData[key] = format(isoDate, "yyyy-mm-dd HH:MM") + " UTC";
+        capData[key] = formatDistanceToNow(isoDate, { addSuffix: true });
+      }
+
+      if (key === "expires" || key === "onset") {
+        const timestamp = Date.parse(capData[key]);
+        const date = new Date(timestamp);
+        // capData[key] = format(isoDate, "yyyy-mm-dd HH:MM") + " UTC";
+        capData[key] = format(date, "MMM dd yyyy, HH:MM");
       }
     });
 

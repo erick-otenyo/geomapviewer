@@ -14,6 +14,7 @@ import "./themes/card-small.scss";
 import "./themes/card-dark.scss";
 
 const TOP_META = {
+  sent: { title: "Sent", icon: infoIcon },
   onset: { title: "Onset Time", icon: infoIcon },
   expires: { title: "Expire Time", icon: infoIcon },
   urgency: { title: "Urgency", icon: infoIcon },
