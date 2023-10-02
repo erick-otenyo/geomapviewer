@@ -78,7 +78,7 @@ export const createUpdateProviders = (activeLayers) => {
 
     if (multiTemporal && layerType) {
       switch (layerType) {
-        case "file":
+        case "raster_file":
           provider = rasterFileUpdateProvider(layer);
           break;
         case "wms":

@@ -64,7 +64,7 @@ export const fetchDatasets = createThunkAction(
                 // mark as has analysis
                 layer.hasTimeseriesAnalysis = true;
 
-                if (layer.layerType === "file") {
+                if (layer.layerType === "raster_file") {
                   if (layer.analysisConfig.pointTimeseriesAnalysis) {
                     layer.analysisConfig.pointTimeseriesAnalysis.config =
                       getTimeseriesConfig(layer, "point");
