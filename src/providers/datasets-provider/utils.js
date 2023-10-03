@@ -11,6 +11,7 @@ const rasterFileUpdateProvider = (layer) => {
     currentTimeMethod,
     autoUpdateInterval,
     settings = {},
+    tileJsonUrl,
   } = layer;
 
   const { autoUpdateActive = true } = settings;
@@ -18,7 +19,7 @@ const rasterFileUpdateProvider = (layer) => {
   return {
     layer: layer,
     getTimestamps: () => {
-      return fetchRasterTimestamps(layerId).then((timestamps) => {
+      return fetchRasterTimestamps(tileJsonUrl).then((timestamps) => {
         return timestamps;
       });
     },
@@ -78,7 +79,7 @@ export const createUpdateProviders = (activeLayers) => {
 
     if (multiTemporal && layerType) {
       switch (layerType) {
-        case "file":
+        case "raster_file":
           provider = rasterFileUpdateProvider(layer);
           break;
         case "wms":

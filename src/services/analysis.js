@@ -5,13 +5,12 @@ import { CMS_API } from "@/utils/apis";
 export const fetchRasterPixelValue = ({ layerId, lat, lng, time }) => {
   const params = {
     time: time,
-    layer: layerId,
     x: lng,
     y: lat,
   };
 
   return request
-    .get(`${CMS_API}/raster-data/pixel`, { params })
+    .get(`${CMS_API}/raster-data/pixel/${layerId}`, { params })
     .then((res) => res?.data.value);
 };
 
@@ -23,13 +22,12 @@ export const fetchRasterGeostoreValue = ({
 }) => {
   const params = {
     time: time,
-    layer: layerId,
     geostore_id: geostoreId,
     value_type: valueType,
   };
 
   return request
-    .get(`${CMS_API}/raster-data/geostore`, { params })
+    .get(`${CMS_API}/raster-data/geostore/${layerId}`, { params })
     .then((res) => res?.data);
 };
 
@@ -40,14 +38,13 @@ export const fetchRasterPixelTimeseriesValue = ({
   startTime,
 }) => {
   const params = {
-    layer: layerId,
     x: lng,
     y: lat,
     time_from: startTime,
   };
 
   return request
-    .get(`${CMS_API}/raster-data/pixel/timeseries`, { params })
+    .get(`${CMS_API}/raster-data/pixel/timeseries/${layerId}`, { params })
     .then((res) => res?.data);
 };
 
@@ -58,13 +55,12 @@ export const fetchRasterGeostoreTimeseriesValue = ({
   valueType,
 }) => {
   const params = {
-    layer: layerId,
     geostore_id: geostoreId,
     time_from: startTime,
     value_type: valueType,
   };
 
   return request
-    .get(`${CMS_API}/raster-data/geostore/timeseries`, { params })
+    .get(`${CMS_API}/raster-data/geostore/timeseries/${layerId}`, { params })
     .then((res) => res?.data);
 };
