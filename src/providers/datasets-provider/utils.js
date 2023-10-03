@@ -11,6 +11,7 @@ const rasterFileUpdateProvider = (layer) => {
     currentTimeMethod,
     autoUpdateInterval,
     settings = {},
+    tileJsonUrl,
   } = layer;
 
   const { autoUpdateActive = true } = settings;
@@ -18,7 +19,7 @@ const rasterFileUpdateProvider = (layer) => {
   return {
     layer: layer,
     getTimestamps: () => {
-      return fetchRasterTimestamps(layerId).then((timestamps) => {
+      return fetchRasterTimestamps(tileJsonUrl).then((timestamps) => {
         return timestamps;
       });
     },
