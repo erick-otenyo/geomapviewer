@@ -71,6 +71,50 @@ const wmsUpdateProvider = (layer) => {
   };
 };
 
+const rasterTileUpdateProvider = (layer) => {
+  const {
+    currentTimeMethod,
+    autoUpdateInterval,
+    settings = {},
+    tileJsonUrl,
+    timestampsResponseObjectKey = "timestamps",
+  } = layer;
+
+  const { autoUpdateActive = true } = settings;
+
+  return {
+    layer: layer,
+    getTimestamps: () => {
+      return fetchRasterTimestamps(
+        tileJsonUrl,
+        timestampsResponseObjectKey
+      ).then((timestamps) => {
+        return timestamps;
+      });
+    },
+    getCurrentLayerTime: (timestamps) => {
+      let currentTime = timestamps[timestamps.length - 1];
+
+      switch (currentTimeMethod) {
+        case "next_to_now":
+          const nextDate = getNextDate(timestamps);
+          if (nextDate) {
+            currentTime = nextDate;
+          }
+          break;
+        default:
+          break;
+      }
+
+      return currentTime;
+    },
+    ...(!!autoUpdateInterval &&
+      autoUpdateActive && {
+        updateInterval: autoUpdateInterval,
+      }),
+  };
+};
+
 export const createUpdateProviders = (activeLayers) => {
   const providers = activeLayers.reduce((all, layer) => {
     const { layerType, multiTemporal } = layer;
@@ -84,6 +128,8 @@ export const createUpdateProviders = (activeLayers) => {
           break;
         case "wms":
           provider = wmsUpdateProvider(layer);
+        case "raster_tile":
+          provider = rasterTileUpdateProvider(layer);
         default:
           break;
       }
