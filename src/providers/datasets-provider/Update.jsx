@@ -49,7 +49,7 @@ class LayerUpdate extends PureComponent {
       getCapabilitiesUrl,
       layerName,
       autoUpdateInterval,
-      getCapabilitiesLayerName
+      getCapabilitiesLayerName,
     } = layer;
 
     this.initWmsWorker();

@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import isEqual from "lodash/isEqual";
 import isInteger from "lodash/isInteger";
+import isNumber from "lodash/isNumber";
 import { format as dateFormat, parseISO } from "date-fns";
 
 import Icon from "@/components/ui/icon";
@@ -104,7 +105,17 @@ class FeatureInfo extends PureComponent {
     const { config } = this.props;
     const { unit } = config;
 
-    return `${isInteger(value) ? value : value.toFixed(2)} ${unit}`;
+    let fValue = "";
+
+    if (isInteger(value)) {
+      fValue = value;
+    }
+
+    if (isNumber(value)) {
+      fValue = value.toFixed(2);
+    }
+
+    return `${fValue} ${unit}`;
   };
 
   getValues = () => {

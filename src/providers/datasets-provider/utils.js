@@ -128,6 +128,7 @@ export const createUpdateProviders = (activeLayers) => {
           break;
         case "wms":
           provider = wmsUpdateProvider(layer);
+          break;
         case "raster_tile":
           provider = rasterTileUpdateProvider(layer);
         default:

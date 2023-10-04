@@ -334,8 +334,6 @@ class MapComponent extends Component {
 
     const hasMapBounds = mapBounds && !!mapBounds.length;
 
-    console.log(hasMapBounds, boundaryBounds, type);
-
     if (
       (!type || (type === "country" && !adm0)) &&
       !hasMapBounds &&
