@@ -33,16 +33,10 @@ const wmsGetLayerTimeFromCapabilities = async (
   layerName,
   params = {}
 ) => {
-  const defaultParams = {
-    service: "WMS",
-    request: "GetCapabilities",
-    version: "1.3.0",
-  };
-
   try {
     // Fetch the GetCapabilities document from the WMS server
     const response = await get(wmsUrl, {
-      params: { ...defaultParams, ...params },
+      params: { ...params },
     });
 
     // parse xml
