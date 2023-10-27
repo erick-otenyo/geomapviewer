@@ -48,7 +48,7 @@ const datasets = [
             required: true,
             sentence: "{selector}",
             type: "datetime",
-            dateFormat: { currentTime: "yyyy-mm-dd HH:MM" },
+            dateFormat: { currentTime: "yyyy-MM-dd HH:mm" },
             availableDates: [],
           },
         ],

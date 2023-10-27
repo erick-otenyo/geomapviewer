@@ -111,7 +111,6 @@ export const getCardData = createSelector(
       if (key === "expires" || key === "onset") {
         const timestamp = Date.parse(capData[key]);
         const date = new Date(timestamp);
-        // capData[key] = format(isoDate, "yyyy-mm-dd HH:MM") + " UTC";
         capData[key] = format(date, "MMM dd yyyy, HH:MM");
       }
     });

@@ -212,7 +212,7 @@ class FeatureInfo extends PureComponent {
                   <span>Date: </span>
                 </span>
                 <span className="val">
-                  {dateFormat(parseISO(params.time), "yyyy-mm-dd HH:MM")}
+                  {dateFormat(parseISO(params.time), "yyyy-MM-dd HH:mm")}
                 </span>
               </div>
             )}

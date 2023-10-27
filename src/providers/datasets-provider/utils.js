@@ -213,7 +213,7 @@ export const getTimeseriesConfig = (layer, analysisType) => {
           label: "Date",
           formatConfig: {
             formatDate: true,
-            dateFormat: "yyyy-mm-dd HH:MM",
+            dateFormat: "yyyy-MM-dd HH:mm",
           },
         },
         {
