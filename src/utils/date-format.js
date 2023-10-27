@@ -1,6 +1,6 @@
 import { defined } from "@/utils/core";
-import dateFormat from "dateformat";
-import { endOfMonth } from "date-fns";
+
+import { parseISO, endOfMonth, format as dateFormat } from "date-fns";
 
 /**
  * Formats a date according to the locale if provided, otherwise in a dd/mm/yyyy format.
@@ -116,7 +116,7 @@ export function getPentadFromDateString(dateString) {
 // next_pentad_num = 1
 
 export function dFormatter(date, format, asPeriod) {
-  let formated = dateFormat(date, format);
+  let formated = dateFormat(parseISO(date), format);
 
   if (asPeriod) {
     if (asPeriod === "pentadal") {

@@ -1,6 +1,7 @@
 import request from "@/utils/request";
 
 import { CMS_API } from "@/utils/apis";
+import { parseISO } from "date-fns";
 
 export const fetchRasterPixelValue = ({ layerId, lat, lng, time }) => {
   const params = {
@@ -45,7 +46,8 @@ export const fetchRasterPixelTimeseriesValue = ({
 
   return request
     .get(`${CMS_API}/raster-data/pixel/timeseries/${layerId}`, { params })
-    .then((res) => res?.data);
+    .then((res) => res?.data)
+    .then((data) => data.sort((a, b) => parseISO(a.date) - parseISO(b.date)));
 };
 
 export const fetchRasterGeostoreTimeseriesValue = ({
@@ -62,5 +64,6 @@ export const fetchRasterGeostoreTimeseriesValue = ({
 
   return request
     .get(`${CMS_API}/raster-data/geostore/timeseries/${layerId}`, { params })
-    .then((res) => res?.data);
+    .then((res) => res?.data)
+    .then((data) => data.sort((a, b) => parseISO(a.date) - parseISO(b.date)));
 };

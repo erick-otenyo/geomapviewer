@@ -9,6 +9,7 @@ import { parse, end, toSeconds, pattern } from "iso8601-duration";
 import * as ownActions from "./actions";
 import { getDatasetProps } from "./selectors";
 import { setMapSettings } from "@/components/map/actions";
+import { parseISO } from "date-fns";
 
 const actions = {
   ...ownActions,
@@ -98,12 +99,20 @@ class LayerUpdate extends PureComponent {
       //
       getLayerTimestamps()
         .then((timestamps) => {
-          setTimestamps({ [layerId]: timestamps });
+          // sort timestamps by date
+          const sortedTimestamps =
+            timestamps &&
+            !!timestamps.length &&
+            timestamps.sort((a, b) => parseISO(a) - parseISO(b));
 
-          const newParams = { time: timestamps[timestamps.length - 1] };
+          setTimestamps({ [layerId]: sortedTimestamps });
+
+          const newParams = {
+            time: sortedTimestamps[sortedTimestamps.length - 1],
+          };
 
           if (getCurrentLayerTime) {
-            const newTime = getCurrentLayerTime(timestamps);
+            const newTime = getCurrentLayerTime(sortedTimestamps);
 
             newParams.time = newTime;
           }
