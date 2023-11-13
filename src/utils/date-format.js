@@ -67,12 +67,18 @@ const getOrdinalNum = (number) => {
   return number + ["th", "st", "nd", "rd", ""][selector];
 };
 
-export function getPentadFromDateString(dateString) {
-  const date = new Date(dateString);
+export function getPentadFromDateString(date) {
+  let dateObj;
 
-  const lastDayOfMonth = endOfMonth(date).getDate();
+  if (typeof date === "string") {
+    dateObj = parseISO(date);
+  } else {
+    dateObj = date;
+  }
 
-  const day = date.getDate();
+  const lastDayOfMonth = endOfMonth(dateObj).getDate();
+
+  const day = dateObj.getDate();
 
   if (day <= 5) {
     return [1, "1-5th", 1];
@@ -116,7 +122,15 @@ export function getPentadFromDateString(dateString) {
 // next_pentad_num = 1
 
 export function dFormatter(date, format, asPeriod) {
-  let formated = dateFormat(parseISO(date), format);
+  let dateObj;
+
+  if (typeof date === "string") {
+    dateObj = parseISO(date);
+  } else {
+    dateObj = date;
+  }
+
+  let formated = dateFormat(dateObj, format);
 
   if (asPeriod) {
     if (asPeriod === "pentadal") {
