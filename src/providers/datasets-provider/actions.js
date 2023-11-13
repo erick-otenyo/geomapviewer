@@ -1,9 +1,7 @@
 import { createAction, createThunkAction } from "@/redux/actions";
 
 import { setMapSettings } from "@/components/map/actions";
-import getCountryBoundaryDataset from "./datasets/boundaries/country";
 import { getApiDatasets } from "@/services/datasets";
-import { createCapDataset } from "./datasets/cap";
 
 import { getTimeseriesConfig } from "./utils";
 
@@ -25,35 +23,13 @@ export const fetchDatasets = createThunkAction(
 
     const currentActiveDatasets = [...activeDatasets];
 
-    let countryBoundaryDataset = [];
-
     getApiDatasets()
-      .then(({ datasets: apiDatasets, config = {} }) => {
-        let capDataset = [];
-        const { capConfig, boundaryTilesUrl } = config;
-
-        if (boundaryTilesUrl) {
-          countryBoundaryDataset = getCountryBoundaryDataset(
-            boundaryTilesUrl,
-            "default"
-          );
-        }
-
-        if (capConfig) {
-          capDataset = createCapDataset(capConfig);
-        }
-
-        const allDatasets = [
-          ...countryBoundaryDataset,
-          ...capDataset,
-          ...apiDatasets,
-        ];
-
-        const initialVisibleDatasets = allDatasets.filter(
+      .then((apiDatasets) => {
+        const initialVisibleDatasets = apiDatasets.filter(
           (d) => d.initialVisible
         );
 
-        const datasetsWithAnalysis = allDatasets.reduce(
+        const datasetsWithAnalysis = apiDatasets.reduce(
           (allDatasets, dataset) => {
             const layers = dataset.layers.reduce((dLayers, layer) => {
               if (
