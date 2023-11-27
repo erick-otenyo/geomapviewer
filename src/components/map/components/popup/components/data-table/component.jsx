@@ -7,8 +7,9 @@ import Button from "@/components/ui/button";
 import "./styles.scss";
 
 const renderString = ({ suffix, type, linkText, value }) => {
-  let valueString = value || "n/a";
-  if (type === "number" && value) {
+  let valueString = value !== null && value !== "" ? value : "n/a";
+
+  if (type === "number" && value !== null && value !== "") {
     valueString = formatNumber({ num: value, unit: suffix });
   } else if (type === "link" && value && linkText) {
     valueString = (
@@ -36,7 +37,6 @@ const DataTable = ({
   setAnalysisSettings,
   setMainMapSettings,
 }) => {
-
   return (
     <div className="c-data-table">
       <div className="table">
