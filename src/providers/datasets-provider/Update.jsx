@@ -100,18 +100,18 @@ class LayerUpdate extends PureComponent {
       getLayerTimestamps()
         .then((timestamps) => {
           // sort timestamps by date
-          const sortedTimestamps =
-            timestamps &&
-            !!timestamps.length &&
-            timestamps.sort((a, b) => parseISO(a) - parseISO(b));
-
-          setTimestamps({ [layerId]: sortedTimestamps });
+          setTimestamps({ [layerId]: [...timestamps] });
 
           const newParams = {
-            time: sortedTimestamps[sortedTimestamps.length - 1],
+            time: timestamps[timestamps.length - 1],
           };
 
           if (getCurrentLayerTime) {
+            const sortedTimestamps =
+              timestamps &&
+              !!timestamps.length &&
+              timestamps.sort((a, b) => parseISO(a) - parseISO(b));
+
             const newTime = getCurrentLayerTime(sortedTimestamps);
 
             newParams.time = newTime;

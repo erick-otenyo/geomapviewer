@@ -5,9 +5,12 @@ export const fetchTimestamps = (dataPath) => {
   return gskyTimestampsRequest.get(url);
 };
 
-export const fetchRasterTimestamps = (
-  tileJsonUrl,
-  timestampsKey = "timestamps"
-) => {
-  return request(tileJsonUrl).then((res) => res.data[timestampsKey]);
+export const fetchUrlTimestamps = (tileJsonUrl, timestampsKey) => {
+  return request(tileJsonUrl).then((res) => {
+    if (timestampsKey) {
+      return res.data[timestampsKey];
+    }
+
+    return res.data;
+  });
 };

@@ -20,3 +20,19 @@ export const getNextDate = (dates) => {
   // Return the next date, or null if there isn't one
   return nextDate || null;
 };
+
+
+
+export const getPreviousDate = (dates) => {
+  // Get the current date time
+  const now = new Date();
+
+  // Find the date that is one step behind the current date time, assuming the dates are ordered
+  const previousDate = dates.reverse().find((dateStr) => {
+    const date = new Date(dateStr);
+    return date < now;
+  });
+
+  // Return the previous date, or null if there isn't one
+  return previousDate || null;
+};

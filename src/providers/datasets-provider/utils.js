@@ -1,9 +1,38 @@
-import { fetchRasterTimestamps } from "@/services/timestamps";
+import { fetchUrlTimestamps } from "@/services/timestamps";
 import { getTimeValuesFromWMS } from "@/utils/wms";
-import { getNextDate } from "@/utils/time";
+import { getNextDate, getPreviousDate } from "@/utils/time";
 
 import { POLITICAL_BOUNDARIES_DATASET } from "@/data/datasets";
 import { POLITICAL_BOUNDARIES } from "@/data/layers";
+
+const getLayerTime = (timestamps, currentTimeMethod) => {
+  let currentTime = timestamps[timestamps.length - 1];
+
+  switch (currentTimeMethod) {
+    case "next_to_now":
+      const nextDate = getNextDate(timestamps);
+      if (nextDate) {
+        currentTime = nextDate;
+      }
+      break;
+    case "previous_to_now":
+      const previousDate = getPreviousDate(timestamps);
+      if (previousDate) {
+        currentTime = previousDate;
+      }
+      break;
+    case "latest_from_source":
+      currentTime = timestamps[timestamps.length - 1];
+      break;
+    case "earliest_from_source":
+      currentTime = timestamps[0];
+      break;
+    default:
+      break;
+  }
+
+  return currentTime;
+};
 
 const rasterFileUpdateProvider = (layer) => {
   const {
@@ -19,25 +48,12 @@ const rasterFileUpdateProvider = (layer) => {
   return {
     layer: layer,
     getTimestamps: () => {
-      return fetchRasterTimestamps(tileJsonUrl).then((timestamps) => {
+      return fetchUrlTimestamps(tileJsonUrl).then((timestamps) => {
         return timestamps;
       });
     },
     getCurrentLayerTime: (timestamps) => {
-      let currentTime = timestamps[timestamps.length - 1];
-
-      switch (currentTimeMethod) {
-        case "next_to_now":
-          const nextDate = getNextDate(timestamps);
-          if (nextDate) {
-            currentTime = nextDate;
-          }
-          break;
-        default:
-          break;
-      }
-
-      return currentTime;
+      return getLayerTime(timestamps, currentTimeMethod);
     },
     ...(!!autoUpdateInterval &&
       autoUpdateActive && {
@@ -52,18 +68,13 @@ const wmsUpdateProvider = (layer) => {
     getCapabilitiesUrl,
     layerName,
     autoUpdateInterval,
+    currentTimeMethod,
   } = layer;
 
   return {
     layer: layer,
     getCurrentLayerTime: (timestamps) => {
-      const nextDate = getNextDate(timestamps);
-
-      if (nextDate) {
-        return nextDate;
-      }
-
-      return timestamps[timestamps.length - 1];
+      return getLayerTime(timestamps, currentTimeMethod);
     },
     ...(!!autoUpdateInterval && {
       updateInterval: autoUpdateInterval,
@@ -71,13 +82,13 @@ const wmsUpdateProvider = (layer) => {
   };
 };
 
-const rasterTileUpdateProvider = (layer) => {
+const tileLayerUpdateProvider = (layer) => {
   const {
     currentTimeMethod,
     autoUpdateInterval,
     settings = {},
     tileJsonUrl,
-    timestampsResponseObjectKey = "timestamps",
+    timestampsResponseObjectKey,
   } = layer;
 
   const { autoUpdateActive = true } = settings;
@@ -85,28 +96,14 @@ const rasterTileUpdateProvider = (layer) => {
   return {
     layer: layer,
     getTimestamps: () => {
-      return fetchRasterTimestamps(
-        tileJsonUrl,
-        timestampsResponseObjectKey
-      ).then((timestamps) => {
-        return timestamps;
-      });
+      return fetchUrlTimestamps(tileJsonUrl, timestampsResponseObjectKey).then(
+        (timestamps) => {
+          return timestamps;
+        }
+      );
     },
     getCurrentLayerTime: (timestamps) => {
-      let currentTime = timestamps[timestamps.length - 1];
-
-      switch (currentTimeMethod) {
-        case "next_to_now":
-          const nextDate = getNextDate(timestamps);
-          if (nextDate) {
-            currentTime = nextDate;
-          }
-          break;
-        default:
-          break;
-      }
-
-      return currentTime;
+      return getLayerTime(timestamps, currentTimeMethod);
     },
     ...(!!autoUpdateInterval &&
       autoUpdateActive && {
@@ -130,7 +127,9 @@ export const createUpdateProviders = (activeLayers) => {
           provider = wmsUpdateProvider(layer);
           break;
         case "raster_tile":
-          provider = rasterTileUpdateProvider(layer);
+          provider = tileLayerUpdateProvider(layer);
+        case "vector_tile":
+          provider = tileLayerUpdateProvider(layer);
         default:
           break;
       }
