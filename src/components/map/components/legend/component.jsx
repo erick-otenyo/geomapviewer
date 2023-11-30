@@ -124,6 +124,7 @@ const MapLegendContent = ({
             index={i}
             key={id}
             layerGroup={lg}
+            title={isMultiLayer ? name : null}
             toolbar={
               <LegendItemToolbar
                 {...rest}
@@ -182,7 +183,7 @@ const MapLegendContent = ({
               </div>
             )}
             <LayerCapabilities capabilities={capabilities} />
-            <LegendItemTypes />
+            {!isMultiLayer && <LegendItemTypes />}
             {statement && <LayerAnalysisStatement statementHtml={statement} />}
             {statementConfig && (
               <LayerStatement

@@ -78,9 +78,19 @@ class LayerUpdate extends PureComponent {
       zoomToDataExtent,
     } = this.props;
 
-    const { id: layerId, layerType } = layer;
+    const {
+      id: layerId,
+      layerType,
+      isMultiLayer,
+      isDefault,
+      linkedLayers,
+    } = layer;
 
     let getLayerTimestamps = getTimestamps;
+
+    if (isMultiLayer && !isDefault) {
+      getLayerTimestamps = null;
+    }
 
     if (!getTimestamps && layerType === "wms") {
       getLayerTimestamps = this.getWMSTimestamps;
@@ -96,11 +106,16 @@ class LayerUpdate extends PureComponent {
         setLayerLoadingStatus({ [layerId]: true });
       }
 
-      //
       getLayerTimestamps()
         .then((timestamps) => {
           // sort timestamps by date
           setTimestamps({ [layerId]: [...timestamps] });
+
+          if (linkedLayers && !!linkedLayers.length) {
+            linkedLayers.forEach((linkedLayer) => {
+              setTimestamps({ [linkedLayer]: [...timestamps] });
+            });
+          }
 
           const newParams = {
             time: timestamps[timestamps.length - 1],

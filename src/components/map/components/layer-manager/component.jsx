@@ -91,36 +91,20 @@ class LayerManagerComponent extends PureComponent {
   handleOnAdd = (layerModel) => {
     const { layerConfig } = layerModel;
 
-    const {
-      allDatasets,
-      activeDatasets,
-      setMapSettings,
-      setMainMapSettings,
-    } = this.props;
+    const { allDatasets, activeDatasets, setMapSettings, setMainMapSettings } =
+      this.props;
 
-    if (layerModel && layerModel.isMultiLayer && layerModel.default) {
-      const { dataset } = layerModel;
+    if (layerModel && layerModel.isMultiLayer && layerModel.isDefault) {
+      const { dataset, linkedLayers, showAllMultiLayer } = layerModel;
 
       // NOTE: Add related layers. This are layers that should be switched on together as a group
-      const relatedDataset = allDatasets.find((d) => d.id === dataset);
-
-      if (
-        relatedDataset &&
-        relatedDataset.layers &&
-        !!relatedDataset.layers.length
-      ) {
-        const { layers } = relatedDataset;
-
-        const nonDefaultLayers = layers
-          .filter((l) => !l.default)
-          .map((l) => l.id);
-
+      if (showAllMultiLayer && linkedLayers && !!linkedLayers.length) {
         const newActiveDatasets = activeDatasets.map((newDataset, i) => {
           if (newDataset.dataset === dataset) {
             const newActiveDataset = activeDatasets[i];
             return {
               ...newActiveDataset,
-              layers: [...newActiveDataset.layers, ...nonDefaultLayers],
+              layers: [...newActiveDataset.layers, ...linkedLayers],
             };
           }
           return newDataset;

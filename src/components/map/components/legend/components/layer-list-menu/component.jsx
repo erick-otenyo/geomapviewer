@@ -23,12 +23,13 @@ class LayerListMenu extends PureComponent {
                 onInfoClick={() => onInfoClick(l.metadata)}
                 // small
               />
-              {l.nestedLegend && l.active && (
+              {l.nestedLegend && l.active ? (
                 // l.active && (
                 <div className="nested-legend">
                   <LegendItemTypes activeLayer={l} />
                 </div>
-              )}
+              ) : null}
+
               {l.legendDesc && (
                 <p className="layer-description">{l.legendDesc}</p>
               )}
