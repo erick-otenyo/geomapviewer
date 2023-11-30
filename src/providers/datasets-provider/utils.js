@@ -48,9 +48,11 @@ const rasterFileUpdateProvider = (layer) => {
   return {
     layer: layer,
     getTimestamps: () => {
-      return fetchUrlTimestamps(tileJsonUrl).then((timestamps) => {
-        return timestamps;
-      });
+      return fetchUrlTimestamps(tileJsonUrl, "timestamps").then(
+        (timestamps) => {
+          return timestamps;
+        }
+      );
     },
     getCurrentLayerTime: (timestamps) => {
       return getLayerTime(timestamps, currentTimeMethod);
