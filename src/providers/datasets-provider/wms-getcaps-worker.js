@@ -77,7 +77,14 @@ const wmsGetLayerTimeFromCapabilities = async (
       return getValidTimestamps(timeValueStr);
     }
 
-    return timeValueStr.split(",");
+    const timestamps = timeValueStr.split(",");
+
+    // sort by date
+    timestamps.sort((a, b) => {
+      return new Date(a) - new Date(b);
+    });
+
+    return timestamps;
   } catch (error) {
     console.error(
       `Error fetching or parsing GetCapabilities document: ${error.message}`

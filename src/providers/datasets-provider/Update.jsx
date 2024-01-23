@@ -4,8 +4,6 @@ import { isEmpty } from "lodash";
 import { connect } from "react-redux";
 import { wrap } from "comlink";
 
-import { parse, end, toSeconds, pattern } from "iso8601-duration";
-
 import * as ownActions from "./actions";
 import { getDatasetProps } from "./selectors";
 import { setMapSettings } from "@/components/map/actions";

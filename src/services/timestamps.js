@@ -8,7 +8,14 @@ export const fetchTimestamps = (dataPath) => {
 export const fetchUrlTimestamps = (tileJsonUrl, timestampsKey) => {
   return request(tileJsonUrl).then((res) => {
     if (timestampsKey) {
-      return res.data[timestampsKey];
+      const timestamps = res.data[timestampsKey];
+
+      //sort by date
+      timestamps.sort((a, b) => {
+        return new Date(a) - new Date(b);
+      });
+
+      return timestamps;
     }
 
     return res.data;
