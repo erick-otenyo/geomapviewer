@@ -21,6 +21,9 @@ export const getGeostore = async ({ type, adm0, adm1, adm2, token }) => {
     case "geostore":
       url = url.concat(`${adm0}`);
       break;
+    case "use":
+      url = `/map-boundary-data/${adm0}/${adm1}`;
+      break;
     default:
       return false;
   }
@@ -29,7 +32,6 @@ export const getGeostore = async ({ type, adm0, adm1, adm2, token }) => {
     .get(`${url}?thresh=${thresh}`, { cancelToken: token })
     .then((response) => {
       const { attributes: geostore } = response?.data || {};
-
       return {
         ...geostore,
         id: geostore?.hash,

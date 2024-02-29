@@ -162,7 +162,7 @@ export const getTimeseriesConfig = (layer, analysisType) => {
     datasetId: layer.dataset,
     title: `${layer.name} - Timeseries Analysis for {location}`,
     categories: [""],
-    types: ["country", "geostore", "point"],
+    types: ["country", "geostore", "point", "aoi", "use"],
     admins: ["adm0", "adm1", "adm2"],
     large: true,
     metaKey: "",

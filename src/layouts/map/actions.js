@@ -12,7 +12,7 @@ export const setMainMapAnalysisView = createThunkAction(
     (dispatch, getState) => {
       const { boundaryDataSource } = getState().config || {};
 
-      const { cartodb_id, wdpaid } = data || {};
+      const { gid } = data || {};
       const { analysisEndpoint, tableName } = layer || {};
       const { query, pushQuery } = useRouter();
       const { map, mainMap } = query || {};
@@ -34,16 +34,11 @@ export const setMainMapAnalysisView = createThunkAction(
               type: "country",
               ...getAdmLocationByLevel(data, boundaryDataSource),
             };
-          } else if (analysisEndpoint === "wdpa" && (cartodb_id || wdpaid)) {
-            payload = {
-              type: analysisEndpoint,
-              adm0: wdpaid || cartodb_id,
-            };
-          } else if (cartodb_id && tableName) {
+          } else if (gid && tableName) {
             payload = {
               type: "use",
               adm0: tableName,
-              adm1: cartodb_id,
+              adm1: gid,
             };
           }
         }

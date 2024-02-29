@@ -72,7 +72,7 @@ class FeatureInfo extends PureComponent {
         });
       }
     } else {
-      const adminLocationTypes = ["country", "geostore", "aoi"];
+      const adminLocationTypes = ["country", "geostore", "aoi", "use"];
 
       if (
         adminLocationTypes.includes(locationType) &&

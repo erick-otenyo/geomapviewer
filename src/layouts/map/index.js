@@ -76,13 +76,15 @@ class MainMapContainer extends PureComponent {
   };
 
   handleClickAnalysis = (selected) => {
-    const { layer, geometry, isPoint } = selected;
-    const { analysisEndpoint } = layer || {};
+    const { data, layer, geometry, isPoint } = selected;
+    const { gid } = data || {};
+    const { analysisEndpoint, tableName } = layer || {};
+    const isUse = gid && tableName;
 
     const isAdmin = analysisEndpoint === "admin";
 
     const { setMainMapAnalysisView } = this.props;
-    if (isAdmin || isPoint) {
+    if (isAdmin || isPoint || isUse) {
       setMainMapAnalysisView(selected);
     } else {
       this.onDrawComplete(geometry);

@@ -1,12 +1,11 @@
 import React, { Component, PureComponent, createRef } from "react";
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import debounce from "lodash/debounce";
 import cx from "classnames";
 
 import { trackMapLatLon, trackEvent } from "@/utils/analytics";
-import { svgStringToImage } from "@/utils/svg";
 
 import Loader from "@/components/ui/loader";
 import Icon from "@/components/ui/icon";

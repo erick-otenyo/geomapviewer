@@ -491,13 +491,13 @@ export const getActiveLayers = createSelector(
   [getAllLayers, selectGeostore, selectLocation, getActiveArea],
   (layers, geostore, location, activeArea) => {
     if (isEmpty(layers)) return [];
-    const filteredLayers = layers.filter((l) => !l.confirmedOnly);
 
     const hasClickedPoint =
       location.type === "point" && location.adm0 && location.adm1;
 
     if (!hasClickedPoint) {
-      if (!geostore || !geostore.id) return filteredLayers;
+      if (!geostore || !geostore.id) return layers;
+
       const { type, adm0 } = location || {};
       const isAoI = type === "aoi" && adm0;
 
@@ -513,7 +513,7 @@ export const getActiveLayers = createSelector(
         }),
       };
 
-      const parsedLayers = filteredLayers.concat({
+      const parsedLayers = layers.concat({
         id: geostore.id,
         name: isAoI ? "Area of Interest" : "Geojson",
         config: {
@@ -543,6 +543,9 @@ export const getActiveLayers = createSelector(
                 paint: {
                   "line-color": "#000",
                   "line-width": 1.5,
+                },
+                metadata: {
+                  position: "top",
                 },
               },
             ],
@@ -575,7 +578,7 @@ export const getActiveLayers = createSelector(
       ...point,
     };
 
-    return filteredLayers.concat({
+    return layers.concat({
       id: geojson.id,
       name: "Geojson",
       layerConfig: {

@@ -16,9 +16,7 @@ import { getPentadFromDateString } from "@/utils/date-format";
 const getSettings = (state) => state.settings;
 const getData = (state) => state.data && state.data;
 const getPlotConfig = (state) => state.plotConfig;
-const getCurrentLocation = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
-const getSentences = (state) => state.sentences;
 
 export const getColor = (val, inverse) => {
   if (inverse) {

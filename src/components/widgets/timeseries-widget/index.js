@@ -2,7 +2,6 @@ import {
   fetchRasterPixelTimeseriesValue,
   fetchRasterGeostoreTimeseriesValue,
 } from "@/services/analysis";
-import { parseISO, addDays } from "date-fns";
 
 import getWidgetProps from "./selectors";
 

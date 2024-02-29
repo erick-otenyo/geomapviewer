@@ -56,12 +56,11 @@ class Popup extends Component {
       });
     } else {
       const { data, layer, geometry } = selected;
-      const { cartodb_id, wdpaid } = data || {};
+      const { gid } = data || {};
       const { analysisEndpoint, tableName } = layer || {};
 
       const isAdmin = analysisEndpoint === "admin";
-      const isWdpa = analysisEndpoint === "wdpa" && (cartodb_id || wdpaid);
-      const isUse = cartodb_id && tableName;
+      const isUse = gid && tableName;
 
       onClickAnalysis({
         data,
@@ -69,7 +68,6 @@ class Popup extends Component {
         geometry,
         isUse,
         isAdmin,
-        isWdpa,
       });
     }
 

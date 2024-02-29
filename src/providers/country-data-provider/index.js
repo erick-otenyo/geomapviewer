@@ -20,7 +20,7 @@ class CountryDataProvider extends PureComponent {
       getCountries,
     } = this.props;
 
-    if (type !== "point") {
+    if (type !== "point" || type !== "use") {
       getCountries();
 
       if (adm0) {
@@ -40,7 +40,7 @@ class CountryDataProvider extends PureComponent {
     const hasCountryChanged = adm0 && adm0 !== prevProps.location.adm0;
     const hasRegionChanged = adm0 && adm1 && adm1 !== prevProps.location.adm1;
 
-    if (type !== "point") {
+    if (type !== "point" || type !== "use") {
       if (hasCountryChanged) {
         this.handleRegionFetch(adm0);
         if (adm1) {
