@@ -21,6 +21,9 @@ class LegendTypeChoropleth extends PureComponent {
 
     return (
       <div className="c-legend-type-choropleth">
+        {legendConfig.units && (
+          <div className="units">{legendConfig.units}</div>
+        )}
         <ul>
           {legendConfig.items.map(({ color }, i) => (
             <li

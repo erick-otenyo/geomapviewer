@@ -6,8 +6,10 @@ import { replace } from "@wmo-raf/layer-manager";
 import {
   LegendItemTypeBasic,
   LegendItemTypeGradient,
+  LegendItemTypeGradientVertical,
   LegendItemTypeProportional,
   LegendItemTypeImage,
+  LegendItemTypeChoroplethVertical,
 } from "@/components/legend";
 
 import Loader from "@/components/ui/loader";
@@ -134,7 +136,15 @@ class LegendItemTypes extends PureComponent {
         )}
 
         {shouldRender && !React.Children.count(children) && (
+          <LegendItemTypeChoroplethVertical {...this.props} />
+        )}
+
+        {shouldRender && !React.Children.count(children) && (
           <LegendItemTypeGradient {...this.props} />
+        )}
+
+        {shouldRender && !React.Children.count(children) && (
+          <LegendItemTypeGradientVertical {...this.props} />
         )}
 
         {shouldRender && !React.Children.count(children) && (

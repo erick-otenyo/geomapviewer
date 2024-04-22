@@ -26,6 +26,9 @@ export class LegendTypeBasic extends React.PureComponent {
 
     return (
       <div className="c-legend-type-basic">
+        {legendConfig.units && (
+          <div className="units">{legendConfig.units}</div>
+        )}
         <ul className={mode}>
           {legendConfig.items.map((item) => (
             <li key={`legend-basic-item-${item.name}`}>

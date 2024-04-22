@@ -154,7 +154,9 @@ export {
   default as LegendItemTypes,
   LegendItemTypeBasic,
   LegendItemTypeChoropleth,
+  LegendItemTypeChoroplethVertical,
   LegendItemTypeGradient,
+  LegendItemTypeGradientVertical,
   LegendItemTypeProportional,
   LegendItemTypeImage,
 } from "./components/legend-item-types";

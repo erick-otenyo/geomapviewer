@@ -24,6 +24,9 @@ class LegendTypeImage extends PureComponent {
 
     return (
       <div className="c-legend-type-image">
+        {legendConfig.units && (
+          <div className="units">{legendConfig.units}</div>
+        )}
         <img src={legendConfig.imageUrl} alt={`${activeLayer.name} - Legend`} />
       </div>
     );

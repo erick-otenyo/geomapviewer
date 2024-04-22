@@ -1,6 +1,12 @@
 .c-legend-type-choropleth {
   padding: 10px 0 0;
 
+  .units {
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
   ul {
     display: flex;
     margin: 0;

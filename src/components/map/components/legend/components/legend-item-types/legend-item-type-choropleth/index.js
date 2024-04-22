@@ -31,7 +31,12 @@ class LegendTypeChoropleth extends React.PureComponent {
 
     return (
       <div className="c-legend-type-choropleth">
-        <Legend thresholds={thresholds} colors={colors} {...rest} />
+        <Legend
+          thresholds={thresholds}
+          colors={colors}
+          title={legendConfig.units}
+          {...rest}
+        />
       </div>
     );
   }
