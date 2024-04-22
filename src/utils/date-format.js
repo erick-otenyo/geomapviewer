@@ -102,6 +102,30 @@ export function getPentadFromDateString(date) {
   return [6, `26-${getOrdinalNum(lastDayOfMonth)}`, 26];
 }
 
+export function getDekadFromString(date) {
+  let dateObj;
+
+  if (typeof date === "string") {
+    dateObj = parseISO(date);
+  } else {
+    dateObj = date;
+  }
+
+  const lastDayOfMonth = endOfMonth(dateObj).getDate();
+
+  const day = dateObj.getDate();
+
+  if (day <= 10) {
+    return [1, "1-10th", 1];
+  }
+
+  if (day <= 20) {
+    return [2, "11-20th", 11];
+  }
+
+  return [3, `21-${getOrdinalNum(lastDayOfMonth)}`, 21];
+}
+
 // if day <= 5:
 // next_pentad_start = datetime(date.year, date.month, 6)
 // next_pentad_num = 2
@@ -137,6 +161,10 @@ export function dFormatter(date, format, asPeriod) {
       const [pentad, duration] = getPentadFromDateString(date);
 
       formated = `${formated} - P${pentad} ${duration}`;
+    } else if (asPeriod === "dekadal") {
+      const [dekad, duration] = getDekadFromString(date);
+
+      formated = `${formated} - D${dekad} ${duration}`;
     }
   }
 
