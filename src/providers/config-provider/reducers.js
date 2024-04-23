@@ -12,6 +12,7 @@ export const initialState = {
   logo: {},
   countries: [],
   links: {},
+  disclaimerText: "",
 };
 
 const setConfigLoading = (state, { payload }) => ({

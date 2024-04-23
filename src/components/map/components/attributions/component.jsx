@@ -6,13 +6,20 @@ import { Button } from "@erick-otenyo/hw-components";
 
 import Icon from "@/components/ui/icon";
 
+import mapLibreLogo from "@/assets/logos/maplibre.svg?sprite";
 import infoIcon from "@/assets/icons/info.svg?sprite";
 
 import AttributionsModal from "./attributions-modal";
 
 import "./styles.scss";
 
-const MapAttributions = ({ className, viewport, map }) => {
+const MapAttributions = ({
+  className,
+  viewport,
+  map,
+  disclaimerText,
+  links,
+}) => {
   const width = map._container.clientWidth;
   const [open, setAttributionsModalOpen] = useState(false);
   const [narrowView, setNarrowView] = useState(width < 900);
@@ -23,9 +30,28 @@ const MapAttributions = ({ className, viewport, map }) => {
 
   return (
     <div className={cx("c-map-attributions", className)}>
-      <div className="logos"></div>
       {!narrowView && (
         <>
+          {disclaimerText && (
+            <a
+              rel="noopener noreferrer"
+              target="_blank"
+              style={{ maxWidth: 450 }}
+              {...(links &&
+                links.disclaimerPageUrl && { href: links.disclaimerPageUrl })}
+            >
+              {disclaimerText}
+            </a>
+          )}
+          <div className="logos">
+            <a
+              href="https://maplibre.org"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <Icon className="maplibre-logo" icon={mapLibreLogo} />
+            </a>
+          </div>
           <a
             href="http://openmaptiles.org/"
             rel="noopener noreferrer"
@@ -40,6 +66,25 @@ const MapAttributions = ({ className, viewport, map }) => {
           >
             © OpenStreetMap Contributors
           </a>
+
+          {links && links.termsOfServicePageUrl && (
+            <a
+              href={links.termsOfServicePageUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Terms of service
+            </a>
+          )}
+          {links && links.privacyPolicyPageUrl && (
+            <a
+              href={links.privacyPolicyPageUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Privacy policy
+            </a>
+          )}
         </>
       )}
       {narrowView && (
@@ -56,6 +101,8 @@ const MapAttributions = ({ className, viewport, map }) => {
           <AttributionsModal
             open={open}
             onRequestClose={() => setAttributionsModalOpen(false)}
+            disclaimerText={disclaimerText}
+            links={links}
           />
         </>
       )}
