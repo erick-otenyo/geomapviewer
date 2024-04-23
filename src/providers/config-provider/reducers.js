@@ -13,6 +13,8 @@ export const initialState = {
   countries: [],
   links: {},
   disclaimerText: "",
+  enableMyAccount: false,
+  allowSignups: false,
 };
 
 const setConfigLoading = (state, { payload }) => ({

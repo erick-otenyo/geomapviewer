@@ -1,6 +1,14 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import * as actions from './actions';
-import Component from './component';
+import * as actions from "./actions";
+import Component from "./component";
 
-export default connect(null, actions)(Component);
+const mapStateToProps = ({ config }) => {
+  const { allowSignups } = config;
+
+  return {
+    allowSignups,
+  };
+};
+
+export default connect(mapStateToProps, actions)(Component);

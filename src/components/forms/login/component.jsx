@@ -45,6 +45,7 @@ class LoginForm extends PureComponent {
       simple,
       narrow,
       className,
+      allowSignups,
     } = this.props;
 
     const { showForm } = this.state;
@@ -54,7 +55,8 @@ class LoginForm extends PureComponent {
         submit: "login",
         submitFunc: loginUser,
         altView: "register",
-        altLabel: "Not a member? <b>Sign up!</b>",
+        altLabel: "Not registered? <b>Sign up!</b>",
+        altEnabled: allowSignups,
         confirmation: {
           title: "",
           description: "",
@@ -64,6 +66,7 @@ class LoginForm extends PureComponent {
         submit: "register",
         submitFunc: registerUser,
         altView: "login",
+        altEnabled: true,
         altLabel: "Already joined? <b>Sign in!</b>",
         confirmation: {
           title:
@@ -84,7 +87,7 @@ class LoginForm extends PureComponent {
       },
     };
 
-    const { submit, submitFunc, altView, altLabel, confirmation } =
+    const { submit, submitFunc, altView, altLabel, altEnabled, confirmation } =
       formMeta[showForm];
 
     return (
@@ -168,16 +171,18 @@ class LoginForm extends PureComponent {
                       />
                       <div className="submit-actions">
                         <Submit submitting={submitting}>{submit}</Submit>
-                        <button
-                          className="change-form"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            this.setState({ showForm: altView });
-                            reset();
-                          }}
-                        >
-                          {ReactHtmlParser(altLabel)}
-                        </button>
+                        {altEnabled && (
+                          <button
+                            className="change-form"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              this.setState({ showForm: altView });
+                              reset();
+                            }}
+                          >
+                            {ReactHtmlParser(altLabel)}
+                          </button>
+                        )}
                       </div>
                     </form>
                   </Column>

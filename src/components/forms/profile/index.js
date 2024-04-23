@@ -17,7 +17,11 @@ const splitLastName = (fullName) => {
     : fullName;
 };
 
-const mapStateToProps = ({ auth }) => {
+const mapStateToProps = ({ auth, config }) => {
+  const {
+    links: { contactUsPageUrl },
+  } = config;
+
   const { how_do_you_use: howDoYouUse, sector } = auth.data || {};
 
   const sectorHasOther = sector && sector.includes("Other");
@@ -35,6 +39,7 @@ const mapStateToProps = ({ auth }) => {
       : null;
 
   return {
+    contactUsPageUrl,
     ...(auth &&
       auth.data && {
         initialValues: {

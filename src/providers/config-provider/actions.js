@@ -22,6 +22,8 @@ export const fetchConfig = createThunkAction(
         vectorLayerIcons,
         links,
         disclaimerText,
+        enableMyAccount,
+        allowSignups,
       } = config;
 
       const sections = categories
@@ -50,6 +52,8 @@ export const fetchConfig = createThunkAction(
         bounds,
         links,
         disclaimerText,
+        enableMyAccount,
+        allowSignups,
         sections: sections,
         basemaps: basemaps.reduce((all, item) => {
           item.value = item.label;
