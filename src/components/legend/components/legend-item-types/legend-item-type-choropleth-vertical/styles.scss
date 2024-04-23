@@ -1,0 +1,31 @@
+.c-legend-type-choropleth-vertical {
+  .units {
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  table {
+    tr {
+      th {
+        padding: 0;
+        height: 12px;
+        width: 12px;
+        border: none;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.12);
+        span {
+          padding: 0;
+          display: inline-block;
+          height: 100%;
+          width: 100%;
+        }
+      }
+      td {
+        padding: 0 0 4px 8px;
+        font-size: 12px;
+        line-height: 20px;
+        vertical-align: middle;
+        border-bottom: none;
+      }
+    }
+  }
+}

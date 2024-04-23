@@ -24,6 +24,9 @@ class LegendTypeGradient extends PureComponent {
 
     return (
       <ul className="c-legend-type-proportional">
+        {legendConfig.units && (
+          <div className="units">{legendConfig.units}</div>
+        )}
         {legendConfig.items.map(({ name, color, size }) => (
           <li key={`legend-proportional-item-${name}`}>
             <div

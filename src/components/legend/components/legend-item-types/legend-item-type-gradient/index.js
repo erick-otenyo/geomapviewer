@@ -32,6 +32,9 @@ class LegendTypeGradient extends PureComponent {
 
     return (
       <div className="c-legend-type-gradient">
+        {legendConfig.units && (
+          <div className="units">{legendConfig.units}</div>
+        )}
         <div className="legend-gradient-icon">
           {itemTransparent && (
             <div

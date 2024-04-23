@@ -38,7 +38,7 @@ class ProfileForm extends PureComponent {
   };
 
   render() {
-    const { initialValues, saveProfile, source } = this.props;
+    const { initialValues, saveProfile, source, contactUsPageUrl } = this.props;
 
     const countryOptions = countryList().getData();
 
@@ -185,7 +185,15 @@ class ProfileForm extends PureComponent {
                     </div>
                     <div className="column small-12">
                       <p className="delete-profile">
-                        <a href="/contact-us">Email us </a>
+                        <a
+                          {...(contactUsPageUrl && {
+                            href: contactUsPageUrl,
+                          })}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Contact us{" "}
+                        </a>
                         to delete your account.
                       </p>
                     </div>

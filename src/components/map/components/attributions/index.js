@@ -1,3 +1,7 @@
-import Component from './component';
+import { connect } from "react-redux";
 
-export default Component;
+import Component from "./component";
+
+import { getAttributionProps } from "./selectors";
+
+export default connect(getAttributionProps, {})(Component);

@@ -28,6 +28,7 @@ const getApiSections = (state) => (state.config && state.config.sections) || [];
 export const selectmapLocationGeostore = (state) =>
   state.geostore && state.geostore.mapLocationGeostore;
 const selectLoggedIn = (state) => state.auth?.data?.loggedIn;
+const selectEnableMyAccount = (state) => state.config?.enableMyAccount;
 
 export const getMenuSection = createSelector(
   [getMenuSettings],
@@ -206,12 +207,19 @@ export const getActiveSectionWithData = createSelector(
 );
 
 export const getSearchSections = createSelector(
-  [getMenuSection],
-  (menuSection) =>
-    searchSections.map((s) => ({
+  [getMenuSection, selectEnableMyAccount],
+  (menuSection, myAccountEnabled) => {
+    const sections = searchSections.map((s) => ({
       ...s,
       active: menuSection === s.slug,
-    }))
+    }));
+
+    if (!myAccountEnabled) {
+      return sections.filter((s) => s.slug !== "my-account");
+    }
+
+    return sections;
+  }
 );
 
 const getLegendLayerGroups = createSelector([getLayerGroups], (groups) => {
@@ -222,9 +230,15 @@ const getLegendLayerGroups = createSelector([getLayerGroups], (groups) => {
 });
 
 export const getMobileSections = createSelector(
-  [getMenuSection, getLegendLayerGroups, getLocation, getEmbed],
-  (menuSection, activeDatasets, location, embed) =>
-    mobileSections
+  [
+    getMenuSection,
+    getLegendLayerGroups,
+    getLocation,
+    getEmbed,
+    selectEnableMyAccount,
+  ],
+  (menuSection, activeDatasets, location, embed, myAccountEnabled) => {
+    const sections = mobileSections
       .filter((s) => !embed || s.embed)
       .map((s) => ({
         ...s,
@@ -235,7 +249,14 @@ export const getMobileSections = createSelector(
           highlight: location && !!location.type && !!location.adm0,
         }),
         active: menuSection === s.slug,
-      }))
+      }));
+
+    if (!myAccountEnabled) {
+      return sections.filter((s) => s.slug !== "my-account");
+    }
+
+    return sections;
+  }
 );
 
 export const getDatasetCategories = createSelector(

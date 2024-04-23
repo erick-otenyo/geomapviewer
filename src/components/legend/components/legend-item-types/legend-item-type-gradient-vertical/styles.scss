@@ -1,4 +1,4 @@
-.c-legend-type-gradient {
+.c-legend-type-gradient-vertical {
   .units {
     font-size: 10px;
     font-weight: 700;
@@ -7,7 +7,8 @@
 
   ul {
     display: flex;
-    margin: 0;
+    flex-direction: column;
+    margin: 0 0 0 8px;
     padding: 0;
     list-style: none;
     font-size: 12px;
@@ -17,6 +18,7 @@
     padding: 0;
     margin: 0;
     flex: 1 1 auto;
+    height: 24px;
 
     &:before {
       content: none !important; // For the NexGDDP tool
@@ -25,19 +27,6 @@
     .name {
       display: block;
       font-family: inherit;
-      text-align: center;
-    }
-
-    &:first-child {
-      .name {
-        text-align: left;
-      }
-    }
-
-    &:last-child {
-      .name {
-        text-align: right;
-      }
     }
   }
 
@@ -48,14 +37,13 @@
   .icon-gradient {
     display: block;
     height: 5px;
-    margin-top: 10px;
     margin-bottom: 5px;
   }
 
   .icon-gradient-transparent {
     display: block;
     height: 5px;
-    margin-top: 10px;
+    width: 12px;
     margin-bottom: 5px;
     background-image: linear-gradient(
         45deg,
