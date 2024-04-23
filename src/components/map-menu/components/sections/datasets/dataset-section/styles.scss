@@ -6,6 +6,10 @@
   margin-bottom: rem(20px);
   padding-bottom: rem(20px);
 
+  &:last-child {
+    margin-bottom: rem(50px);
+  }
+
   &.collapsed {
     margin-bottom: 0;
     padding-bottom: 0;
